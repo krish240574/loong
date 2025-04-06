@@ -27,13 +27,14 @@ Each datapoint **must** follow this schema:
 
 ```json
 {
-  "question": "What is 2+2?",
-  "final_answer": "4",
-  "rationale": "print(2+2)",
+  "question": "What is the mean of [1, 2, 3, 4, 5] multiplied by the median of the same list?",
+  "final_answer": "15.0",
+  "rationale": "import numpy as np\nimport pandas as pd\n\ndata = [1, 2, 3, 4, 5]\nmean = np.mean(data)\nmedian = pd.Series(data).median()\nresult = mean * median\nprint(result)",
   "metadata": {
     "license": "CC BY 4.0",
     "source": "Basic Arithmetic, 1992",
     "domain": "Mathematics",
+    "required_dependencies": ["numpy==2.2.4", "pandas==2.2.4"],
     "difficulty": 1,
     "tags": "arithmetic"
   }
@@ -49,6 +50,7 @@ Each datapoint **must** follow this schema:
   - `license`: Licensing info (e.g., `MIT`, `CC BY 4.0`)
   - `source`: Origin or reference of the data (for example URL)
   - `domain`: Must match one of our supported domains (e.g. `"Physics"`, `"Finance"`)
+  - `required_dependencies`: List of dependencies with version required to run the rationale code
 - `metadata` (OPTIONAL): Arbitrary metadata: difficulty (numerical scale), tags, units, subdomains, domain-specific metadata, etc.
 
 ---
