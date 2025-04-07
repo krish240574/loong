@@ -35,6 +35,9 @@ Each datapoint **must** follow this schema:
     "source": "Basic Arithmetic, 1992",
     "domain": "Mathematics",
     "required_dependencies": ["numpy==2.2.4", "pandas==2.2.4"],
+    "name": "Loong_Mathematics",
+    "contributor": "Zeyu Zhang",
+    "date_created": "2025-04-07",
     "difficulty": 1,
     "tags": "arithmetic"
   }
@@ -51,6 +54,9 @@ Each datapoint **must** follow this schema:
   - `source`: Origin or reference of the data (for example URL)
   - `domain`: Must match one of our supported domains (e.g. `"Physics"`, `"Finance"`)
   - `required_dependencies`: List of dependencies with version required to run the rationale code
+  - `name`: Name of the dataset (e.g., `"Loong_Mathematics"`)
+  - `contributor`: Name of the dataset contributor
+  - `date_created`: Date when the dataset was created (YYYY-MM-DD format)
 - `metadata` (OPTIONAL): Arbitrary metadata: difficulty (numerical scale), tags, units, subdomains, domain-specific metadata, etc.
 
 ---
@@ -62,7 +68,6 @@ Organize your dataset like this:
 ```
 /data/{domain}/{your_dataset_name}/
 ├── data.json         # your seed dataset, list of dicts
-├── metadata.json     # dataset-level metadata (see below)
 └── README.md         # (optional) explanation of dataset
 ```
 
@@ -77,27 +82,15 @@ Organize your dataset like this:
     "metadata": {
       "license": "...",
       "source": "...",
-      "domain": "..."
+      "domain": "...",
+      "required_dependencies": ["...", "..."],
+      "name": "...",
+      "contributor": "...",
+      "date_created": "..."
     }
   },
   ...
 ]
-```
-
----
-
-## 🧾 Dataset-Level Metadata
-
-Every dataset directory must include a `metadata.json` file describing the dataset as a whole:
-
-```json
-{
-  "name": "Basic Arithmetic",
-  "domain": "Mathematics",
-  "license": "CC BY 4.0",
-  "contributor": "John von Neumann",
-  "date_created": "2025-03-27"
-}
 ```
 
 ---
@@ -132,7 +125,6 @@ Before submitting a dataset:
    `/data/{domain}/{your_dataset_name}/`
 3. Include:
    - `data.json`
-   - `metadata.json`
    - Optional: `README.md`
 4. Open a pull request with a short description.
 5. We’ll review for:

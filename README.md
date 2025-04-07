@@ -78,7 +78,7 @@ Each datapoint includes:
 - `question`
 - `final_answer`
 - `rationale` (typically code)
-- `metadata` (license, source, domain, difficulty, tags, anything else)
+- `metadata` (license, source, domain, required_dependencies, name, contributor, date_created, difficulty, tags, anything else)
 
 Each dataset is designed to allow automatic evaluation via **verifiers**, usually by executing the rationale code and comparing the output to the known answer.
 
