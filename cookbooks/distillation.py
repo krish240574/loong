@@ -1,7 +1,6 @@
 import asyncio
 import json
 import os
-from typing import List, Dict, Any
 
 from camel.datasets.static_dataset import StaticDataset
 from camel.datasets.few_shot_generator import FewShotGenerator
@@ -17,6 +16,14 @@ from camel.logger import get_logger, set_log_level
 # Set up logger
 logger = get_logger(__name__)
 set_log_level('INFO')
+
+if not os.environ["OPENAI_API_KEY"]:
+    raise RuntimeError("No OpenAI API key found")
+
+DEEPSEEK_API_KEY = "ENTER API KEY HERE"
+
+if DEEPSEEK_API_KEY == "ENTER API KEY HERE":
+    raise RuntimeError("Please enter your API key.")
 
 # Enable DeepSeek reasoning content
 os.environ["GET_REASONING_CONTENT"] = "true"
@@ -35,18 +42,20 @@ else:
 
 logger.info("Loading advanced math dataset...")
 # Load the advanced math dataset and filter for Level 4 and 5
-with open('adv_math_seed_dataset.json', 'r') as f:
+with open('data/advanced_math/seed_dataset.json', 'r') as f:
     seed_data = json.load(f)
 
 # Filter for Level 4 and 5 questions
 filtered_seed_data = [
     example for example in seed_data 
-    if example.get('meta_data', {}).get('level') in ['Level 4', 'Level 5']
+    if example.get('metadata', {}).get('level') in ['Level 4', 'Level 5']
 ]
 
+
+
 logger.info(f"Filtered seed dataset from {len(seed_data)} to {len(filtered_seed_data)} examples (Level 4 and 5 only)")
-logger.info(f"Level 4: {sum(1 for x in filtered_seed_data if x['meta_data']['level'] == 'Level 4')}")
-logger.info(f"Level 5: {sum(1 for x in filtered_seed_data if x['meta_data']['level'] == 'Level 5')}")
+logger.info(f"Level 4: {sum(1 for x in filtered_seed_data if x['metadata']['level'] == 'Level 4')}")
+logger.info(f"Level 5: {sum(1 for x in filtered_seed_data if x['metadata']['level'] == 'Level 5')}")
 
 seed_dataset = StaticDataset(filtered_seed_data)
 
@@ -58,13 +67,14 @@ model_4o = ModelFactory.create(
     model_platform=ModelPlatformType.OPENAI,
     model_type=ModelType.GPT_4O_MINI,
     model_config_dict=ChatGPTConfig().as_dict(),
-    timeout=30
+    timeout=1000
 )
 
 model_deepseek = ModelFactory.create(
     model_platform=ModelPlatformType.DEEPSEEK,
     model_type=ModelType.DEEPSEEK_REASONER,
-    api_key="Enter your Deepseek API"
+    api_key=DEEPSEEK_API_KEY,
+    timeout = 1000
 )
 logger.info("Models initialized successfully")
 
