@@ -1,0 +1,6 @@
+[project]
+name = "loong"
+version = "0.1.0"
+dependencies = [
+    "camel-ai @ git+https://github.com/camel-ai/camel.git#egg=camel-ai&subdirectory=.&extras=all"
+]
