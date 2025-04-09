@@ -2,5 +2,5 @@
 name = "loong"
 version = "0.1.0"
 dependencies = [
-    "camel-ai[dev,huggingface,docs] @ git+https://github.com/camel-ai/camel.git"
+    "camel-ai[all] @ git+https://github.com/camel-ai/camel.git@ce5ee0a3ceda7eb8dd4f42047ee2fe538abfd561"
 ]
