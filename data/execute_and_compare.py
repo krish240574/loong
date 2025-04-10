@@ -35,7 +35,7 @@ async def setup_verifier(required_packages: List[str], timeout: float = 60.0) ->
         A configured PythonVerifier instance.
     """
     verifier = PythonVerifier(timeout=timeout, required_packages=required_packages)
-    await verifier._setup(uv=True)
+    await verifier.setup(uv=True)
     return verifier
 
 
@@ -55,7 +55,7 @@ async def execute_rationale(
     """
     try:
         # Execute the rationale
-        result = await verifier._verify_implementation(rationale, None)
+        result = await verifier.verify(rationale, None)
         
         return {
             "status": result.status.name,
@@ -190,7 +190,7 @@ async def process_batch(batch: List[Tuple[int, Dict[str, Any]]], required_packag
     finally:
         # Only clean up if not from cache and caching is disabled
         if not ENV_CACHE_ENABLED and not from_cache and verifier.venv_path:
-            await verifier._cleanup()
+            await verifier.cleanup()
 
 
 async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: PythonVerifier, domain: str = None) -> Tuple[int, Dict[str, Any]]:
@@ -479,7 +479,7 @@ async def process_dataset(
     # Clean up verifier cache at the end
     if ENV_CACHE_ENABLED and _verifier_cache:
         print(f"Cleaning up {len(_verifier_cache)} cached verifiers...")
-        cleanup_tasks = [verifier._cleanup() for verifier in _verifier_cache.values() if verifier.venv_path]
+        cleanup_tasks = [verifier.cleanup() for verifier in _verifier_cache.values() if verifier.venv_path]
         if cleanup_tasks:
             await asyncio.gather(*cleanup_tasks)
         _verifier_cache.clear()
@@ -647,7 +647,7 @@ async def main():
             print(json.dumps(result, indent=2))
         finally:
             if not ENV_CACHE_ENABLED and verifier.venv_path:
-                await verifier._cleanup()
+                await verifier.cleanup()
     else:
         if args.skip_execution and os.path.exists(args.output):
             # Load existing results
@@ -701,7 +701,7 @@ async def main():
     if not ENV_CACHE_ENABLED:
         for verifier in _verifier_cache.values():
             if verifier.venv_path:
-                await verifier._cleanup()
+                await verifier.cleanup()
     
     # Cleanup MathVerifier if initialized
     if _math_verifier:
