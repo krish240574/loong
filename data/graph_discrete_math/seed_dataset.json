@@ -220,7 +220,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -239,7 +240,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -258,7 +260,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -296,7 +299,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -619,7 +623,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -790,7 +795,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -847,7 +854,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -866,7 +874,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -885,7 +895,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -1797,7 +1808,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -1816,7 +1828,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -1835,7 +1849,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -1892,7 +1908,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -2329,7 +2347,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -2348,7 +2368,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -2576,7 +2598,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "sympy==1.11.1"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -2823,7 +2846,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -3165,7 +3189,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
@@ -3355,7 +3381,9 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "Loong_Graph_Discrete_Math",
