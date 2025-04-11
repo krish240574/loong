@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import List, Dict, Any
 import jsonschema
 from collections import defaultdict
+import sys
 
 def validate_date_format(date_str: str) -> bool:
     try:
@@ -101,8 +102,7 @@ def main():
         "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json"
     }
     
-    domain_statistics = {}
-    total_items = defaultdict(int)
+    has_errors = False
     
     print("\nValidation Summary:")
     print("=" * 80)
@@ -111,6 +111,7 @@ def main():
         if not path.exists():
             print(f"\n{domain}:")
             print("  File not found")
+            has_errors = True
             continue
             
         results = validate_dataset(path)
@@ -120,31 +121,16 @@ def main():
                 print(f"\n{domain}:")
                 for field, count in missing_summary.items():
                     print(f"  {field}: {count} items")
-                    total_items[field] += count
-                domain_statistics[domain] = missing_summary
+                has_errors = True
         else:
             print(f"\n{domain}: All required fields present")
     
-    print("\nOverall Statistics:")
-    print("=" * 80)
-    if total_items:
-        print("\nTotal missing fields across all domains:")
-        for field, count in total_items.items():
-            print(f"  {field}: {count} items")
-        
-        print("\nDomains with missing fields:")
-        print(f"  {len(domain_statistics)}/{len(domain_paths)} domains have missing fields")
+    if has_errors:
+        print("\nValidation failed!")
+        sys.exit(1)
     else:
-        print("All domains have complete schema!")
-    
-    # Save detailed statistics to file
-    statistics = {
-        "domain_statistics": domain_statistics,
-        "total_missing": dict(total_items)
-    }
-    with open('validation_statistics.json', 'w', encoding='utf-8') as f:
-        json.dump(statistics, f, ensure_ascii=False, indent=2)
-    print("\nDetailed statistics have been saved to validation_statistics.json")
+        print("\nAll schemas are valid!")
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
