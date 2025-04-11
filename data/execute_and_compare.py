@@ -5,6 +5,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import ast
 from typing import Dict, List, Any, Optional, Tuple
 from tqdm import tqdm
 
@@ -12,11 +13,12 @@ from camel.verifiers.python_verifier import PythonVerifier
 from camel.verifiers.models import VerificationOutcome
 from camel.verifiers import MathVerifier
 from physic_verifier_tem import PhysicsVerifier
+from camel.extractors import BaseExtractor, BoxedStrategy
 import logging
 
 # Configuration constants
 DEFAULT_MAX_WORKERS = 6
-DEFAULT_BATCH_SIZE = 10
+DEFAULT_BATCH_SIZE = 5
 DEFAULT_TIMEOUT = 60.0
 DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
@@ -28,17 +30,22 @@ logging.basicConfig(
 )
 
 
-async def setup_verifier(required_packages: List[str], timeout: float = 60.0) -> PythonVerifier:
+async def setup_verifier(required_packages: List[str], timeout: float = DEFAULT_TIMEOUT, domain: str = None) -> PythonVerifier:
     """
     Set up a Python verifier with the required packages.
     
     Args:
         required_packages: List of required packages with versions.
         timeout: Timeout for code execution in seconds.
+        domain: The problem domain (e.g., 'mathematical_programming').
         
     Returns:
         A configured PythonVerifier instance.
     """
+    # Set longer timeout for Mathematical Programming domain
+    if domain == "mathematical_programming":
+        timeout = 240.0
+        
     verifier = PythonVerifier(
         timeout=timeout, 
         required_packages=required_packages)
@@ -88,7 +95,7 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
     Args:
         execution_result: The result from code execution.
         final_answer: The expected final answer.
-        domain: The problem domain (e.g., 'advanced_math').
+        domain: The problem domain (e.g., 'mathematical_programming').
         
     Returns:
         True if the results match, False otherwise.
@@ -98,6 +105,16 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
         try:
             math_verifier = await get_math_verifier()
             verification_result = await math_verifier.verify(
+                solution=execution_result,
+                reference_answer=final_answer
+            )
+            return verification_result.status == VerificationOutcome.SUCCESS
+        except Exception:
+            pass
+    elif domain == "mathematical_programming" and execution_result is not None and final_answer is not None:
+        try:
+            math_programming_verifier = await get_math_programming_verifier()
+            verification_result = await math_programming_verifier.verify(
                 solution=execution_result,
                 reference_answer=final_answer
             )
@@ -118,6 +135,8 @@ _math_verifier = None
 # Initialize physics verifier for advanced_physics domain
 _physics_verifier = None
 
+# Initialize mathematical programming verifier for mathematical_programming domain
+_math_programming_verifier = None
 
 async def get_math_verifier():
     """
@@ -145,12 +164,34 @@ async def get_physics_verifier():
         await _physics_verifier.setup(uv=True)
     return _physics_verifier
 
-async def get_or_create_verifier(required_packages: List[str]) -> Tuple[PythonVerifier, bool]:
+async def get_math_programming_verifier():
+    """
+    Get or initialize the Mathematical Programming verifier.
+    
+    Returns:
+        Mathematical Programming verifier
+    """
+    global _math_programming_verifier
+    if _math_programming_verifier is None:
+        # Initialize extractor
+        extractor = BaseExtractor([[BoxedStrategy()]])
+        await extractor.setup()
+        timeout = 220.0
+        _math_programming_verifier = PythonVerifier(
+            timeout=timeout, 
+            required_packages=["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib", "geopy"],
+            extractor=extractor
+        )
+        await _math_programming_verifier.setup(uv=True)
+    return _math_programming_verifier
+
+async def get_or_create_verifier(required_packages: List[str], domain: str = None) -> Tuple[PythonVerifier, bool]:
     """
     Get a verifier from cache or create a new one if needed.
     
     Args:
         required_packages: List of required packages with versions.
+        domain: The problem domain (e.g., 'mathematical_programming').
         
     Returns:
         Tuple of (verifier, is_from_cache)
@@ -162,7 +203,7 @@ async def get_or_create_verifier(required_packages: List[str]) -> Tuple[PythonVe
         return _verifier_cache[cache_key], True
     
     # Create a new verifier
-    verifier = await setup_verifier(required_packages)
+    verifier = await setup_verifier(required_packages, domain=domain)
     
     if ENV_CACHE_ENABLED:
         _verifier_cache[cache_key] = verifier
@@ -176,6 +217,7 @@ async def process_batch(batch: List[Tuple[int, Dict[str, Any]]], required_packag
     Args:
         batch: List of (index, item) tuples to process.
         required_packages: List of required packages with versions.
+        domain: The problem domain (e.g., 'mathematical_programming').
         
     Returns:
         List of (index, result) tuples.
@@ -184,7 +226,7 @@ async def process_batch(batch: List[Tuple[int, Dict[str, Any]]], required_packag
         return []
     
     # Get or create a verifier for this batch
-    verifier, from_cache = await get_or_create_verifier(required_packages)
+    verifier, from_cache = await get_or_create_verifier(required_packages, domain)
     
     try:
         # Process items concurrently within the batch
@@ -207,6 +249,7 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
     Args:
         item_tuple: Tuple containing (index, item) from the dataset.
         verifier: The Python verifier to use.
+        domain: The problem domain (e.g., 'mathematical_programming').
         
     Returns:
         Tuple of (index, result dictionary).
@@ -321,9 +364,9 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         elif item.get("metadata", {}).get("required_dependencies"):
             packages = item.get("metadata", {}).get("required_dependencies", [])
         # Check for Mathematical Programming domain that needs pyscipopt
-        elif item.get("metadata", {}).get("domain") == "Mathematical_Programming" or \
+        elif item.get("metadata", {}).get("domain") == "Mathematical Programming" or \
              (item.get("metadata", {}).get("library") == "SCIP"):
-            packages = ["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib",]
+            packages = ["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib", "geopy"]
         
         # Sort packages to ensure consistent grouping
         key = tuple(sorted(packages))
@@ -415,6 +458,8 @@ async def process_dataset(
     # Process each domain
     logger.info(f"Processing {len(dataset)} domains...")
     for domain, items in dataset.items():
+        if domain != "mathematical_programming":
+            continue
         domain_start_time = time.time()
         
         # Limit the number of samples if specified
@@ -717,6 +762,10 @@ async def main():
     # Cleanup PhysicsVerifier if initialized
     if _physics_verifier:
         await _physics_verifier.cleanup()
+
+    # Cleanup Mathematical Programming verifier if initialized
+    if _math_programming_verifier:
+        await _math_programming_verifier.cleanup()
 
     logger.info("Processing complete.")
 
