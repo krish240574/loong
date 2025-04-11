@@ -18,7 +18,7 @@ def get_changed_seed_files():
             cmd = "git diff --name-only HEAD~1 HEAD"
         result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
         files = result.stdout.strip().split('\n')
-        return [f for f in files if f.startswith("data/") and f.endswith("seed.json")]
+        return [f for f in files if f.startswith("data/") and f.endswith("seed_dataset.json")]
     except Exception as e:
         print(f"⚠️ Failed to get changed files: {e}")
         return []
