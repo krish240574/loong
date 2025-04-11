@@ -1,6 +1,6 @@
 [
   {
-    "question": "A blood sample has a total carbon dioxide content of 28.5 mmol/L and a pH of 7.48 at 37\u00b0C. Using the Henderson-Hasselbalch equation and the given pKa of 6.10, determine the concentrations of HCO3- and CO2 in the blood. Show all calculations and explain any assumptions made.",
+    "question": "A blood sample has a total carbon dioxide content of 28.5 mmol/L and a pH of 7.48 at 37°C. Using the Henderson-Hasselbalch equation and the given pKa of 6.10, determine the concentrations of HCO3- and CO2 in the blood. Show all calculations and explain any assumptions made.",
     "final_answer": "(27.359467562513824, 1.1405324374861758)",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -32,7 +32,7 @@
     "rationale": "result = 10**(7.4 - 4.5)\nprint(result)"
   },
   {
-    "question": "Given the total carbon dioxide content (HCO3- + CO2) in a blood sample is 28.5 mmol/L, and the blood pH at 37\u00b0C is 7.48, what are the concentrations of HCO3- and CO2 in the blood? The pKa of the reaction is 6.10.",
+    "question": "Given the total carbon dioxide content (HCO3- + CO2) in a blood sample is 28.5 mmol/L, and the blood pH at 37°C is 7.48, what are the concentrations of HCO3- and CO2 in the blood? The pKa of the reaction is 6.10.",
     "final_answer": "(27.359467562513824, 1.1405324374861756)",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -64,7 +64,7 @@
     "rationale": "import math\n\n# Given values\npH = 7.4\nNa2HPO4_concentration = 0.008\nKH2PO4_concentration = 0.002\n\n# Henderson-Hasselbalch rearrangement\npKa2 = pH - math.log10(Na2HPO4_concentration / KH2PO4_concentration)\n\n# Calculating Ka\nKa = 10 ** (-pKa2)\n\nresult = Ka\nprint(result)"
   },
   {
-    "question": "What are the concentrations of HCO3- and CO2 in the blood given that the total carbon dioxide content is 28.5 mmol/L and the blood pH is 7.48 at 37\u00b0C? The pKa of the reaction is 6.10.",
+    "question": "What are the concentrations of HCO3- and CO2 in the blood given that the total carbon dioxide content is 28.5 mmol/L and the blood pH is 7.48 at 37°C? The pKa of the reaction is 6.10.",
     "final_answer": "(27.359467562513824, 1.1405324374861758)",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -128,7 +128,7 @@
     "rationale": "# Data given\nmass_percentage_cu = 0.390  # in percentage\nmolar_mass_cu = 63.546  # g/mol\nnum_of_cu_atoms = 4\n\n# Calculating the mass of Cu in one mole of laccase\ntotal_mass_of_cu = num_of_cu_atoms * molar_mass_cu\n\n# Using the mass percentage to find the molar mass of laccase\nmolar_mass_of_laccase = (total_mass_of_cu / mass_percentage_cu) * 100\n\nresult = molar_mass_of_laccase\nprint(result)"
   },
   {
-    "question": "Given the enzyme concentration [E] = 4 nM, Km = 2.8 \u03bcM, and Vm = 60 \u03bcM/min, calculate the catalytic efficiency of the enzyme, which is defined as kcat/Km, and express the answer in units of s^-1\u00b7\u03bcM^-1.",
+    "question": "Given the enzyme concentration [E] = 4 nM, Km = 2.8 μM, and Vm = 60 μM/min, calculate the catalytic efficiency of the enzyme, which is defined as kcat/Km, and express the answer in units of s^-1·μM^-1.",
     "final_answer": "89.28571428571429",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -141,7 +141,7 @@
       ],
       "name": "loong_computational_biology"
     },
-    "rationale": "Vm = 60  # \u03bcM/min\nenzyme_concentration_nM = 4  # nM\nKm = 2.8  # \u03bcM\n\n# Convert Vm to \u03bcM/s\neffector_velocity_s = Vm / 60\n\n# Convert enzyme concentration from nM to \u03bcM\nenzyme_concentration_uM = enzyme_concentration_nM / 1000\n\n# Calculate kcat\nkcat = effector_velocity_s / enzyme_concentration_uM\n\n# Calculate catalytic efficiency (kcat/Km)\ncatalytic_efficiency = kcat / Km\n\nresult = catalytic_efficiency\nprint(result)"
+    "rationale": "Vm = 60  # μM/min\nenzyme_concentration_nM = 4  # nM\nKm = 2.8  # μM\n\n# Convert Vm to μM/s\neffector_velocity_s = Vm / 60\n\n# Convert enzyme concentration from nM to μM\nenzyme_concentration_uM = enzyme_concentration_nM / 1000\n\n# Calculate kcat\nkcat = effector_velocity_s / enzyme_concentration_uM\n\n# Calculate catalytic efficiency (kcat/Km)\ncatalytic_efficiency = kcat / Km\n\nresult = catalytic_efficiency\nprint(result)"
   },
   {
     "question": "In a 1.0 L solution of 0.1 M Tris at pH 7.5, what are the concentrations of protonated and unprotonated Tris? Use the Henderson-Hasselbalch equation to solve for these concentrations, given that the pKa of Tris is 8.1.",
@@ -160,7 +160,7 @@
     "rationale": "import math\n\n# Given values\npH = 7.5\npKa = 8.1\ntotal_concentration = 0.1  # 0.1 M\n\n# Henderson-Hasselbalch equation\nratio = 10 ** (pH - pKa)\n\n# Let [A-] = concentration of unprotonated Tris\n# Let [HA] = concentration of protonated Tris\n\n# ratio = [A-]/[HA]\n# [A-] = ratio * [HA]\n\n# Total concentration: [A-] + [HA] = 0.1\n# Substitute [A-] = ratio * [HA] in the total concentration equation:\n\n# ratio * [HA] + [HA] = 0.1\nha_concentration = total_concentration / (1 + ratio)  # [HA]\na_minus_concentration = ratio * ha_concentration  # [A-]\n\nresult = (ha_concentration, a_minus_concentration)\nprint(result)"
   },
   {
-    "question": "A lipid, phosphatidylcholine, with a molecular weight of 97,000 g/mol and a density of 1.018 g/cm^3, forms micelles when mixed with water. Assuming the particles are not hydrated, calculate the radius of the particles and the diffusion coefficient (D) of the particles in water at 25\u00b0C, given the viscosity of water as 0.9 mPa\u00b7s and the Boltzmann constant as 1.38 \u00d7 10^-23 J/K.",
+    "question": "A lipid, phosphatidylcholine, with a molecular weight of 97,000 g/mol and a density of 1.018 g/cm^3, forms micelles when mixed with water. Assuming the particles are not hydrated, calculate the radius of the particles and the diffusion coefficient (D) of the particles in water at 25°C, given the viscosity of water as 0.9 mPa·s and the Boltzmann constant as 1.38 × 10^-23 J/K.",
     "final_answer": "(3.3553013526296024e-09, 7.224706121300888e-11)",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -173,10 +173,10 @@
       ],
       "name": "loong_computational_biology"
     },
-    "rationale": "import math\n\n# Constants\nMW = 97000  # g/mol\ndensity = 1.018  # g/cm^3\nN_A = 6.022e23  # molecules/mol\nk_B = 1.38e-23  # J/K\nT = 298  # K (25\u00b0C)\nviscosity = 0.9e-3  # Pa\u00b7s (0.9 mPa\u00b7s)\n\n# Convert density from g/cm^3 to g/m^3 for consistency with SI units\n# 1 g/cm^3 = 1000 kg/m^3\nrho = density * 1e3  # kg/m^3\n\n# Volume of the micelle in m^3\n# Convert MW to kg by dividing by 1000\nV_micelle = MW / (rho * N_A) * 1e-3\n\n# Radius of the micelle\nr = (3 * V_micelle / (4 * math.pi)) ** (1/3)\n\n# Diffusion Coefficient using Stokes-Einstein equation\nD = (k_B * T) / (6 * math.pi * viscosity * r)\n\nresult = (r, D)\nprint(result)\n"
+    "rationale": "import math\n\n# Constants\nMW = 97000  # g/mol\ndensity = 1.018  # g/cm^3\nN_A = 6.022e23  # molecules/mol\nk_B = 1.38e-23  # J/K\nT = 298  # K (25°C)\nviscosity = 0.9e-3  # Pa·s (0.9 mPa·s)\n\n# Convert density from g/cm^3 to g/m^3 for consistency with SI units\n# 1 g/cm^3 = 1000 kg/m^3\nrho = density * 1e3  # kg/m^3\n\n# Volume of the micelle in m^3\n# Convert MW to kg by dividing by 1000\nV_micelle = MW / (rho * N_A) * 1e-3\n\n# Radius of the micelle\nr = (3 * V_micelle / (4 * math.pi)) ** (1/3)\n\n# Diffusion Coefficient using Stokes-Einstein equation\nD = (k_B * T) / (6 * math.pi * viscosity * r)\n\nresult = (r, D)\nprint(result)\n"
   },
   {
-    "question": "The value of delta G for the conversion of 3-phosphoglycerate to 2-phosphoglycerate (2PG) is +4.4kJ/mol. If the concentration of 3-phosphoglycerate at equilibrium is 1.75mM, what is the concentration of 2-phosphoglycerate? Assume a temperature of 25C and a constant R = 0.0083145 kJ/mol. Use the equation \u0394G = -RT ln(Q) to solve the problem.",
+    "question": "The value of delta G for the conversion of 3-phosphoglycerate to 2-phosphoglycerate (2PG) is +4.4kJ/mol. If the concentration of 3-phosphoglycerate at equilibrium is 1.75mM, what is the concentration of 2-phosphoglycerate? Assume a temperature of 25C and a constant R = 0.0083145 kJ/mol. Use the equation ΔG = -RT ln(Q) to solve the problem.",
     "final_answer": "0.29661619875554146",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -189,10 +189,10 @@
       ],
       "name": "loong_computational_biology"
     },
-    "rationale": "import math\n\n# Given values\ndelta_G = 4.4  # kJ/mol\nR = 0.0083145  # kJ/mol\nT = 25 + 273.15  # Convert to Kelvin\nequilibrium_concentration_3PG = 1.75  # mM\n\n# Calculate the concentration of 2-phosphoglycerate (2PG) using the equation \u0394G = -RT ln(Q)\n# \u0394G = -RT ln([2PG]/[3PG]) implies:\n# ln([2PG]/[3PG]) = -\u0394G / RT\n# [2PG]/[3PG] = e^(-\u0394G / RT)\n# [2PG] = [3PG] * e^(-\u0394G / RT)\n\nexponential_term = math.exp(-delta_G / (R * T))\nconcentration_2PG = equilibrium_concentration_3PG * exponential_term\nresult = concentration_2PG\nprint(result)"
+    "rationale": "import math\n\n# Given values\ndelta_G = 4.4  # kJ/mol\nR = 0.0083145  # kJ/mol\nT = 25 + 273.15  # Convert to Kelvin\nequilibrium_concentration_3PG = 1.75  # mM\n\n# Calculate the concentration of 2-phosphoglycerate (2PG) using the equation ΔG = -RT ln(Q)\n# ΔG = -RT ln([2PG]/[3PG]) implies:\n# ln([2PG]/[3PG]) = -ΔG / RT\n# [2PG]/[3PG] = e^(-ΔG / RT)\n# [2PG] = [3PG] * e^(-ΔG / RT)\n\nexponential_term = math.exp(-delta_G / (R * T))\nconcentration_2PG = equilibrium_concentration_3PG * exponential_term\nresult = concentration_2PG\nprint(result)"
   },
   {
-    "question": "Calculating \\( K_{\\text{eq}} \\) and \\(\\Delta G\\) from concentrations\nAn enzymatic hydrolysis of fructose-1-P\n\nFructose-1-P + H\\(_2\\)O \\(\\rightleftharpoons\\) fructose + P\\(_i\\)\n\nwas allowed to proceed to equilibrium at 25\u00b0C. The original concentration \nof fructose-1-P was 0.2 M, but when the system had reached equilibrium the \nconcentration of fructose-1-P was only 6.52 x 10\\(^{-5}\\) M. Calculate the \nequilibrium constant for this reaction and the standard free energy of hydrolysis of fructose-1-P.",
+    "question": "Calculating \\( K_{\\text{eq}} \\) and \\(\\Delta G\\) from concentrations\nAn enzymatic hydrolysis of fructose-1-P\n\nFructose-1-P + H\\(_2\\)O \\(\\rightleftharpoons\\) fructose + P\\(_i\\)\n\nwas allowed to proceed to equilibrium at 25°C. The original concentration \nof fructose-1-P was 0.2 M, but when the system had reached equilibrium the \nconcentration of fructose-1-P was only 6.52 x 10\\(^{-5}\\) M. Calculate the \nequilibrium constant for this reaction and the standard free energy of hydrolysis of fructose-1-P.",
     "final_answer": "(613.0969977153376, -15902.353257276329)",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -221,7 +221,7 @@
       ],
       "name": "loong_computational_biology"
     },
-    "rationale": "import math\n\n# Constants\nhalf_life_days = 163\nseconds_per_day = 24 * 60 * 60\nhalf_life_seconds = half_life_days * seconds_per_day\n\n# Conversion factors\ncurie_to_becquerel = 3.7e10\nmci_to_becquerel = 1e-3 * curie_to_becquerel\n\n# Calculate decay constant \u03bb\ndecay_constant = math.log(2) / half_life_seconds\n\n# Activity\nactivity_becquerel = mci_to_becquerel  # 1 mCi in Bq\n\n# Calculate number of atoms N\nnum_atoms = activity_becquerel / decay_constant\n\n# Avogadro's number\navogadro_number = 6.022e23\n\n# Molar mass of Ca-45\na_molar_mass_ca45 = 45  # grams per mole\n\n# Calculate mass in grams\nmass_grams_ca45 = (num_atoms / avogadro_number) * a_molar_mass_ca45\n\n# Result\nresult = mass_grams_ca45\nprint(result)"
+    "rationale": "import math\n\n# Constants\nhalf_life_days = 163\nseconds_per_day = 24 * 60 * 60\nhalf_life_seconds = half_life_days * seconds_per_day\n\n# Conversion factors\ncurie_to_becquerel = 3.7e10\nmci_to_becquerel = 1e-3 * curie_to_becquerel\n\n# Calculate decay constant λ\ndecay_constant = math.log(2) / half_life_seconds\n\n# Activity\nactivity_becquerel = mci_to_becquerel  # 1 mCi in Bq\n\n# Calculate number of atoms N\nnum_atoms = activity_becquerel / decay_constant\n\n# Avogadro's number\navogadro_number = 6.022e23\n\n# Molar mass of Ca-45\na_molar_mass_ca45 = 45  # grams per mole\n\n# Calculate mass in grams\nmass_grams_ca45 = (num_atoms / avogadro_number) * a_molar_mass_ca45\n\n# Result\nresult = mass_grams_ca45\nprint(result)"
   },
   {
     "question": "Calculate the ionic strength of a 0.02 M solution of Fe2(SO4)3.",
@@ -304,7 +304,7 @@
     "rationale": "from itertools import permutations\n\n# Define the amino acids valine (V), alanine (A), leucine (L)\namino_acids = ['V', 'A', 'L']\n\n# Generate all possible permutations of the three amino acids\ntripeptides = set(permutations(amino_acids, 3))\n\n# The number of distinct tripeptides is the length of this set\nresult = len(tripeptides)\nprint(result)"
   },
   {
-    "question": "Calculate the length of a nucleotide sequence whose expected frequency is once per haploid human genome\n\nThe haploid human genome consists of 3 \u00d7 10^9 base pairs. Using the logic in problem 15, one can calculate the minimum length of a unique DNA sequence expected to occur by chance just once in the human genome. That is, what is the length of a double-stranded DNA whose expected frequency of occurrence is once in the haploid human genome?",
+    "question": "Calculate the length of a nucleotide sequence whose expected frequency is once per haploid human genome\n\nThe haploid human genome consists of 3 × 10^9 base pairs. Using the logic in problem 15, one can calculate the minimum length of a unique DNA sequence expected to occur by chance just once in the human genome. That is, what is the length of a double-stranded DNA whose expected frequency of occurrence is once in the haploid human genome?",
     "final_answer": "16",
     "metadata": {
       "license": "CC-BY-NC-SA-4.0",
@@ -685,7 +685,7 @@
       ],
       "name": "loong_computational_biology"
     },
-    "rationale": "# In a dihybrid cross, we consider each trait separately and then use the product rule.\n# For brown eyes (B) which is dominant, a parent has the genotype Bb and another Bb.\n# For big teeth (T) which is dominant, a parent has the genotype Tt and another Tt.\n# Therefore, the cross we consider is BbTt x BbTt.\n\n# Probability of brown eyes (B\u2013):\n# Cross: Bb x Bb => Possible genotypes: BB, Bb, Bb, bb\n# Phenotypically: 3/4 will have brown eyes (because BB, Bb, Bb)\nprob_brown_eyes = 3/4\n\n# Probability of big teeth (T\u2013):\n# Cross: Tt x Tt => Possible genotypes: TT, Tt, Tt, tt\n# Phenotypically: 3/4 will have big teeth (because TT, Tt, Tt)\nprob_big_teeth = 3/4\n\n# Probability of brown eyes and big teeth (B\u2013 and T\u2013) using the product rule:\nresult = prob_brown_eyes * prob_big_teeth\nprint(result)"
+    "rationale": "# In a dihybrid cross, we consider each trait separately and then use the product rule.\n# For brown eyes (B) which is dominant, a parent has the genotype Bb and another Bb.\n# For big teeth (T) which is dominant, a parent has the genotype Tt and another Tt.\n# Therefore, the cross we consider is BbTt x BbTt.\n\n# Probability of brown eyes (B–):\n# Cross: Bb x Bb => Possible genotypes: BB, Bb, Bb, bb\n# Phenotypically: 3/4 will have brown eyes (because BB, Bb, Bb)\nprob_brown_eyes = 3/4\n\n# Probability of big teeth (T–):\n# Cross: Tt x Tt => Possible genotypes: TT, Tt, Tt, tt\n# Phenotypically: 3/4 will have big teeth (because TT, Tt, Tt)\nprob_big_teeth = 3/4\n\n# Probability of brown eyes and big teeth (B– and T–) using the product rule:\nresult = prob_brown_eyes * prob_big_teeth\nprint(result)"
   },
   {
     "question": "What is the probability that the offspring of two heterozygous black guinea pigs will be black? Explain your answer using Punnett squares and provide a step-by-step calculation of the probability.",
@@ -830,229 +830,5 @@
       "name": "loong_computational_biology"
     },
     "rationale": "# Initial concentration in cells/ml\ninitial_concentration = 3.4 * 10**9\n\n# Dilution factor\ndilution_factor = 10**-8\n\n# Final concentration calculation\nfinal_concentration = initial_concentration * dilution_factor\n\n# Colonies expected if plating 1 ml of the final concentration\nexpected_colonies = final_concentration\n\nresult = expected_colonies\nprint(result)"
-  },
-  {
-    "question": "Given: A DNA string s\n of length at most 1000 nt.\n\nReturn: Four integers (separated by spaces) counting the respective number of times that the symbols 'A', 'C', 'G', and 'T' occur in s\n.\n\nSample Dataset\nAGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC",
-    "final_answer": "20 12 17 21",
-    "rationale": "from Bio.Seq import Seq\n\ns = \"AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC\"\nsequence = Seq(s)\n\na_count = sequence.count('A')\nc_count = sequence.count('C')\ng_count = sequence.count('G')\nt_count = sequence.count('T')\n\nresult = f\"{a_count} {c_count} {g_count} {t_count}\"\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Given: A DNA string t\n having length at most 1000 nt.\n\nReturn: The transcribed RNA string of t\n.\n\nSample Dataset\nGATGGAACTTGACTACGTAAATT",
-    "final_answer": "GAUGGAACUUGACUACGUAAAUU",
-    "rationale": "from Bio.Seq import Seq\n\nt = \"GATGGAACTTGACTACGTAAATT\"\ndna_seq = Seq(t)\n\nrna_seq = dna_seq.transcribe()\n\nresult = str(rna_seq)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Given: A DNA string s\n of length at most 1000 bp.\n\nReturn: The reverse complement sc\n of s\n.\n\nSample Dataset\nAAAACCCGGT",
-    "final_answer": "ACCGGGTTTT",
-    "rationale": "from Bio.Seq import Seq\n\ns = \"AAAACCCGGT\"\ndna_seq = Seq(s)\n\nreverse_complement_seq = dna_seq.reverse_complement()\n\nresult = str(reverse_complement_seq)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "A sequence is an ordered collection of objects (usually numbers), which are allowed to repeat. Sequences can be finite or infinite. Two examples are the finite sequence (\u03c0,\u22122\u2013\u221a,0,\u03c0)\n and the infinite sequence of odd numbers (1,3,5,7,9,\u2026)\n. We use the notation an\n to represent the n\n-th term of a sequence.\n\nA recurrence relation is a way of defining the terms of a sequence with respect to the values of previous terms. In the case of Fibonacci's rabbits from the introduction, any given month will contain the rabbits that were alive the previous month, plus any new offspring. A key observation is that the number of offspring in any month is equal to the number of rabbits that were alive two months prior. As a result, if Fn\n represents the number of rabbit pairs alive after the n\n-th month, then we obtain the Fibonacci sequence having terms Fn\n that are defined by the recurrence relation Fn=Fn\u22121+Fn\u22122\n (with F1=F2=1\n to initiate the sequence). Although the sequence bears Fibonacci's name, it was known to Indian mathematicians over two millennia ago.\n\nWhen finding the n\n-th term of a sequence defined by a recurrence relation, we can simply use the recurrence relation to generate terms for progressively larger values of n\n. This problem introduces us to the computational technique of dynamic programming, which successively builds up solutions by using the answers to smaller cases.\n\nGiven: Positive integers n\u226440\n and k\u22645\n.\n\nReturn: The total number of rabbit pairs that will be present after n\n months, if we begin with 1 pair and in each generation, every pair of reproduction-age rabbits produces a litter of k\n rabbit pairs (instead of only 1 pair).\n\nSample Dataset\n5 3",
-    "final_answer": "19",
-    "rationale": "n = 5\nk = 3\n\ndef fib_rabbit(n, k):\n    if n == 1 or n == 2:\n        return 1\n    else:\n        return fib_rabbit(n-1, k) + k * fib_rabbit(n-2, k)\n\nresult = fib_rabbit(n, k)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Given two strings s\n and t\n of equal length, the Hamming distance between s\n and t\n, denoted dH(s,t)\n, is the number of corresponding symbols that differ in s\n and t\n\nGiven: Two DNA strings s\n and t\n of equal length (not exceeding 1 kbp).\n\nReturn: The Hamming distance dH(s,t)\n.\n\nSample Dataset\nGAGCCTACTAACGGGAT\nCATCGTAATGACGGCCT",
-    "final_answer": "7",
-    "rationale": "s = \"GAGCCTACTAACGGGAT\"\nt = \"CATCGTAATGACGGCCT\"\n\nhamming_distance = sum(sc != tc for sc, tc in zip(s, t))\n\nresult = hamming_distance\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Given: Three positive integers k\n, m\n, and n\n, representing a population containing k+m+n\n organisms: k\n individuals are homozygous dominant for a factor, m\n are heterozygous, and n\n are homozygous recessive.\n\nReturn: The probability that two randomly selected mating organisms will produce an individual possessing a dominant allele (and thus displaying the dominant phenotype). Assume that any two organisms can mate.\n\nSample Dataset\n2 2 2",
-    "final_answer": "0.7833333333333334",
-    "rationale": "k, m, n = 2, 2, 2\n\ntotal = k + m + n\n\n# Probabilities for each pair producing a dominant phenotype\nprob_dominant = (k/total) * ((k-1)/(total-1)) + (k/total) * (m/(total-1)) + (k/total) * (n/(total-1))\nprob_dominant += (m/total) * (k/(total-1)) + (m/total) * ((m-1)/(total-1)) * 0.75 + (m/total) * (n/(total-1)) * 0.5\nprob_dominant += (n/total) * (k/(total-1)) + (n/total) * (m/(total-1)) * 0.5\n\nresult = prob_dominant\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Problem\nThe 20 commonly occurring amino acids are abbreviated by using 20 letters from the English alphabet (all letters except for B, J, O, U, X, and Z). Protein strings are constructed from these 20 symbols. Henceforth, the term genetic string will incorporate protein strings along with DNA strings and RNA strings.\n\nThe RNA codon table dictates the details regarding the encoding of specific codons into the amino acid alphabet.\n\nGiven: An RNA string s\n corresponding to a strand of mRNA (of length at most 10 kbp).\n\nReturn: The protein string encoded by s\n.\n\nSample Dataset\nAUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA",
-    "final_answer": "MAMAPRTEINSTRING",
-    "rationale": "from Bio.Seq import Seq\n\nrna_string = \"AUGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGA\"\nrna_seq = Seq(rna_string)\n\nprotein_string = str(rna_seq.translate(to_stop=True))\n\nresult = protein_string\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "A binary tree is a tree in which each node has degree equal to at most 3. The binary tree will be our main tool in the construction of phylogenies.\n\nA rooted tree is a tree in which one node (the root) is set aside to serve as the pinnacle of the tree. A standard graph theory exercise is to verify that for any two nodes of a tree, exactly one path connects the nodes. In a rooted tree, every node v\n will therefore have a single parent, or the unique node w\n such that the path from v\n to the root contains {v,w}\n. Any other node x\n adjacent to v\n is called a child of v\n because v\n must be the parent of x\n; note that a node may have multiple children. In other words, a rooted tree possesses an ordered hierarchy from the root down to its leaves, and as a result, we may often view a rooted tree with undirected edges as a directed graph in which each edge is oriented from parent to child. We should already be familiar with this idea; it's how the Rosalind problem tree works!\n\nEven though a binary tree can include nodes having degree 2, an unrooted binary tree is defined more specifically: all internal nodes have degree 3. In turn, a rooted binary tree is such that only the root has degree 2 (all other internal nodes have degree 3).\n\nGiven: A positive integer n\n (3\u2264n\u226410000\n).\n\nReturn: The number of internal nodes of any unrooted binary tree having n\n leaves.\n\nSample Dataset\n4\n",
-    "final_answer": "2",
-    "rationale": "from math import ceil\nn = 4\ninternal_nodes = n - 2\nresult = internal_nodes\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "### Problem\n\nSay that we have strings \\( S = S_1 S_2 \\cdots S_m \\) and \\( t = t_1 t_2 \\cdots t_n \\) with \\( m < n \\). Consider the substring \\( t' = t[1 : m] \\). We have two cases:\n\n1. If \\( S = t' \\), then we set \\( S <_{\\text{Lex}} t \\) because \\( S \\) is shorter than \\( t \\) (e.g., APPLE < APPLET).\n2. Otherwise, \\( S \\neq t' \\). We define \\( S <_{\\text{Lex}} t \\) if \\( S <_{\\text{Lex}} t' \\) and define \\( S >_{\\text{Lex}} t \\) if \\( S >_{\\text{Lex}} t' \\) (e.g., APPLET <_{\\text{Lex}} ARTS because APPL <_{\\text{Lex}} ARTS).\n\n**Given**: A permutation of at most 12 symbols defining an **ordered alphabet** \\( \\mathcal{A} \\) and a positive integer \\( n \\) (\\( n \\leq 4 \\)).\n\n**Return**: All strings of length at most \\( n \\) formed from \\( \\mathcal{A} \\), ordered lexicographically. (Note: As in \u201cEnumerating k-mers Lexicographically\u201d, alphabet order is based on the order in which the symbols are given.)\n\n---\n\n### Sample Dataset\n\n```\nD N A\n3\n```",
-    "final_answer": "['D', 'DD', 'DDD', 'DDN', 'DDA', 'DN', 'DND', 'DNN', 'DNA', 'DA', 'DAD', 'DAN', 'DAA', 'N', 'ND', 'NDD', 'NDN', 'NDA', 'NN', 'NND', 'NNN', 'NNA', 'NA', 'NAD', 'NAN', 'NAA', 'A', 'AD', 'ADD', 'ADN', 'ADA', 'AN', 'AND', 'ANN', 'ANA', 'AA', 'AAD', 'AAN', 'AAA']",
-    "rationale": "from itertools import product\n\ndef lexicographic_enum(alphabet, n):\n    results = []\n    for i in range(1, n + 1):\n        results.extend([''.join(p) for p in product(alphabet, repeat=i)])\n    return results\n\ndataset = \"\"\"\nD N A\n3\n\"\"\"\n\nlines = dataset.strip().split('\\n')\nalphabet = lines[0].split()\nn = int(lines[1])\n\nresult = lexicographic_enum(alphabet, n)\nresult.sort(key=lambda word: [alphabet.index(c) for c in word])\n\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "A **set** is the mathematical term for a loose collection of objects, called **elements**. Examples of sets include \\(\\{\\text{the moon, the sun, Wilford Brimley}\\}\\) and \\(\\mathbb{R}\\), the set containing all real numbers. We even have the **empty set**, represented by \\(\\emptyset\\) or \\(\\{\\}\\), which contains no elements at all. Two sets are equal when they contain the same elements. In other words, in contrast to **permutations**, the ordering of the elements of a set is unimportant (e.g., \\(\\{\\text{the moon, the sun, Wilford Brimley}\\}\\) is equivalent to \\(\\{\\text{Wilford Brimley, the moon, the sun}\\}\\)). Sets are not allowed to contain duplicate elements, so that \\(\\{\\text{Wilford Brimley, the sun, the sun}\\}\\) is not a set. We have already used sets of 2 elements to represent **edges** from a **graph**.\n\nA set \\( A \\) is a **subset** of \\( B \\) if every element of \\( A \\) is also an element of \\( B \\), and we write \\( A \\subseteq B \\). For example, \\(\\{\\text{the sun, the moon}\\} \\subseteq \\{\\text{the sun, the moon, Wilford Brimley}\\}\\), and \\(\\emptyset\\) is a subset of every set (including itself).\n\nAs illustrated in the biological introduction, we can use subsets to represent the collection of taxa possessing a character. However, the number of applications is endless; for example, an **event** in **probability** can now be defined as a subset of the set containing all possible **outcomes**.\n\nOur first question is to count the total number of possible subsets of a given set.\n\n**Given**: A positive integer \\( n \\) (\\( n \\leq 1000 \\)).\n\n**Return**: The total number of subsets of \\(\\{1, 2, \\ldots, n\\}\\) modulo \\( 1,000,000 \\).\n\n---\n\n### Sample Dataset\n\n```\n3\n```",
-    "final_answer": "8",
-    "rationale": "def total_number_of_subsets(n):\n    modulus = 1000000\n    # Total number of subsets of a set with n elements is 2^n\n    total_subsets = pow(2, n, modulus)\n    return total_subsets\n\nn = 3\nresult = total_number_of_subsets(n)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Consider a set \\( S \\) of \\( (k+1) \\)-mers of some unknown DNA string. Let \\( S^{\\text{rc}} \\) denote the set containing all reverse complements of the elements of \\( S \\). (Recall from \"Counting Subsets\" that sets are not allowed to contain duplicate elements).\n\nThe **de Bruijn graph** \\( B_k \\) of order \\( k \\) corresponding to \\( S \\cup S^{\\text{rc}} \\) is a digraph defined in the following way:\n\n- Nodes of \\( B_k \\) correspond to all \\( k \\)-mers that are present as a substring of a \\( (k+1) \\)-mer from \\( S \\cup S^{\\text{rc}} \\).\n- Edges of \\( B_k \\) are encoded by the \\( (k+1) \\)-mers of \\( S \\cup S^{\\text{rc}} \\) in the following way: for each \\( (k+1) \\)-mer \\( r \\) in \\( S \\cup S^{\\text{rc}} \\), form a directed edge \\( (r[1:k], r[2:k+1]) \\).\n\nGiven: A collection of up to 1000 (possibly repeating) DNA strings of equal length (not exceeding 50 bp) corresponding to a set \\( S \\) of \\( (k+1) \\)-mers.\n\nReturn: The adjacency list corresponding to the de Bruijn graph corresponding to \\( S \\cup S^{\\text{rc}} \\).\n\nSample Dataset\n\n```\nTGAT\nCATG\nTCAT\nATGC\nCATC\nCATC\n```",
-    "final_answer": "[('ATC', 'TCA'), ('ATG', 'TGA'), ('ATG', 'TGC'), ('CAT', 'ATC'), ('CAT', 'ATG'), ('GAT', 'ATG'), ('GCA', 'CAT'), ('TCA', 'CAT'), ('TGA', 'GAT')]",
-    "rationale": "from Bio.Seq import Seq\nfrom collections import defaultdict\n\ndef reverse_complement(seq):\n    return str(Seq(seq).reverse_complement())\n\ndef de_bruijn_graph(kmers):\n    adj_list = defaultdict(set)\n    all_kmers = set(kmers)\n\n    for kmer in kmers:\n        all_kmers.add(reverse_complement(kmer))\n    \n    for kmer in all_kmers:\n        adj_list[kmer[:-1]].add(kmer[1:])\n\n    return adj_list\n\ndataset = [\n    \"TGAT\",\n    \"CATG\",\n    \"TCAT\",\n    \"ATGC\",\n    \"CATC\",\n    \"CATC\"\n]\n\ngraph = de_bruijn_graph(dataset)\nresult = sorted([(key, val) for key in graph for val in sorted(graph[key])])\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Consider a collection of coin flips. One of the most natural questions we can ask is if we flip a coin 92 times, what is the **probability** of obtaining 51 \"heads\", vs. 27 \"heads\", vs. 92 \"heads\"?\n\nEach coin flip can be modeled by a **uniform random variable** in which each of the two outcomes (\"heads\" and \"tails\") has probability equal to \\( \\frac{1}{2} \\). We may assume that these random variables are **independent** (see \"Independent Alleles\"); in layman's terms, the outcomes of the two coin flips do not influence each other.\n\nA **binomial random variable** \\( X \\) takes a value of \\( k \\) if \\( n \\) consecutive \"coin flips\" result in \\( k \\) total \"heads\" and \\( n - k \\) total \"tails.\" We write that \\( X \\in \\text{Bin}(n, \\frac{1}{2}) \\).\n\nGiven: A positive integer \\( n \\leq 50 \\).\n\nReturn: An array \\( A \\) of length \\( 2n \\) in which \\( A[k] \\) represents the **common logarithm** of the probability that two diploid siblings share at least \\( k \\) of their \\( 2n \\) chromosomes (we do not consider recombination for now).\n\nSample Dataset\n\n```\n5\n```",
-    "final_answer": "[0.0, -0.00042432292765179444, -0.0046905112795315234, -0.024424599331418283, -0.08190410438309813, -0.20547927791864962, -0.423712651968057, -0.7647872888256622, -1.2621119296336116, -1.968907271481587, -3.010299956639812]",
-    "rationale": "import math\n\ndef calculate_probabilities(n):\n    total_chromosomes = 2 * n\n    probabilities = []\n    \n    for k in range(total_chromosomes + 1):\n        prob = sum(math.comb(total_chromosomes, i) * (0.5 ** total_chromosomes) for i in range(k, total_chromosomes + 1))\n        probabilities.append(math.log10(prob))\n    \n    return probabilities\n\nn = 5\nresult = calculate_probabilities(n)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "Given a collection of DNA strings representing contigs, we use the N statistic NXX (where XX ranges from 01 to 99) to represent the maximum positive integer L\n such that the total number of nucleotides of all contigs having length \u2265L\n is at least XX% of the sum of contig lengths. The most commonly used such statistic is N50, although N75 is also worth mentioning.\n\nGiven: A collection of at most 1000 DNA strings (whose combined length does not exceed 50 kbp).\n\nReturn: N50 and N75 for this collection of strings.\n\nSample Dataset\nGATTACA\nTACTACTAC\nATTGAT\nGAAGA",
-    "final_answer": "(7, 6)",
-    "rationale": "from Bio import SeqIO\n\ndef calculate_NXX_statistics(contigs, percentage):\n    total_length = sum(len(contig) for contig in contigs)\n    threshold = (percentage * total_length) / 100\n    contigs_sorted = sorted(contigs, key=len, reverse=True)\n    cumulative_length = 0\n    for contig in contigs_sorted:\n        cumulative_length += len(contig)\n        if cumulative_length >= threshold:\n            return len(contig)\n\ncontigs = [\"GATTACA\", \"TACTACTAC\", \"ATTGAT\", \"GAAGA\"]\n\nN50 = calculate_NXX_statistics(contigs, 50)\nN75 = calculate_NXX_statistics(contigs, 75)\n\nresult = (N50, N75)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
-  },
-  {
-    "question": "As in the case of unrooted trees, say that we have a fixed collection of n\n taxa labeling the leaves of a rooted binary tree T\n. You may like to verify that (by extension of \u201cCounting Phylogenetic Ancestors\u201d) such a tree will contain n\u22121\n internal nodes and 2n\u22122\n total edges. Any edge will still encode a split of taxa; however, the two splits corresponding to the edges incident to the root of T\n will be equal. We still consider two trees to be equivalent if they have the same splits (which requires that they must also share the same duplicated split to be equal).\n\nLet B(n)\n represent the total number of distinct rooted binary trees on n\n labeled taxa.\n\nGiven: A positive integer n\n (n\u22641000\n).\n\nReturn: The value of B(n)\n modulo 1,000,000.\n\nSample Dataset\n4",
-    "final_answer": "15",
-    "rationale": "def count_rooted_binary_trees(n):\n    B = [1] * (n + 1)  # Initialize list for storing B(i)\n    for i in range(2, n + 1):\n        B[i] = (B[i - 1] * (2 * i - 3)) % 1000000\n    return B[n]\n\nn = 4\nresult = count_rooted_binary_trees(n)\nprint(result)",
-    "metadata": {
-      "license": "unknown_license",
-      "source": "https://rosalind.info/problems",
-      "domain": "computational biology",
-      "contributor": "Yifeng Wang",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "date_created": "2025-3-29",
-      "name": "loong_computational_biology"
-    }
   }
 ]
