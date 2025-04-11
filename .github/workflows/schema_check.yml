@@ -3,12 +3,8 @@ name: Schema Validation
 on:
     push:
         branches: [main]
-        paths:
-          - '**/seed_dataset.json'
     pull_request:
         branches: [main]
-        paths:
-          - '**/seed_dataset.json'
     workflow_dispatch:
 
 jobs:
