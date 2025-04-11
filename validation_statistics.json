@@ -1,0 +1,46 @@
+{
+  "domain_statistics": {
+    "advanced_math": {
+      "Missing required metadata field: domain": 1615,
+      "Missing required metadata field: name": 1615,
+      "Missing required metadata field: contributor": 1615,
+      "Missing required metadata field: date_created": 1615
+    },
+    "advanced_physics": {
+      "Missing required field: metadata": 429
+    },
+    "computational_biology": {
+      "Missing required metadata field: license": 304,
+      "Missing required metadata field: source": 304,
+      "Missing required metadata field: required_dependencies": 304,
+      "Missing required metadata field: name": 304
+    },
+    "finance": {
+      "Missing required metadata field: required_dependencies": 121,
+      "Missing required metadata field: contributor": 190,
+      "Missing required metadata field: date_created": 190
+    },
+    "games": {
+      "Missing required metadata field: required_dependencies": 926,
+      "Missing required metadata field: name": 926
+    },
+    "graph_discrete_math": {
+      "Missing required metadata field: domain": 178
+    },
+    "mathematical_programming": {
+      "Missing required field: metadata": 68,
+      "Missing required field: final_answer": 1
+    }
+  },
+  "total_missing": {
+    "Missing required metadata field: domain": 1793,
+    "Missing required metadata field: name": 2845,
+    "Missing required metadata field: contributor": 1805,
+    "Missing required metadata field: date_created": 1805,
+    "Missing required field: metadata": 497,
+    "Missing required metadata field: license": 304,
+    "Missing required metadata field: source": 304,
+    "Missing required metadata field: required_dependencies": 1351,
+    "Missing required field: final_answer": 1
+  }
+}
