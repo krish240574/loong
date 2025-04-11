@@ -28,4 +28,4 @@ jobs:
     - name: Run validation
       run: |
         cd data
-        python execute_compare_actions.py
+        python execute_compare_action.py
