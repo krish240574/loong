@@ -28,6 +28,7 @@ jobs:
         pip install antlr4-python3-runtime==4.11
         pip install numpy==1.26.4
         pip install sympy==1.13.3
+        pip install uv==0.6.12
     
     - name: Run validation
       run: |
