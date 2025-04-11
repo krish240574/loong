@@ -14,8 +14,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "large_clique_size"
+            "name": "large_clique_size",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -33,8 +33,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "all_pairs_node_connectivity"
+            "name": "all_pairs_node_connectivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -52,8 +52,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "local_node_connectivity"
+            "name": "local_node_connectivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -71,8 +71,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "diameter_undirected"
+            "name": "diameter_undirected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -90,8 +90,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "diameter_directed"
+            "name": "diameter_directed",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -109,8 +109,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "min_edge_dominating_set"
+            "name": "min_edge_dominating_set",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -128,8 +128,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "min_weighted_dominating_set"
+            "name": "min_weighted_dominating_set",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -147,8 +147,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "k_components"
+            "name": "k_components",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -166,8 +166,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "one_exchange_maxcut"
+            "name": "one_exchange_maxcut",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -185,8 +185,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "randomized_partitioning_cutsize"
+            "name": "randomized_partitioning_cutsize",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -204,8 +204,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "average_degree_connectivity"
+            "name": "average_degree_connectivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -223,8 +223,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "attribute_assortativity_coefficient"
+            "name": "attribute_assortativity_coefficient",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -242,8 +242,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "degree_assortativity_coefficient"
+            "name": "degree_assortativity_coefficient",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -261,8 +261,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "numeric_assortativity_coefficient"
+            "name": "numeric_assortativity_coefficient",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -280,8 +280,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "attribute_mixing_dict"
+            "name": "attribute_mixing_dict",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -299,8 +299,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "degree_mixing_matrix"
+            "name": "degree_mixing_matrix",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -318,8 +318,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "average_neighbor_degree"
+            "name": "average_neighbor_degree",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -337,8 +337,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_attribute_xy"
+            "name": "node_attribute_xy",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -356,8 +356,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_degree_xy_out_x_in_y"
+            "name": "node_degree_xy_out_x_in_y",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -375,8 +375,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_degree_xy_in_x_out_y"
+            "name": "node_degree_xy_in_x_out_y",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -394,8 +394,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_at_free_true"
+            "name": "is_at_free_true",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -413,8 +413,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_at_free_false"
+            "name": "is_at_free_false",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -432,8 +432,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "color"
+            "name": "color",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -451,8 +451,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "degrees"
+            "name": "degrees",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -470,8 +470,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "density"
+            "name": "density",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -489,8 +489,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_bipartite"
+            "name": "is_bipartite",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -508,8 +508,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_bipartite_node_set"
+            "name": "is_bipartite_node_set",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -527,8 +527,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "latapy_clustering"
+            "name": "latapy_clustering",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -546,8 +546,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "robins_alexander_clustering"
+            "name": "robins_alexander_clustering",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -565,8 +565,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "jaccard_projected_graph"
+            "name": "jaccard_projected_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -584,8 +584,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "projected_graph"
+            "name": "projected_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -603,8 +603,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "weighted_projected_graph"
+            "name": "weighted_projected_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -622,8 +622,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "spectral_bipartivity"
+            "name": "spectral_bipartivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -641,8 +641,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "edge_boundary"
+            "name": "edge_boundary",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -660,8 +660,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_boundary"
+            "name": "node_boundary",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -679,8 +679,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "bridges"
+            "name": "bridges",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -698,8 +698,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "closeness_centrality"
+            "name": "closeness_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -717,8 +717,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "degree_centrality"
+            "name": "degree_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -736,8 +736,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "in_degree_centrality"
+            "name": "in_degree_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -755,8 +755,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "out_degree_centrality"
+            "name": "out_degree_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -774,8 +774,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "eigenvector_centrality"
+            "name": "eigenvector_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -793,8 +793,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "laplacian_centrality"
+            "name": "laplacian_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -812,8 +812,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "global_reaching_centrality"
+            "name": "global_reaching_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -831,8 +831,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "local_reaching_centrality"
+            "name": "local_reaching_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -850,8 +850,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "second_order_centrality"
+            "name": "second_order_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -869,8 +869,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "communicability_betweenness_centrality"
+            "name": "communicability_betweenness_centrality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -888,8 +888,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "estrada_index"
+            "name": "estrada_index",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -907,8 +907,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "voterank_undirected"
+            "name": "voterank_undirected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -926,8 +926,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "voterank_directed"
+            "name": "voterank_directed",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -945,8 +945,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "chain_decomposition"
+            "name": "chain_decomposition",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -964,8 +964,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "complete_to_chordal_graph_edgelist"
+            "name": "complete_to_chordal_graph_edgelist",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -983,8 +983,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "complete_to_chordal_graph_elimorder"
+            "name": "complete_to_chordal_graph_elimorder",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1002,8 +1002,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "find_induced_nodes"
+            "name": "find_induced_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1021,8 +1021,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "find_cliques"
+            "name": "find_cliques",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1040,8 +1040,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "find_cliques_clique_num"
+            "name": "find_cliques_clique_num",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1059,8 +1059,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "average_clustering"
+            "name": "average_clustering",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1078,8 +1078,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "clustering"
+            "name": "clustering",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1097,8 +1097,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "square_clustering"
+            "name": "square_clustering",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1116,8 +1116,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "transitivity"
+            "name": "transitivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1135,8 +1135,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "triangles"
+            "name": "triangles",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1154,8 +1154,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "equitable_color"
+            "name": "equitable_color",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1173,8 +1173,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "modularity"
+            "name": "modularity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1192,8 +1192,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_biconnected"
+            "name": "is_biconnected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1211,8 +1211,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_connected"
+            "name": "is_connected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1230,8 +1230,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_connected_component"
+            "name": "node_connected_component",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1249,8 +1249,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "number_connected_components"
+            "name": "number_connected_components",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1268,8 +1268,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_semiconnected"
+            "name": "is_semiconnected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1287,8 +1287,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_strongly_connected"
+            "name": "is_strongly_connected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1306,8 +1306,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_weakly_connected"
+            "name": "is_weakly_connected",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1325,8 +1325,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "number_weakly_connected_components"
+            "name": "number_weakly_connected_components",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1344,8 +1344,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "edge_connectivity"
+            "name": "edge_connectivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1363,8 +1363,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_connectivity"
+            "name": "node_connectivity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1382,8 +1382,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "node_disjoint_paths"
+            "name": "node_disjoint_paths",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1401,8 +1401,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "stoer_wagner"
+            "name": "stoer_wagner",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1420,8 +1420,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_edge_cover"
+            "name": "is_edge_cover",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1439,8 +1439,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "min_edge_cover"
+            "name": "min_edge_cover",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1458,8 +1458,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "cut_size"
+            "name": "cut_size",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1477,8 +1477,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "cycle_basis"
+            "name": "cycle_basis",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1496,8 +1496,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "girth"
+            "name": "girth",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1515,8 +1515,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "minimum_cycle_basis"
+            "name": "minimum_cycle_basis",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1534,8 +1534,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "simple_cycles"
+            "name": "simple_cycles",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1553,8 +1553,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_minimal_d_separator"
+            "name": "is_minimal_d_separator",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1572,8 +1572,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "all_topological_sorts"
+            "name": "all_topological_sorts",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1591,8 +1591,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "ancestors"
+            "name": "ancestors",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1610,8 +1610,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "antichains"
+            "name": "antichains",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1629,8 +1629,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "descendants"
+            "name": "descendants",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1648,8 +1648,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_aperiodic"
+            "name": "is_aperiodic",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1667,8 +1667,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_directed_acyclic_graph"
+            "name": "is_directed_acyclic_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1686,8 +1686,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "topological_sort"
+            "name": "topological_sort",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1705,8 +1705,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "transitive_closure"
+            "name": "transitive_closure",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1724,8 +1724,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "transitive_closure_dag"
+            "name": "transitive_closure_dag",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1743,8 +1743,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "transitive_reduction"
+            "name": "transitive_reduction",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1762,8 +1762,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "barycenter"
+            "name": "barycenter",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1781,8 +1781,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "center"
+            "name": "center",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1800,8 +1800,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "diameter"
+            "name": "diameter",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1819,8 +1819,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "effective_graph_resistance"
+            "name": "effective_graph_resistance",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1838,8 +1838,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "kemeny_constant"
+            "name": "kemeny_constant",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1857,8 +1857,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "periphery"
+            "name": "periphery",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1876,8 +1876,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "radius"
+            "name": "radius",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1895,8 +1895,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "resistance_distance"
+            "name": "resistance_distance",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1914,8 +1914,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "global_parameters"
+            "name": "global_parameters",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1933,8 +1933,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_distance_regular"
+            "name": "is_distance_regular",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1952,8 +1952,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_strongly_regular"
+            "name": "is_strongly_regular",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1971,8 +1971,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dominance_frontiers"
+            "name": "dominance_frontiers",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -1990,8 +1990,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "immediate_dominators"
+            "name": "immediate_dominators",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2009,8 +2009,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "efficiency"
+            "name": "efficiency",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2028,8 +2028,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "global_efficiency"
+            "name": "global_efficiency",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2047,8 +2047,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "local_efficiency"
+            "name": "local_efficiency",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2066,8 +2066,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "has_eulerian_path"
+            "name": "has_eulerian_path",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2085,8 +2085,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "boykov_kolmogorov"
+            "name": "boykov_kolmogorov",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2104,8 +2104,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "cost_of_flow"
+            "name": "cost_of_flow",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2123,8 +2123,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "preflow_push"
+            "name": "preflow_push",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2142,8 +2142,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_isolate"
+            "name": "is_isolate",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2161,8 +2161,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "isolates"
+            "name": "isolates",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2180,8 +2180,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "lowest_common_ancestor"
+            "name": "lowest_common_ancestor",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2199,8 +2199,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_matching"
+            "name": "is_matching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2218,8 +2218,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_maximal_matching"
+            "name": "is_maximal_matching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2237,8 +2237,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_perfect_matching"
+            "name": "is_perfect_matching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2256,8 +2256,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "max_weight_matching"
+            "name": "max_weight_matching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2275,8 +2275,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "maximal_matching"
+            "name": "maximal_matching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2294,8 +2294,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "contracted_nodes"
+            "name": "contracted_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2313,8 +2313,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "moral_graph"
+            "name": "moral_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2332,8 +2332,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "harmonic_function"
+            "name": "harmonic_function",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2351,8 +2351,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "local_and_global_consistency"
+            "name": "local_and_global_consistency",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2370,8 +2370,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "compose_all_edges"
+            "name": "compose_all_edges",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2389,8 +2389,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "compose_all_nodes"
+            "name": "compose_all_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2408,8 +2408,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "intersection_all_nodes"
+            "name": "intersection_all_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2427,8 +2427,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "intersection_all_edges"
+            "name": "intersection_all_edges",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2446,8 +2446,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "union_all_nodes"
+            "name": "union_all_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2465,8 +2465,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "union_all_edges"
+            "name": "union_all_edges",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2484,8 +2484,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "difference"
+            "name": "difference",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2503,8 +2503,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "power"
+            "name": "power",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2522,8 +2522,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "complement"
+            "name": "complement",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2541,8 +2541,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "reverse"
+            "name": "reverse",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2560,8 +2560,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_planar"
+            "name": "is_planar",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2579,8 +2579,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "chromatic_polynomial"
+            "name": "chromatic_polynomial",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2598,8 +2598,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_k_regular"
+            "name": "is_k_regular",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2617,8 +2617,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_regular"
+            "name": "is_regular",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2636,8 +2636,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "k_factor"
+            "name": "k_factor",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2655,8 +2655,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "rich_club_coefficient"
+            "name": "rich_club_coefficient",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2674,8 +2674,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "all_pairs_all_shortest_paths"
+            "name": "all_pairs_all_shortest_paths",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2693,8 +2693,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "shortest_path"
+            "name": "shortest_path",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2712,8 +2712,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "shortest_path_length"
+            "name": "shortest_path_length",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2731,8 +2731,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "predecessor"
+            "name": "predecessor",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2750,8 +2750,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "all_pairs_bellman_ford_path"
+            "name": "all_pairs_bellman_ford_path",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2769,8 +2769,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "bellman_ford_path_length"
+            "name": "bellman_ford_path_length",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2788,8 +2788,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dijkstra_predecessor_and_distance"
+            "name": "dijkstra_predecessor_and_distance",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2807,8 +2807,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "negative_edge_cycle"
+            "name": "negative_edge_cycle",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2826,8 +2826,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "simrank_similarity"
+            "name": "simrank_similarity",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2845,8 +2845,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_simple_path"
+            "name": "is_simple_path",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2864,8 +2864,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_threshold_graph"
+            "name": "is_threshold_graph",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2883,8 +2883,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "hamiltonian_path"
+            "name": "hamiltonian_path",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2902,8 +2902,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_reachable"
+            "name": "is_reachable",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2921,8 +2921,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_strongly_connected_tournament"
+            "name": "is_strongly_connected_tournament",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2940,8 +2940,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_tournament"
+            "name": "is_tournament",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2959,8 +2959,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "score_sequence"
+            "name": "score_sequence",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2978,8 +2978,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "bfs_layers"
+            "name": "bfs_layers",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -2997,8 +2997,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "bfs_predecessors"
+            "name": "bfs_predecessors",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3016,8 +3016,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "bfs_successors"
+            "name": "bfs_successors",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3035,8 +3035,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "descendants_at_distance"
+            "name": "descendants_at_distance",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3054,8 +3054,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dfs_edges"
+            "name": "dfs_edges",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3073,8 +3073,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dfs_postorder_nodes"
+            "name": "dfs_postorder_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3092,8 +3092,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dfs_predecessors"
+            "name": "dfs_predecessors",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3111,8 +3111,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dfs_preorder_nodes"
+            "name": "dfs_preorder_nodes",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3130,8 +3130,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "dfs_successors"
+            "name": "dfs_successors",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3149,8 +3149,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "to_prufer_sequence"
+            "name": "to_prufer_sequence",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3168,8 +3168,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "number_of_spanning_trees"
+            "name": "number_of_spanning_trees",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3187,8 +3187,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_arborescence"
+            "name": "is_arborescence",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3206,8 +3206,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_branching"
+            "name": "is_branching",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3225,8 +3225,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_forest"
+            "name": "is_forest",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3244,8 +3244,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_tree"
+            "name": "is_tree",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3263,8 +3263,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "is_triad"
+            "name": "is_triad",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3282,8 +3282,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "triad_type"
+            "name": "triad_type",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3301,8 +3301,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "triads_by_type"
+            "name": "triads_by_type",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3320,8 +3320,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "closeness_vitality"
+            "name": "closeness_vitality",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3339,8 +3339,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "voronoi_cells"
+            "name": "voronoi_cells",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3358,8 +3358,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "number_of_walks"
+            "name": "number_of_walks",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     },
     {
@@ -3377,8 +3377,8 @@
                 "networkx==3.4.2"
             ],
             "date_created": "2025-03-21",
-            "name": "Loong_Graph_Discrete_Math",
-            "tags": "wiener_index"
+            "name": "wiener_index",
+            "domain": "Loong_Graph_Discrete_Math"
         }
     }
 ]
