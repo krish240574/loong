@@ -1,9 +1,6 @@
 name: Schema Validation
 
 on:
-  push:
-    paths:
-      - '**.json'
   pull_request:
     paths:
       - '**.json'
