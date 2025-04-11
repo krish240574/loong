@@ -142,7 +142,7 @@ def main():
         "domain_statistics": domain_statistics,
         "total_missing": dict(total_items)
     }
-    with open('validation_statistics.json', 'w', encoding='utf-8') as f:
+    with open('data/validation_statistics.json', 'w', encoding='utf-8') as f:
         json.dump(statistics, f, ensure_ascii=False, indent=2)
     print("\nDetailed statistics have been saved to validation_statistics.json")
 

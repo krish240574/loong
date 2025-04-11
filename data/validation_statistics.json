@@ -16,7 +16,6 @@
       "Missing required metadata field: name": 304
     },
     "finance": {
-      "Missing required metadata field: required_dependencies": 121,
       "Missing required metadata field: contributor": 190,
       "Missing required metadata field: date_created": 190
     },
@@ -40,7 +39,7 @@
     "Missing required field: metadata": 497,
     "Missing required metadata field: license": 304,
     "Missing required metadata field: source": 304,
-    "Missing required metadata field: required_dependencies": 1351,
+    "Missing required metadata field: required_dependencies": 1230,
     "Missing required field: final_answer": 1
   }
 }
