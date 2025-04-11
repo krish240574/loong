@@ -8,7 +8,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -23,7 +23,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -38,7 +38,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -53,7 +53,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -68,7 +68,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -83,7 +83,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -98,7 +98,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -145,7 +145,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -160,7 +160,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -175,7 +175,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -190,7 +190,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -205,7 +205,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -235,7 +235,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -283,7 +283,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -314,7 +314,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -329,7 +329,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -344,7 +344,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -359,7 +359,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -374,7 +374,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -389,7 +389,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -404,7 +404,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -419,7 +419,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -434,7 +434,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -449,7 +449,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -496,7 +496,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -543,7 +543,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -574,7 +574,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -589,7 +589,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -604,7 +604,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -619,7 +619,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -634,7 +634,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -665,7 +665,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -680,7 +680,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -743,7 +743,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -806,7 +806,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -821,7 +821,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -836,7 +836,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -867,7 +867,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -914,7 +914,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -929,7 +929,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -944,7 +944,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -959,7 +959,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -974,7 +974,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -989,7 +989,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -1004,7 +1004,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1019,7 +1019,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1034,7 +1034,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1049,7 +1049,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1064,7 +1064,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1079,7 +1079,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1094,7 +1094,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1109,7 +1109,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -1124,7 +1124,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1187,7 +1187,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1202,7 +1202,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1233,7 +1233,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1264,7 +1264,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1279,7 +1279,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1294,7 +1294,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1325,7 +1325,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1340,7 +1340,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -1355,7 +1355,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1370,7 +1370,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1385,7 +1385,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1416,7 +1416,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -1463,7 +1463,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1478,7 +1478,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1509,7 +1509,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -1524,7 +1524,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -1571,7 +1571,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1602,7 +1602,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -1617,7 +1617,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1632,7 +1632,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1647,7 +1647,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -1662,7 +1662,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1677,7 +1677,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1725,7 +1725,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1740,7 +1740,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -1755,7 +1755,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1786,7 +1786,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1801,7 +1801,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1816,7 +1816,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -1831,7 +1831,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1861,7 +1861,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1876,7 +1876,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1891,7 +1891,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -1906,7 +1906,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -1921,7 +1921,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1936,7 +1936,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -1951,7 +1951,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1966,7 +1966,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -1981,7 +1981,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -2012,7 +2012,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2027,7 +2027,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "scipy==1.15.2",
         "QuantLib-Python==1.37"
       ],
@@ -2043,7 +2043,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2074,7 +2074,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -2089,7 +2089,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -2121,7 +2121,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -2136,7 +2136,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -2151,7 +2151,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2166,7 +2166,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2197,7 +2197,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2212,7 +2212,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2227,7 +2227,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -2242,7 +2242,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2257,7 +2257,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -2272,7 +2272,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2320,7 +2320,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2335,7 +2335,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -2446,7 +2446,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
@@ -2461,7 +2461,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -2476,7 +2476,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -2523,7 +2523,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2554,7 +2554,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -2569,7 +2569,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2632,7 +2632,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
@@ -2679,7 +2679,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
@@ -2791,7 +2791,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
@@ -2806,7 +2806,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://www.quantlib.org"
@@ -2854,7 +2854,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
@@ -2900,7 +2900,7 @@
       "name": "Quantitative Finance",
       "domain": "Quant",
       "license": "MIT",
-      "required_packages": [
+      "required_dependencies": [
         "QuantLib-Python==1.37"
       ],
       "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
