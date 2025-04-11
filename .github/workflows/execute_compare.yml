@@ -27,6 +27,7 @@ jobs:
         pip install Pillow
         pip install antlr4-python3-runtime==4.11
         pip install numpy==1.26.4
+        pip install sympy==1.13.3
     
     - name: Run validation
       run: |
