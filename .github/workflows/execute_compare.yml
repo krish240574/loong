@@ -26,6 +26,7 @@ jobs:
         pip install camel-ai[verifiers]==0.2.43
         pip install Pillow
         pip install antlr4-python3-runtime==4.11
+        pip install numpy==1.26.4
     
     - name: Run validation
       run: |
