@@ -1,0 +1,10 @@
+Domain,Total Samples,Execution Success Rate,Match Rate
+logic,85,100.0,100.0
+security_and_safety,516,100.0,100.0
+advanced_physics,429,98.6013986013986,98.6013986013986
+graph_discrete_math,178,100.0,96.06741573033707
+advanced_math,1615,100.0,78.76160990712074
+finance,315,58.0952380952381,25.71428571428571
+mathematical_programming,68,77.94117647058823,1.4705882352941175
+computational_biology,304,80.26315789473685,0.0
+games,926,100.0,0.0
