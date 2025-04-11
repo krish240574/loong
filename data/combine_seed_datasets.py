@@ -6,8 +6,15 @@ and combines them into a single JSON file named 'seed_dataset_all_domain.json'.
 """
 
 import json
-import os
 from pathlib import Path
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(message)s'
+)
+
 
 def main():
     # Define the base data directory
@@ -25,37 +32,36 @@ def main():
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
         "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json"
     }
-    
     # Dictionary to hold all domain data
     all_domains_data = {}
     
     # Process each domain
     for domain, domain_path in domain_paths.items():
         if domain_path.exists():
-            print(f"Processing {domain}...")
+            logger.info(f"Processing {domain}...")
             try:
                 with open(domain_path, 'r', encoding='utf-8') as f:
                     domain_data = json.load(f)
                     all_domains_data[domain] = domain_data
-                print(f"Successfully loaded {domain} with {len(domain_data)} entries")
+                logger.info(f"Successfully loaded {domain} with {len(domain_data)} entries")
             except Exception as e:
-                print(f"Error loading {domain}: {e}")
+                logger.error(f"Error loading {domain}: {e}")
         else:
-            print(f"Warning: {domain_path} does not exist")
+            logger.warning(f"Warning: {domain_path} does not exist")
     
     # Write the combined data to a new file
     output_file = data_dir / "seed_dataset_all_domain.json"
     
-    print(f"\nWriting combined data to {output_file}...")
+    logger.info(f"\nWriting combined data to {output_file}...")
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(all_domains_data, f, ensure_ascii=False, indent=2)
     
     # Print summary
     total_domains = len(all_domains_data)
-    print(f"\nCombined {total_domains} domains into {output_file}")
-    print("Domains included:")
+    logger.info(f"\nCombined {total_domains} domains into {output_file}")
+    logger.info("Domains included:")
     for domain in all_domains_data:
-        print(f"- {domain}: {len(all_domains_data[domain])} entries")
+        logger.info(f"- {domain}: {len(all_domains_data[domain])} entries")
 
 if __name__ == "__main__":
     main()

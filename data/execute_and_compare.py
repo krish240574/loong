@@ -22,6 +22,11 @@ DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(message)s'
+)
+
 
 async def setup_verifier(required_packages: List[str], timeout: float = 60.0) -> PythonVerifier:
     """
@@ -34,7 +39,9 @@ async def setup_verifier(required_packages: List[str], timeout: float = 60.0) ->
     Returns:
         A configured PythonVerifier instance.
     """
-    verifier = PythonVerifier(timeout=timeout, required_packages=required_packages)
+    verifier = PythonVerifier(
+        timeout=timeout, 
+        required_packages=required_packages)
     await verifier.setup(uv=True)
     return verifier
 
@@ -56,7 +63,7 @@ async def execute_rationale(
     try:
         # Execute the rationale
         result = await verifier.verify(rationale, None)
-        
+ 
         return {
             "status": result.status.name,
             "result": result.result,
@@ -185,7 +192,7 @@ async def process_batch(batch: List[Tuple[int, Dict[str, Any]]], required_packag
         results = await asyncio.gather(*tasks)
         return results
     except Exception as e:
-        print(f"Error processing batch: {e}")
+        logger.error(f"Error processing batch: {e}")
         return []
     finally:
         # Only clean up if not from cache and caching is disabled
@@ -370,7 +377,7 @@ def generate_detailed_domain_files(dataset: Dict[str, List[Dict[str, Any]]], res
         with open(domain_file_path, 'w', encoding='utf-8') as f:
             json.dump(detailed_items, f, indent=2, ensure_ascii=False)
         
-        print(f"Generated detailed JSON file for domain '{domain}': {domain_file_path}")
+        logger.info(f"Generated detailed JSON file for domain '{domain}': {domain_file_path}")
 
 async def process_dataset(
     dataset_path: str, 
@@ -406,7 +413,7 @@ async def process_dataset(
     total_items_processed = 0
     
     # Process each domain
-    print(f"Processing {len(dataset)} domains...")
+    logger.info(f"Processing {len(dataset)} domains...")
     for domain, items in dataset.items():
         domain_start_time = time.time()
         
@@ -417,14 +424,14 @@ async def process_dataset(
         # Store the original items for this domain
         original_dataset[domain] = items.copy()
         
-        print(f"\nProcessing domain: {domain} ({len(items)} items)")
+        logger.info(f"\nProcessing domain: {domain} ({len(items)} items)")
         
         # Create indexed items
         indexed_items = list(enumerate(items))
         
         # Group items by their required packages
         grouped_items = await group_by_packages(indexed_items)
-        print(f"Grouped into {len(grouped_items)} distinct package configurations")
+        logger.info(f"Grouped into {len(grouped_items)} distinct package configurations")
         
         # Process batches with progress bar
         all_results = []
@@ -456,9 +463,9 @@ async def process_dataset(
         successful_executions = sum(1 for r in sorted_results if r["execution_successful"])
         successful_matches = sum(1 for r in sorted_results if r["match_status"])
         
-        print(f"Domain: {domain} - Completed in {domain_time:.2f} seconds")
-        print(f"  Successful executions: {successful_executions}/{len(sorted_results)} ({successful_executions/len(sorted_results)*100:.2f}%)")
-        print(f"  Successful matches: {successful_matches}/{len(sorted_results)} ({successful_matches/len(sorted_results)*100:.2f}%)")
+        logger.info(f"Domain: {domain} - Completed in {domain_time:.2f} seconds")
+        logger.info(f"  Successful executions: {successful_executions}/{len(sorted_results)} ({successful_executions/len(sorted_results)*100:.2f}%)")
+        logger.info(f"  Successful matches: {successful_matches}/{len(sorted_results)} ({successful_matches/len(sorted_results)*100:.2f}%)")
         
         total_items_processed += len(sorted_results)
     
@@ -473,12 +480,12 @@ async def process_dataset(
     
     # Overall statistics
     total_time = time.time() - total_start_time
-    print(f"\nTotal processing time: {total_time:.2f} seconds")
-    print(f"Average time per item: {total_time/total_items_processed:.2f} seconds")
+    logger.info(f"\nTotal processing time: {total_time:.2f} seconds")
+    logger.info(f"Average time per item: {total_time/total_items_processed:.2f} seconds")
     
     # Clean up verifier cache at the end
     if ENV_CACHE_ENABLED and _verifier_cache:
-        print(f"Cleaning up {len(_verifier_cache)} cached verifiers...")
+        logger.info(f"Cleaning up {len(_verifier_cache)} cached verifiers...")
         cleanup_tasks = [verifier.cleanup() for verifier in _verifier_cache.values() if verifier.venv_path]
         if cleanup_tasks:
             await asyncio.gather(*cleanup_tasks)
@@ -592,16 +599,16 @@ async def main():
     Main function to execute and compare rationale code with final answers.
     """
     import argparse
-    
+
     # Get the directory where this script is located
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    
+
     # Default paths relative to the script location
     default_dataset = os.path.join(script_dir, "seed_dataset_all_domain.json")
     default_output = os.path.join(script_dir, "execution_comparison_results.json")
     default_vis_dir = os.path.join(script_dir, "execution_comparison_visualizations")
     default_detailed_dir = os.path.join(script_dir, "detailed_domain_results")
-    
+
     parser = argparse.ArgumentParser(description="Execute rationale code and compare with final answers")
     parser.add_argument("--dataset", type=str, default=default_dataset,
                         help="Path to the dataset JSON file")
@@ -623,13 +630,13 @@ async def main():
                         help="Skip execution and just generate visualizations from existing results")
     parser.add_argument("--disable-cache", action="store_true",
                         help="Disable caching of virtual environments")
-    
+
     args = parser.parse_args()
-    
+
     # Set global configuration
     global ENV_CACHE_ENABLED
     ENV_CACHE_ENABLED = not args.disable_cache
-    
+
     if args.single_item:
         # For testing with a single item
         test_item = {
@@ -644,20 +651,20 @@ async def main():
         verifier, _ = await get_or_create_verifier(["sympy==1.13.3"])
         try:
             _, result = await process_single_item((0, test_item), verifier)
-            print(json.dumps(result, indent=2))
+            logger.info(json.dumps(result, indent=2))
         finally:
             if not ENV_CACHE_ENABLED and verifier.venv_path:
                 await verifier.cleanup()
     else:
         if args.skip_execution and os.path.exists(args.output):
             # Load existing results
-            print(f"Loading existing results from {args.output}")
+            logger.info(f"Loading existing results from {args.output}")
             with open(args.output, 'r', encoding='utf-8') as f:
                 results = json.load(f)
             
             # If detailed output is requested, we need to load the original dataset
             if args.detailed_dir:
-                print(f"Loading original dataset from {args.dataset} for detailed output")
+                logger.info(f"Loading original dataset from {args.dataset} for detailed output")
                 with open(args.dataset, 'r', encoding='utf-8') as f:
                     original_dataset = json.load(f)
                 
@@ -665,7 +672,7 @@ async def main():
                 generate_detailed_domain_files(original_dataset, results, args.detailed_dir)
         else:
             # Process the entire dataset
-            print(f"Processing dataset from {args.dataset}")
+            logger.info(f"Processing dataset from {args.dataset}")
             results = await process_dataset(
                 dataset_path=args.dataset, 
                 output_path=args.output,
@@ -686,23 +693,23 @@ async def main():
             for items in results.values()
         )
         
-        print(f"\nSummary:")
-        print(f"Processed {total_items} items across {len(results)} domains")
-        print(f"Successful executions: {successful_executions} ({successful_executions/total_items*100:.2f}%)")
-        print(f"Successful matches: {successful_matches} ({successful_matches/total_items*100:.2f}%)")
+        logger.info(f"\nSummary:")
+        logger.info(f"Processed {total_items} items across {len(results)} domains")
+        logger.info(f"Successful executions: {successful_executions} ({successful_executions/total_items*100:.2f}%)")
+        logger.info(f"Successful matches: {successful_matches} ({successful_matches/total_items*100:.2f}%)")
         
         # Generate visualizations
-        print(f"\nGenerating visualizations in {args.vis_dir}")
+        logger.info(f"\nGenerating visualizations in {args.vis_dir}")
         generate_visualizations(results, args.vis_dir)
 
     # Ensure verifiers are cleaned up
-    print("\nCleaning up verifiers...")
+    logger.info("\nCleaning up verifiers...")
     # Cleanup cached PythonVerifiers if caching is disabled
     if not ENV_CACHE_ENABLED:
         for verifier in _verifier_cache.values():
             if verifier.venv_path:
                 await verifier.cleanup()
-    
+
     # Cleanup MathVerifier if initialized
     if _math_verifier:
         await _math_verifier.cleanup()
@@ -711,7 +718,7 @@ async def main():
     if _physics_verifier:
         await _physics_verifier.cleanup()
 
-    print("Processing complete.")
+    logger.info("Processing complete.")
 
 
 if __name__ == "__main__":
