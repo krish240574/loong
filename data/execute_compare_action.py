@@ -43,7 +43,7 @@ def combine_seed_data():
 
     # Define the domains to process with their paths
     domain_paths = {
-        # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
         "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
         "finance": data_dir / "finance" / "seed_dataset.json",
         "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
@@ -51,7 +51,7 @@ def combine_seed_data():
         # "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
         # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
-        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
+        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
@@ -517,6 +517,12 @@ async def process_dataset(
         logger.info(f"  Successful executions: {successful_executions}/{len(sorted_results)} ({execution_rate:.2f}%)")
         logger.info(f"  Successful matches: {successful_matches}/{len(sorted_results)} ({match_rate:.2f}%)")
         
+        # Generate detailed domain report for current domain
+        logger.info(f"\nFailed cases details for domain {domain}:")
+        domain_dataset = {domain: original_dataset[domain]}
+        domain_results = {domain: results[domain]}
+        failed_cases = generate_detailed_domain(domain_dataset, domain_results)
+        
         # Check if all tests passed
         if execution_rate < 100 or match_rate < 100:
             all_domains_passed = False
@@ -525,13 +531,11 @@ async def process_dataset(
             logger.error(f"  Match rate: {match_rate:.2f}%")
         
         total_items_processed += len(sorted_results)
-    
+
     # Overall statistics
     total_time = time.time() - total_start_time
     logger.info(f"\nTotal processing time: {total_time:.2f} seconds")
     logger.info(f"Average time per item: {total_time/total_items_processed:.2f} seconds")
-    logger.info("\nFailed cases details:")
-    failed_cases = generate_detailed_domain(original_dataset, results)
     
     # Clean up verifier cache at the end
     if ENV_CACHE_ENABLED and _verifier_cache:
