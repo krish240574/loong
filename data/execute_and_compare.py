@@ -18,7 +18,7 @@ import logging
 
 # Configuration constants
 DEFAULT_MAX_WORKERS = 6
-DEFAULT_BATCH_SIZE = 5
+DEFAULT_BATCH_SIZE = 10
 DEFAULT_TIMEOUT = 60.0
 DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
@@ -176,7 +176,7 @@ async def get_math_programming_verifier():
         # Initialize extractor
         extractor = BaseExtractor([[BoxedStrategy()]])
         await extractor.setup()
-        timeout = 220.0
+        timeout = 300.0
         _math_programming_verifier = PythonVerifier(
             timeout=timeout, 
             required_packages=["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib", "geopy"],
@@ -364,7 +364,7 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         elif item.get("metadata", {}).get("required_dependencies"):
             packages = item.get("metadata", {}).get("required_dependencies", [])
         # Check for Mathematical Programming domain that needs pyscipopt
-        elif item.get("metadata", {}).get("domain") == "Mathematical Programming" or \
+        elif item.get("metadata", {}).get("domain") == "Mathematical_Programming" or \
              (item.get("metadata", {}).get("library") == "SCIP"):
             packages = ["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib", "geopy"]
         
@@ -458,8 +458,6 @@ async def process_dataset(
     # Process each domain
     logger.info(f"Processing {len(dataset)} domains...")
     for domain, items in dataset.items():
-        if domain != "mathematical_programming":
-            continue
         domain_start_time = time.time()
         
         # Limit the number of samples if specified
