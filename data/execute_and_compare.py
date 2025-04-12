@@ -364,7 +364,7 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         elif item.get("metadata", {}).get("required_dependencies"):
             packages = item.get("metadata", {}).get("required_dependencies", [])
         # Check for Mathematical Programming domain that needs pyscipopt
-        elif item.get("metadata", {}).get("domain") == "Mathematical_Programming" or \
+        elif item.get("metadata", {}).get("domain") == "Mathematical Programming" or \
              (item.get("metadata", {}).get("library") == "SCIP"):
             packages = ["pyscipopt", "pandas", "gurobipy", "cvxpy", "matplotlib", "geopy"]
         
