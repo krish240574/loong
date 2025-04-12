@@ -85,7 +85,7 @@ def combine_seed_data():
     return all_domains_data
 
 
-async def setup_verifier(required_packages: List[str], timeout: float = 60.0) -> PythonVerifier:
+async def setup_verifier(required_packages: List[str], timeout: float = DEFAULT_TIMEOUT) -> PythonVerifier:
     """
     Set up a Python verifier with the required packages.
     
