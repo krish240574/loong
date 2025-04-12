@@ -33,4 +33,12 @@ jobs:
     - name: Run validation
       run: |
         cd data
-        python execute_compare_action.py
+        python execute_compare_action.py > validation_output.txt 2>&1
+
+    - name: Upload validation results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: validation-results
+        path: data/validation_output.txt
+        retention-days: 14
