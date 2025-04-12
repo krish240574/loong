@@ -527,7 +527,6 @@ async def process_dataset(
     logger.info(f"Processing {len(dataset)} domains...")
     for domain, items in dataset.items():
         domain_start_time = time.time()
-        if domain != "mathematical_programming": continue
         
         # Limit the number of samples if specified
         if max_samples is not None:
@@ -550,8 +549,6 @@ async def process_dataset(
         with tqdm(total=len(items), desc=f"Domain: {domain}") as pbar:
             # Process each package group
             for batch_idx, (packages, group_items) in enumerate(grouped_items.items()):
-                print(f"Processing batch {batch_idx} with packages {packages}")
-                if batch_idx == 9: continue
 
                 # Create batches within this package group
                 group_batches = [group_items[i:i+batch_size] for i in range(0, len(group_items), batch_size)]
