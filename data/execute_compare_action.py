@@ -25,7 +25,7 @@ from physic_verifier_tem import PhysicsVerifier
 # Configuration constants
 DEFAULT_MAX_WORKERS = 6
 DEFAULT_BATCH_SIZE = 10
-DEFAULT_TIMEOUT = 60.0
+DEFAULT_TIMEOUT = 300.0
 DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
 
