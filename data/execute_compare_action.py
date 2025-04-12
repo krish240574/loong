@@ -17,9 +17,9 @@ import sys
 
 from camel.verifiers.python_verifier import PythonVerifier
 from camel.verifiers.models import VerificationOutcome
-from camel.verifiers import MathVerifier
 from camel.logger import disable_logging
 disable_logging()
+from math_verifier_tem import MathVerifier
 from physic_verifier_tem import PhysicsVerifier
 
 # Configuration constants
