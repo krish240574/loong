@@ -29,7 +29,7 @@ from camel.extractors import BaseExtractor, BoxedStrategy
 DEFAULT_MAX_WORKERS = 6
 DEFAULT_BATCH_SIZE = 10
 DEFAULT_TIMEOUT = 3600.0
-DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
+DEFAULT_CONCURRENT_BATCHES = 10  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
 
 logger = logging.getLogger(__name__)
@@ -51,9 +51,9 @@ def combine_seed_data():
         "finance": data_dir / "finance" / "seed_dataset.json",
         "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
         "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        # "logic": data_dir / "logic" / "seed_dataset.json",
+        "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
+        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
         "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
@@ -128,7 +128,6 @@ async def execute_rationale(
     try:
         # Execute the rationale
         result = await verifier.verify(rationale, None)
- 
         return {
             "status": result.status.name,
             "result": result.result,
@@ -273,9 +272,6 @@ async def get_or_create_verifier(required_packages: List[str], domain: str = Non
         return await get_math_verifier(), False
     elif domain == "advanced_physics":
         return await get_physics_verifier(), False
-    elif domain == "mathematical_programming":
-        return await get_math_programming_verifier(), False
-    
     # For other domains, use the package-based caching
     key = tuple(sorted(required_packages))
     
@@ -549,7 +545,6 @@ async def process_dataset(
         with tqdm(total=len(items), desc=f"Domain: {domain}") as pbar:
             # Process each package group
             for batch_idx, (packages, group_items) in enumerate(grouped_items.items()):
-
                 # Create batches within this package group
                 group_batches = [group_items[i:i+batch_size] for i in range(0, len(group_items), batch_size)]
                 

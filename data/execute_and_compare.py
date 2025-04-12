@@ -459,6 +459,7 @@ async def process_dataset(
     logger.info(f"Processing {len(dataset)} domains...")
     for domain, items in dataset.items():
         domain_start_time = time.time()
+
         # Limit the number of samples if specified
         if max_samples is not None:
             items = items[:max_samples]
