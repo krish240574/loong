@@ -43,7 +43,7 @@ def combine_seed_data():
 
     # Define the domains to process with their paths
     domain_paths = {
-        # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
         "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
         "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
         "finance": data_dir / "finance" / "seed_dataset.json",
