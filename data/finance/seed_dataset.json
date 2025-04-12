@@ -1,35 +1,5 @@
 [
   {
-    "id": "finance_quant_1",
-    "question": "Using the Black-Scholes model, calculate the theoretical price of a European call option with a strike price of $50, underlying asset price of $55, risk-free rate of 2%, volatility of 30%, and time to expiration of 6 months.",
-    "rationale": "import QuantLib as ql\n\n# Option parameters\nspot_price = 55.0                   # underlying asset price\nstrike_price = 50.0                 # strike price\nrisk_free_rate = 0.02               # annual risk-free rate\nvolatility = 0.30                   # annual volatility\ntime_to_expiry = 0.5                # time to expiration in years\n\n# Today's date\ncalculation_date = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = calculation_date\n\n# Option expiry date (approximation using 365 days per year)\nexpiry_date = calculation_date + int(time_to_expiry * 365)\nexercise = ql.EuropeanExercise(expiry_date)\n\n# Define the payoff for a European call option\npayoff = ql.PlainVanillaPayoff(ql.Option.Call, strike_price)\n\n# Create the European option\neuropean_option = ql.VanillaOption(payoff, exercise)\n\n# Market data setup:\n# 1. The underlying asset handle\nspot_handle = ql.QuoteHandle(ql.SimpleQuote(spot_price))\n\n# 2. The yield term structure (risk-free rate)\nday_count = ql.Actual365Fixed()\nrisk_free_curve = ql.FlatForward(calculation_date, risk_free_rate, day_count)\nrisk_free_curve_handle = ql.YieldTermStructureHandle(risk_free_curve)\n\n# 3. The volatility structure\nvolatility_curve = ql.BlackConstantVol(calculation_date, ql.NullCalendar(), volatility, day_count)\nvolatility_curve_handle = ql.BlackVolTermStructureHandle(volatility_curve)\n\n# Create the Black-Scholes-Merton process\nbsm_process = ql.BlackScholesProcess(spot_handle, risk_free_curve_handle, volatility_curve_handle)\n\n# Set the pricing engine to use the Analytical European Engine (Black-Scholes formula)\nengine = ql.AnalyticEuropeanEngine(bsm_process)\neuropean_option.setPricingEngine(engine)\n\n# Calculate the option price (theoretical value)\nresult = european_option.NPV()\n\nprint(result)",
-    "final_answer": "7.686578912147441",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37"
-      ],
-      "source": "https://www.quantlib.org"
-    }
-  },
-  {
-    "id": "finance_quant_4",
-    "question": "Calculate the Value at Risk (VaR) at the 95% confidence level for a portfolio consisting of $2 million in stocks with a daily volatility of 1.2% and $1.5 million in bonds with a daily volatility of 0.8%, assuming a correlation of 0.3 between the two assets.",
-    "rationale": "import QuantLib as ql\nimport math\n\n# Given positions and daily volatilities\nposition_stock = 2000000.0\nvol_stock = 0.012    # 1.2%\nposition_bond = 1500000.0\nvol_bond = 0.008     # 0.8%\n\n# Calculate dollar volatilities\nsigma_stock_money = position_stock * vol_stock  # 2,000,000 * 0.012 = 24,000\nsigma_bond_money  = position_bond * vol_bond      # 1,500,000 * 0.008 = 12,000\n\n# Given correlation coefficient between stocks and bonds\ncorrelation = 0.3\n\n# Calculate the portfolio standard deviation (sigma_p) in dollar terms\n# sigma_p = sqrt((sigma_stock_money)^2 + (sigma_bond_money)^2 + 2 * sigma_stock_money * sigma_bond_money * correlation)\nvariance_portfolio = (sigma_stock_money ** 2 +\n                      sigma_bond_money ** 2 +\n                      2 * sigma_stock_money * sigma_bond_money * correlation)\nsigma_portfolio = math.sqrt(variance_portfolio)\n\n# For a 95% confidence level (one-tailed), get the z-value using QuantLib's InverseCumulativeNormal\n# Note: In QuantLib, InverseCumulativeNormal() returns the inverse of the CDF of a standard normal distribution.\ninv_cum_normal = ql.InverseCumulativeNormal()  # Instantiate the inverse CDF function\nz_value = inv_cum_normal(0.95)  # one-tailed 95% quantile, approximately 1.645\n\n# Calculate the Value at Risk (VaR)\nVaR = z_value * sigma_portfolio\n\n# Store the final result in a variable named \"result\"\nresult = VaR\n\n# For verification purpose, printing the result:\nprint(result)",
-    "final_answer": "49147.82996712563",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37"
-      ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
-    }
-  },
-  {
     "id": "finance_quant_10",
     "question": "Calculate the credit value adjustment (CVA) for a 3-year interest rate swap with a notional principal of $10 million, fixed rate of 3%, floating rate based on LIBOR, counterparty default probability of 0.5% per year, and recovery rate of 40%.",
     "rationale": "import math\n\n# Define notional and swap parameters\nnotional = 10_000_000.0   # Notional of the swap in dollars\nrecovery_rate = 0.40      # 40% recovery rate\nloss_given_default = 1 - recovery_rate  # Loss Given Default ~ 60%\n\n# Default hazard rate (annual default probability)\nannual_default_probability = 0.005  # 0.5% per year\n\n# Time horizon of the swap in years (maturity)\nT = 3.0  # years\n\n# Calculate cumulative default probability using survival probability concept:\n# PD = 1 - exp(-lambda * T)\ncumulative_pd = 1 - math.exp(-annual_default_probability * T)\n\n# For this approximation, we take the full notional as the exposure.\n# Therefore, the approximate CVA is:\n#   CVA = Loss Given Default × Notional × Cumulative Default Probability\ncva = loss_given_default * notional * cumulative_pd\n\nprint(cva)",
@@ -41,22 +11,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
-    }
-  },
-  {
-    "id": "finance_quant_13",
-    "question": "Calculate the expected shortfall (ES) at the 99% confidence level for a trading portfolio with daily profit and loss distribution characterized by a mean of $0 and standard deviation of $500,000, assuming normal distribution.",
-    "rationale": "import QuantLib as ql\nimport math\n\n# Given parameters\nmu = 0.0\nsigma = 500000.0\nalpha = 0.99\n\n# For a normally distributed variable, the Expected Shortfall (ES) is defined as:\n# ES = mu - sigma * (pdf(z_alpha) / (1 - alpha))\n# where z_alpha = N^(-1)(alpha), and pdf is the standard normal density function.\n\n# Using QuantLib's InverseCumulativeNormal for z_alpha:\ninv_cum_normal = ql.InverseCumulativeNormal()\nz_alpha = inv_cum_normal(alpha)\n\n# Standard normal pdf:\ndef standard_normal_pdf(x):\n    return math.exp(-0.5 * x**2) / math.sqrt(2 * math.pi)\n\npdf_z = standard_normal_pdf(z_alpha)\n\n# Expected Shortfall calculation\nES = mu - sigma * (pdf_z / (1 - alpha))\n\n# Store final answer in variable result\nresult = ES\n\n# Print only the final result\nprint(result)",
-    "final_answer": "-1332607.1090965846",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -71,7 +32,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -86,7 +53,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -101,39 +74,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
-    }
-  },
-  {
-    "id": "finance_quant_24",
-    "question": "Calculate the tracking error of a portfolio with returns [5%, 3%, -2%, 4%, 1%] compared to a benchmark index with returns [4%, 2%, -1%, 3%, 0%].",
-    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Portfolio and benchmark returns (expressed in percentage points)\nportfolio_returns = np.array([5, 3, -2, 4, 1])\nbenchmark_returns = np.array([4, 2, -1, 3, 0])\n\n# Compute active returns (portfolio return minus benchmark return)\nactive_returns = portfolio_returns - benchmark_returns\n\n# Compute the sample standard deviation of active returns (ddof=1 uses N-1 for degrees of freedom)\ntracking_error = np.std(active_returns, ddof=1)\n\n# Store the final answer in a variable named 'result'\nresult = tracking_error\n\n# Print the result\nprint(result)",
-    "final_answer": "0.8944271909999161",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37",
-        "numpy==1.26.4"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
-    }
-  },
-  {
-    "id": "finance_quant_27",
-    "question": "Calculate the portfolio variance for a three-asset portfolio with weights [0.4, 0.3, 0.3], variances [0.02, 0.03, 0.04], and covariances [[0, 0.005, 0.004], [0.005, 0, 0.006], [0.004, 0.006, 0]].",
-    "rationale": "import numpy as np\n\n# Portfolio weights\nweights = np.array([0.4, 0.3, 0.3])\n\n# Given asset variances (diagonal elements) and covariances (off-diagonal contributions)\nvariances = [0.02, 0.03, 0.04]\ncovariances = [[0.0,   0.005, 0.004],\n               [0.005, 0.0,   0.006],\n               [0.004, 0.006, 0.0]]\n\n# Construct the full covariance matrix by placing variances on the diagonal\ncovariance_matrix = np.array([[variances[0],    covariances[0][1], covariances[0][2]],\n                              [covariances[1][0], variances[1],    covariances[1][2]],\n                              [covariances[2][0], covariances[2][1], variances[2]]])\n\n# Compute portfolio variance = w' * Σ * w (using numpy for matrix operations)\nportfolio_variance = np.dot(weights, np.dot(covariance_matrix, weights))\n\n# Print the computed portfolio variance\nprint(portfolio_variance)",
-    "final_answer": "0.012740000000000001",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37",
-        "numpy==1.26.4"
-      ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -148,7 +95,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -163,7 +116,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -178,7 +135,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -193,7 +154,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -208,7 +173,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -223,7 +194,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -238,7 +213,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -254,7 +235,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -271,7 +258,13 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -286,7 +279,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -302,7 +301,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -317,7 +322,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -332,7 +341,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -347,7 +362,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -362,7 +383,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -377,7 +402,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -392,7 +423,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -407,7 +442,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -422,7 +461,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -437,7 +480,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -452,7 +501,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -468,7 +521,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -484,7 +541,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -499,7 +562,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -515,7 +582,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -531,7 +602,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -546,7 +623,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -562,7 +645,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -577,7 +664,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -592,7 +685,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -607,7 +706,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -622,7 +727,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -637,7 +746,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -653,7 +768,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -668,7 +789,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -683,7 +810,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -699,7 +830,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -715,7 +852,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -731,7 +874,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -746,7 +895,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -762,7 +917,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -778,7 +939,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -794,7 +961,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -809,7 +980,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -824,7 +999,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -839,7 +1018,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -855,7 +1040,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -870,7 +1059,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -886,7 +1079,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -902,7 +1101,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -917,7 +1120,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -932,7 +1141,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -947,7 +1160,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -962,7 +1181,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -977,7 +1202,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -992,7 +1221,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1007,7 +1242,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1022,7 +1261,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1037,7 +1280,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1052,7 +1301,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1067,7 +1320,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1082,7 +1339,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1097,7 +1358,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1112,7 +1377,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1127,7 +1398,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1143,7 +1418,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1159,7 +1438,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1175,7 +1460,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1190,7 +1481,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1205,7 +1500,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1221,7 +1522,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1236,7 +1543,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1252,7 +1563,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1267,7 +1584,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1282,7 +1603,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1297,7 +1624,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1313,7 +1644,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1328,7 +1665,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1343,7 +1684,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1358,7 +1705,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1373,7 +1724,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1388,7 +1743,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1404,7 +1765,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/QuantLib-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/QuantLib-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1419,7 +1784,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1435,7 +1806,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1451,7 +1826,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1466,7 +1845,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1481,7 +1864,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1497,7 +1884,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1512,7 +1905,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1527,7 +1926,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1543,7 +1948,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1559,7 +1968,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1574,7 +1987,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1590,7 +2007,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1605,7 +2028,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1620,7 +2049,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1635,7 +2068,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1650,7 +2087,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1665,7 +2108,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1680,7 +2127,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1696,7 +2149,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1713,7 +2170,13 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1728,7 +2191,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1743,7 +2210,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1758,7 +2231,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1774,7 +2251,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1789,7 +2272,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1804,7 +2291,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1819,7 +2310,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1834,7 +2331,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1849,7 +2350,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1864,7 +2371,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1879,7 +2392,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1894,7 +2411,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -1909,7 +2432,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1924,7 +2451,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1939,7 +2470,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1954,7 +2489,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1969,7 +2508,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -1984,7 +2527,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2000,7 +2547,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2015,7 +2568,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2031,7 +2588,13 @@
         "scipy==1.15.2",
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2046,7 +2609,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2062,7 +2631,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2077,7 +2652,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2092,7 +2673,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2109,7 +2696,13 @@
         "numpy==1.26.4",
         "scipy==1.15.2"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2124,7 +2717,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2139,7 +2738,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2154,7 +2759,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2169,7 +2778,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2185,7 +2798,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2200,7 +2819,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2215,7 +2838,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2230,7 +2859,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2245,7 +2880,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2260,7 +2899,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2276,7 +2921,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2293,7 +2942,11 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2308,7 +2961,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2323,7 +2982,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2340,7 +3003,11 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2355,7 +3022,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2371,7 +3044,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2387,7 +3066,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2403,7 +3086,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2419,7 +3108,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2434,7 +3129,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2449,7 +3150,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2464,7 +3169,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2480,7 +3189,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2496,7 +3211,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2512,7 +3233,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2527,7 +3252,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2542,7 +3273,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2558,7 +3295,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2574,7 +3315,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2590,7 +3337,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2605,7 +3356,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2621,7 +3378,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2637,7 +3400,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2652,7 +3421,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2668,7 +3441,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2684,7 +3463,13 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2701,7 +3486,13 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2717,7 +3508,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://QuantLib-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://QuantLib-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2733,7 +3528,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html"
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2749,7 +3548,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2764,7 +3567,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/dreamerdeo/finqa"
+      "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2779,7 +3588,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2795,7 +3608,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2812,7 +3629,11 @@
         "scipy==1.15.2",
         "numpy==1.26.4"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2827,7 +3648,11 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html"
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2843,7 +3668,11 @@
         "QuantLib==1.37",
         "numpy==1.26.4"
       ],
-      "source": "https://www.quantlib.org"
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   },
   {
@@ -2858,7 +3687,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2873,7 +3708,13 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2"
+      "source": "https://huggingface.co/datasets/TheFinAI/Fino1_Reasoning_Path_FinQA_v2",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": [
+        "Neil Johnson, Zicheng Su"
+      ]
     }
   },
   {
@@ -2888,7 +3729,108 @@
       "required_dependencies": [
         "QuantLib==1.37"
       ],
-      "source": "Original problem inspired by random walk theory and QuantLib official documentation"
+      "source": "Original problem inspired by random walk theory and QuantLib official documentation",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
+    }
+  },
+  {
+    "id": "finance_quant_1",
+    "question": "Using the Black-Scholes model, calculate the theoretical price of a European call option with a strike price of $50, underlying asset price of $55, risk-free rate of 2%, volatility of 30%, and time to expiration of 6 months.",
+    "rationale": "import QuantLib as ql\n\n# Option parameters\nspot_price = 55.0                   # underlying asset price\nstrike_price = 50.0                 # strike price\nrisk_free_rate = 0.02               # annual risk-free rate\nvolatility = 0.30                   # annual volatility\ntime_to_expiry = 0.5                # time to expiration in years\n\n# Today's date\ncalculation_date = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = calculation_date\n\n# Option expiry date (approximation using 365 days per year)\nexpiry_date = calculation_date + int(time_to_expiry * 365)\nexercise = ql.EuropeanExercise(expiry_date)\n\n# Define the payoff for a European call option\npayoff = ql.PlainVanillaPayoff(ql.Option.Call, strike_price)\n\n# Create the European option\neuropean_option = ql.VanillaOption(payoff, exercise)\n\n# Market data setup:\n# 1. The underlying asset handle\nspot_handle = ql.QuoteHandle(ql.SimpleQuote(spot_price))\n\n# 2. The yield term structure (risk-free rate)\nday_count = ql.Actual365Fixed()\nrisk_free_curve = ql.FlatForward(calculation_date, risk_free_rate, day_count)\nrisk_free_curve_handle = ql.YieldTermStructureHandle(risk_free_curve)\n\n# 3. The volatility structure\nvolatility_curve = ql.BlackConstantVol(calculation_date, ql.NullCalendar(), volatility, day_count)\nvolatility_curve_handle = ql.BlackVolTermStructureHandle(volatility_curve)\n\n# Create the Black-Scholes-Merton process\nbsm_process = ql.BlackScholesProcess(spot_handle, risk_free_curve_handle, volatility_curve_handle)\n\n# Set the pricing engine to use the Analytical European Engine (Black-Scholes formula)\nengine = ql.AnalyticEuropeanEngine(bsm_process)\neuropean_option.setPricingEngine(engine)\n\n# Calculate the option price (theoretical value)\nresult = european_option.NPV()\n\nprint(result)",
+    "final_answer": "7.686578912147441",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37"
+      ],
+      "source": "https://www.quantlib.org",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
+    }
+  },
+  {
+    "id": "finance_quant_4",
+    "question": "Calculate the Value at Risk (VaR) at the 95% confidence level for a portfolio consisting of $2 million in stocks with a daily volatility of 1.2% and $1.5 million in bonds with a daily volatility of 0.8%, assuming a correlation of 0.3 between the two assets.",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Given positions and daily volatilities\nposition_stock = 2000000.0\nvol_stock = 0.012    # 1.2%\nposition_bond = 1500000.0\nvol_bond = 0.008     # 0.8%\n\n# Calculate dollar volatilities\nsigma_stock_money = position_stock * vol_stock  # 2,000,000 * 0.012 = 24,000\nsigma_bond_money  = position_bond * vol_bond      # 1,500,000 * 0.008 = 12,000\n\n# Given correlation coefficient between stocks and bonds\ncorrelation = 0.3\n\n# Calculate the portfolio standard deviation (sigma_p) in dollar terms\n# sigma_p = sqrt((sigma_stock_money)^2 + (sigma_bond_money)^2 + 2 * sigma_stock_money * sigma_bond_money * correlation)\nvariance_portfolio = (sigma_stock_money ** 2 +\n                      sigma_bond_money ** 2 +\n                      2 * sigma_stock_money * sigma_bond_money * correlation)\nsigma_portfolio = math.sqrt(variance_portfolio)\n\n# For a 95% confidence level (one-tailed), get the z-value using QuantLib's InverseCumulativeNormal\n# Note: In QuantLib, InverseCumulativeNormal() returns the inverse of the CDF of a standard normal distribution.\ninv_cum_normal = ql.InverseCumulativeNormal()  # Instantiate the inverse CDF function\nz_value = inv_cum_normal(0.95)  # one-tailed 95% quantile, approximately 1.645\n\n# Calculate the Value at Risk (VaR)\nVaR = z_value * sigma_portfolio\n\n# Store the final result in a variable named \"result\"\nresult = VaR\n\n# For verification purpose, printing the result:\nprint(result)",
+    "final_answer": "49147.82996712563",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
+    }
+  },
+  {
+    "id": "finance_quant_24",
+    "question": "Calculate the tracking error of a portfolio with returns [5%, 3%, -2%, 4%, 1%] compared to a benchmark index with returns [4%, 2%, -1%, 3%, 0%].",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Portfolio and benchmark returns (expressed in percentage points)\nportfolio_returns = np.array([5, 3, -2, 4, 1])\nbenchmark_returns = np.array([4, 2, -1, 3, 0])\n\n# Compute active returns (portfolio return minus benchmark return)\nactive_returns = portfolio_returns - benchmark_returns\n\n# Compute the sample standard deviation of active returns (ddof=1 uses N-1 for degrees of freedom)\ntracking_error = np.std(active_returns, ddof=1)\n\n# Store the final answer in a variable named 'result'\nresult = tracking_error\n\n# Print the result\nprint(result)",
+    "final_answer": "0.8944271909999161",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "numpy==1.26.4"
+      ],
+      "source": "http://gouthamanbalaraman.com/blog/quantlib-python-tutorials-with-examples.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
+    }
+  },
+  {
+    "id": "finance_quant_27",
+    "question": "Calculate the portfolio variance for a three-asset portfolio with weights [0.4, 0.3, 0.3], variances [0.02, 0.03, 0.04], and covariances [[0, 0.005, 0.004], [0.005, 0, 0.006], [0.004, 0.006, 0]].",
+    "rationale": "import numpy as np\n\n# Portfolio weights\nweights = np.array([0.4, 0.3, 0.3])\n\n# Given asset variances (diagonal elements) and covariances (off-diagonal contributions)\nvariances = [0.02, 0.03, 0.04]\ncovariances = [[0.0,   0.005, 0.004],\n               [0.005, 0.0,   0.006],\n               [0.004, 0.006, 0.0]]\n\n# Construct the full covariance matrix by placing variances on the diagonal\ncovariance_matrix = np.array([[variances[0],    covariances[0][1], covariances[0][2]],\n                              [covariances[1][0], variances[1],    covariances[1][2]],\n                              [covariances[2][0], covariances[2][1], variances[2]]])\n\n# Compute portfolio variance = w' * Σ * w (using numpy for matrix operations)\nportfolio_variance = np.dot(weights, np.dot(covariance_matrix, weights))\n\n# Print the computed portfolio variance\nprint(portfolio_variance)",
+    "final_answer": "0.012740000000000001",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
+    }
+  },
+  {
+    "id": "finance_quant_13",
+    "question": "Calculate the expected shortfall (ES) at the 99% confidence level for a trading portfolio with daily profit and loss distribution characterized by a mean of $0 and standard deviation of $500,000, assuming normal distribution.",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Given parameters\nmu = 0.0\nsigma = 500000.0\nalpha = 0.99\n\n# For a normally distributed variable, the Expected Shortfall (ES) is defined as:\n# ES = mu - sigma * (pdf(z_alpha) / (1 - alpha))\n# where z_alpha = N^(-1)(alpha), and pdf is the standard normal density function.\n\n# Using QuantLib's InverseCumulativeNormal for z_alpha:\ninv_cum_normal = ql.InverseCumulativeNormal()\nz_alpha = inv_cum_normal(alpha)\n\n# Standard normal pdf:\ndef standard_normal_pdf(x):\n    return math.exp(-0.5 * x**2) / math.sqrt(2 * math.pi)\n\npdf_z = standard_normal_pdf(z_alpha)\n\n# Expected Shortfall calculation\nES = mu - sigma * (pdf_z / (1 - alpha))\n\n# Store final answer in variable result\nresult = ES\n\n# Print only the final result\nprint(result)",
+    "final_answer": "-1332607.1090965846",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson, Beibei Wang"
     }
   }
 ]
