@@ -10,10 +10,6 @@ from pathlib import Path
 import logging
 import asyncio
 import json
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
 import time
 from typing import Dict, List, Any, Optional, Tuple
 from tqdm import tqdm
@@ -51,11 +47,11 @@ def combine_seed_data():
         "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
         "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
         "finance": data_dir / "finance" / "seed_dataset.json",
-        # "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
+        "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
         "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        # "logic": data_dir / "logic" / "seed_dataset.json",
+        "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json"
+        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json"
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
