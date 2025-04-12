@@ -293,7 +293,7 @@ def main(input_file,
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Batch-execute rationale code from a single JSON file and compare to final_answer.")
-    parser.add_argument("--input-file", type=str, default="data/security_and_safety/seed_dataset.json", help="Path to the input JSON file.")
+    parser.add_argument("--input-file", type=str, default="./seed_dataset.json", help="Path to the input JSON file.")
     parser.add_argument("--output-file", type=str, default="./execution_results", help="Path to save the output JSON.")
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE, help="Number of samples per batch.")
     parser.add_argument("--max-workers", type=int, default=DEFAULT_MAX_WORKERS, help="Number of parallel worker processes.")
