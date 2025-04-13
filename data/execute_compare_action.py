@@ -46,15 +46,15 @@ def combine_seed_data():
 
     # Define the domains to process with their paths
     domain_paths = {
-        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
-        "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
+        # "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
+        # "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
         "finance": data_dir / "finance" / "seed_dataset.json",
-        "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
+        # "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
         "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        "logic": data_dir / "logic" / "seed_dataset.json",
+        # "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
-        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
+        # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
@@ -102,7 +102,7 @@ async def setup_verifier(required_packages: List[str], timeout: float = DEFAULT_
     """
     # Set longer timeout for Mathematical Programming domain
     if domain == "mathematical_programming":
-        timeout = 240.0
+        timeout = 1200.0
         
     verifier = PythonVerifier(
         timeout=timeout, 
@@ -143,7 +143,11 @@ async def execute_rationale(
         }
 
 
-async def compare_results(execution_result: str, final_answer: str, domain: str = None) -> bool:
+async def compare_results(
+        execution_result: str, 
+        final_answer: str, 
+        domain: str = None,
+        precision: float = None) -> bool:
     """
     Enhanced comparison between execution result and final answer.
     Performs normalization before comparison for more accurate matching.
@@ -153,6 +157,7 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
         execution_result: The result from code execution.
         final_answer: The expected final answer.
         domain: The problem domain (e.g., 'advanced_math').
+        precision: The precision of the final answer.
         
     Returns:
         True if the results match, False otherwise.
@@ -188,10 +193,14 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
             return verification_result.status == VerificationOutcome.SUCCESS
         except Exception:
             pass
-
-    
-    # Compare normalized strings
-    return execution_result == final_answer
+    elif precision:
+        if abs(float(execution_result) - float(final_answer)) <= precision:
+            return True
+        else:
+            return False
+    else:
+        # Compare normalized strings
+        return execution_result == final_answer
 
 
 # Cache to store verifiers by package requirements
@@ -333,6 +342,7 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
     
     rationale = item.get("rationale", "")
     final_answer = item.get("final_answer", "")
+    precision = item.get("metadata", {}).get("answer_precision", None)
 
     # Handle advanced_physics domain using PhysicsVerifier directly
     if domain == "advanced_physics":
@@ -394,7 +404,7 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
 
     # Compare results for other domains
     if execution_output["execution_successful"]:
-        match_status = await compare_results(execution_output["result"], final_answer, domain)
+        match_status = await compare_results(execution_output["result"], final_answer, domain, precision)
         return idx, {
             "execution_status": execution_status,
             "execution_successful": True,
