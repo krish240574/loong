@@ -102,7 +102,7 @@ async def setup_verifier(required_packages: List[str], timeout: float = DEFAULT_
     """
     # Set longer timeout for Mathematical Programming domain
     if domain == "mathematical_programming":
-        timeout = 3600.0
+        timeout = 1200.0
         
     verifier = PythonVerifier(
         timeout=timeout, 
