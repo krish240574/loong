@@ -29,7 +29,7 @@ from camel.extractors import BaseExtractor, BoxedStrategy
 DEFAULT_MAX_WORKERS = 6
 DEFAULT_BATCH_SIZE = 10
 DEFAULT_TIMEOUT = 3600.0
-DEFAULT_CONCURRENT_BATCHES = 5  # Number of batches to process concurrently
+DEFAULT_CONCURRENT_BATCHES = 10  # Number of batches to process concurrently
 ENV_CACHE_ENABLED = True        # Enable caching of virtual environments
 
 logger = logging.getLogger(__name__)
@@ -46,15 +46,15 @@ def combine_seed_data():
 
     # Define the domains to process with their paths
     domain_paths = {
-        # "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
-        # "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
-        # "finance": data_dir / "finance" / "seed_dataset.json",
-        # "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
-        # "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        # "logic": data_dir / "logic" / "seed_dataset.json",
+        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
+        "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
+        "finance": data_dir / "finance" / "seed_dataset.json",
+        "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
+        "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
+        "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
-        # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
+        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
@@ -545,7 +545,6 @@ async def process_dataset(
         with tqdm(total=len(items), desc=f"Domain: {domain}") as pbar:
             # Process each package group
             for batch_idx, (packages, group_items) in enumerate(grouped_items.items()):
-                print(f"Solving {batch_idx}")
                 # Create batches within this package group
                 group_batches = [group_items[i:i+batch_size] for i in range(0, len(group_items), batch_size)]
                 
