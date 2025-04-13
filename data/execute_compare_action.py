@@ -50,8 +50,8 @@ def combine_seed_data():
         # "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
         "finance": data_dir / "finance" / "seed_dataset.json",
         # "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
-        # "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        "logic": data_dir / "logic" / "seed_dataset.json",
+        "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
+        # "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
         # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
         # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
@@ -102,7 +102,7 @@ async def setup_verifier(required_packages: List[str], timeout: float = DEFAULT_
     """
     # Set longer timeout for Mathematical Programming domain
     if domain == "mathematical_programming":
-        timeout = 240.0
+        timeout = 3600.0
         
     verifier = PythonVerifier(
         timeout=timeout, 
