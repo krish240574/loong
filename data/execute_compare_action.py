@@ -380,7 +380,7 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
     
     rationale = item.get("rationale", "")
     final_answer = item.get("final_answer", "")
-    precision = item.get("metadata", {}).get("answer_precision", None)
+    precision = item.get("metadata", {}).get("answer_tolerance", None)
 
     # Handle advanced_physics domain using PhysicsVerifier directly
     if domain == "advanced_physics":
