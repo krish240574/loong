@@ -151,7 +151,7 @@ If you're keen on exploring new research opportunities or discoveries with our p
 <br>
 
 <div align="">
-  <img src="assets/wechatgroup.jpg" alt="WeChat Group QR Code">
+  <img src="assets/wechatgroup.jpeg" alt="WeChat Group QR Code">
 </div>
 
 [discord-image]: https://img.shields.io/discord/1082486657678311454?logo=discord&labelColor=%20%235462eb&logoColor=%20%23f5f5f5&color=%20%235462eb
@@ -159,7 +159,7 @@ If you're keen on exploring new research opportunities or discoveries with our p
 [huggingface-image]: https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CAMEL--AI-ffc107?color=ffc107&logoColor=white
 [huggingface-url]: https://huggingface.co/datasets/camel-ai/loong
 [loong-image]: https://img.shields.io/badge/WeChat-ProjectLoong-brightgreen?logo=wechat&logoColor=white
-[loong-url]: ./assets/wechatgroup.jpg
+[loong-url]: ./assets/wechatgroup.jpeg
 [package-license-image]: https://img.shields.io/badge/License-Apache_2.0-blue.svg
 [package-license-url]: https://github.com/camel-ai/loong/blob/main/LICENSE
 [reddit-image]: https://img.shields.io/reddit/subreddit-subscribers/CamelAI?style=plastic&logo=reddit&label=r%2FCAMEL&labelColor=white
