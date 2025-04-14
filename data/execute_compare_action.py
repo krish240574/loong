@@ -11,7 +11,9 @@ import logging
 import asyncio
 import json
 import time
-import os
+import ast
+import math
+
 
 from typing import Dict, List, Any, Optional, Tuple
 from tqdm import tqdm
@@ -142,6 +144,41 @@ async def execute_rationale(
             "execution_successful": False
         }
 
+def parse_answer_str(s):
+    try:
+        return ast.literal_eval(s)
+    except Exception as e:
+        raise ValueError(f"Failed to parse string: {s}\nError: {e}")
+
+
+def extract_numbers(data):
+    numbers = []
+
+    def recurse(x, path=""):
+        if isinstance(x, (int, float)):
+            numbers.append((path, x))
+        elif isinstance(x, (list, tuple)):
+            for i, item in enumerate(x):
+                recurse(item, f"{path}[{i}]")
+        elif isinstance(x, dict):
+            for k, v in x.items():
+                recurse(v, f"{path}.{k}" if path else k)
+
+    recurse(data)
+    return [num for _, num in sorted(numbers)]
+
+
+def compare_answer_str(s1, s2, rel_tol=1e-2, abs_tol=1e-2):
+    d1 = parse_answer_str(s1)
+    d2 = parse_answer_str(s2)
+    nums1 = extract_numbers(d1)
+    nums2 = extract_numbers(d2)
+
+    if len(nums1) != len(nums2):
+        return False, list(zip(nums1, nums2))
+
+    results = [math.isclose(a, b, rel_tol=rel_tol, abs_tol=abs_tol) for a, b in zip(nums1, nums2)]
+    return all(results)
 
 async def compare_results(
         execution_result: str, 
@@ -194,10 +231,11 @@ async def compare_results(
         except Exception:
             pass
     elif precision:
-        if abs(float(execution_result) - float(final_answer)) <= precision:
-            return True
-        else:
-            return False
+        return compare_answer_str(
+            execution_result,
+            final_answer,
+            rel_tol=precision,
+            abs_tol=precision)
     else:
         # Compare normalized strings
         return execution_result == final_answer
