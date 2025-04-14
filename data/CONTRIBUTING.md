@@ -41,7 +41,7 @@ Each datapoint **must** follow this schema:
     "date_created": "2025-04-07",
     "difficulty": 1,
     "tags": "arithmetic",
-    "answer_precision": "0.1"
+    "answer_tolerance": "0.1"
   }
 }
 ```
@@ -60,7 +60,7 @@ Each datapoint **must** follow this schema:
   - `name`: Name of the dataset (e.g., `"Loong_Mathematics"`)
   - `contributor`: Name of the dataset contributor
   - `date_created`: Date when the dataset was created (YYYY-MM-DD format)
-- `metadata` (OPTIONAL): Arbitrary metadata: difficulty (numerical scale), tags, units, subdomains, domain-specific metadata, etc. If `answer_precision` is not specified, the tolerable error in verification will be considered as 0.
+- `metadata` (OPTIONAL): Arbitrary metadata: difficulty (numerical scale), tags, units, subdomains, domain-specific metadata, etc. If `answer_tolerance` is not specified, the tolerable error in verification will be considered as 0.
 
 ---
 
