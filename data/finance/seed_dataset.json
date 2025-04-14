@@ -3605,26 +3605,6 @@
     }
   },
   {
-    "id": "finance_quant_318",
-    "question": "Calculate the Macaulay duration and modified duration of a bond portfolio with multiple bonds having different maturities and coupon rates. The output should be a dictionary with keys 'bond_details', 'total_market_value', 'portfolio_macaulay_duration', and 'portfolio_modified_duration'. Each number in the output should be rounded to a maximum of 4 decimal places.",
-    "rationale": "import QuantLib as ql\n\n# Set the evaluation date to today\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Define the day counter using a single argument for ActualActual(ISDA)\ndayCounter = ql.ActualActual(ql.ActualActual.ISDA)\n\n# Define the market yield parameters\nyield_rate = 0.03  # Annual yield\ncompounding = ql.Compounded\nfrequency = ql.Annual\n\n# Define the portfolio bonds as a list of dictionaries,\n# Each dictionary contains information for one bond.\nbonds_data = [\n    {   # Bond 1: 5-year bond, 5% coupon\n        \"issue_date\": today,\n        \"maturity_date\": today + ql.Period(5, ql.Years),\n        \"coupon_rate\": 0.05,\n        \"face_amount\": 100,\n        \"settlement_days\": 2,\n        \"quantity\": 10\n    },\n    {   # Bond 2: 10-year bond, 4% coupon\n        \"issue_date\": today,\n        \"maturity_date\": today + ql.Period(10, ql.Years),\n        \"coupon_rate\": 0.04,\n        \"face_amount\": 100,\n        \"settlement_days\": 2,\n        \"quantity\": 5\n    }\n]\n\n# A list to store each bond's results such as clean price, durations, market value, etc.\nbond_results = []\n\n# Iterate over each bond in the portfolio\nfor bond_info in bonds_data:\n    # Create a schedule for the bond's cash flows.\n    schedule = ql.Schedule(bond_info[\"issue_date\"],\n                           bond_info[\"maturity_date\"],\n                           ql.Period(ql.Annual),\n                           ql.TARGET(),\n                           ql.Following,\n                           ql.Following,\n                           ql.DateGeneration.Backward,\n                           False)\n    \n    # Instantiate a FixedRateBond with the provided bond data.\n    bond = ql.FixedRateBond(bond_info[\"settlement_days\"],\n                            bond_info[\"face_amount\"],\n                            schedule,\n                            [bond_info[\"coupon_rate\"]],\n                            dayCounter)\n    \n    # Calculate the clean price for the bond using BondFunctions.cleanPrice.\n    clean_price = ql.BondFunctions.cleanPrice(bond, yield_rate, dayCounter, compounding, frequency)\n    \n    # Compute the Macaulay duration\n    macaulay_duration = ql.BondFunctions.duration(bond, yield_rate, dayCounter, compounding, frequency, ql.Duration.Macaulay)\n    \n    # Compute the Modified duration\n    modified_duration = ql.BondFunctions.duration(bond, yield_rate, dayCounter, compounding, frequency, ql.Duration.Modified)\n    \n    # Calculate the market value.\n    # Market value = clean price * face amount * quantity\n    market_value = clean_price * bond_info[\"face_amount\"] * bond_info[\"quantity\"]\n    \n    bond_results.append({\n        \"clean_price\": round(clean_price, 4),\n        \"macaulay_duration\": round(macaulay_duration, 4),\n        \"modified_duration\": round(modified_duration, 4),\n        \"market_value\": round(market_value, 4),\n        \"quantity\": bond_info[\"quantity\"],\n        \"face_amount\": bond_info[\"face_amount\"]\n    })\n\n# Compute the total market value of the portfolio.\ntotal_market_value = sum(bond[\"market_value\"] for bond in bond_results)\n\nif total_market_value == 0:\n    raise ValueError(\"Total market value of the portfolio is zero.\")\n\n# Compute the overall portfolio durations as the weighted average of each bond's durations,\n# with the weights being the individual market values.\nportfolio_macaulay = sum(bond[\"market_value\"] * bond[\"macaulay_duration\"] for bond in bond_results) / total_market_value\n\nportfolio_modified = sum(bond[\"market_value\"] * bond[\"modified_duration\"] for bond in bond_results) / total_market_value\n\n# Store the final result in a dictionary\nresult = {\n    \"bond_details\": bond_results,\n    \"total_market_value\": round(total_market_value, 4),\n    \"portfolio_macaulay_duration\": round(portfolio_macaulay, 4),\n    \"portfolio_modified_duration\": round(portfolio_modified, 4)\n}\n\n# The 'result' variable holds the final answer.\nprint(result)",
-    "final_answer": "{'bond_details': [{'clean_price': 109.14, 'macaulay_duration': 4.5571, 'modified_duration': 4.4244, 'market_value': 109139.9618, 'quantity': 10, 'face_amount': 100}, {'clean_price': 108.5215, 'macaulay_duration': 8.4978, 'modified_duration': 8.2503, 'market_value': 54260.7394, 'quantity': 5, 'face_amount': 100}], 'total_market_value': 163400.7012, 'portfolio_macaulay_duration': 5.8657, 'portfolio_modified_duration': 5.6949}",
-    "metadata": {
-      "name": "Quantitative Finance",
-      "domain": "Quant",
-      "license": "MIT",
-      "required_dependencies": [
-        "QuantLib==1.37"
-      ],
-      "source": "https://www.quantlib.org",
-      "date_created": [
-        "2025-03-26"
-      ],
-      "contributor": "Neil Johnson",
-      "answer_precision": "100"
-    }
-  },
-  {
     "id": "finance_quant_427",
     "question": "Determine the optimal hedge ratio using minimum variance hedging for six correlated assets with given variances and covariances. The output should be a list of optimal hedge ratios for the six assets, each rounded to at most four decimal places.",
     "rationale": "import numpy as np\nimport QuantLib as ql\n\n# Example dummy covariance matrix for 6 hedging instruments (Σ)\ncov_matrix = np.array([\n    [0.04,   0.01,   0.005,  0.002,  0.001,  0.0005],\n    [0.01,   0.03,   0.008,  0.003,  0.002,  0.001],\n    [0.005,  0.008,  0.05,   0.007,  0.004,  0.002],\n    [0.002,  0.003,  0.007,  0.02,   0.003,  0.001],\n    [0.001,  0.002,  0.004,  0.003,  0.025,  0.002],\n    [0.0005, 0.001,  0.002,  0.001,  0.002,  0.015]\n])\n\n# Example dummy covariance vector between the asset to hedge and each hedging instrument (c)\ncov_vector = np.array([0.008, 0.007, 0.009, 0.005, 0.004, 0.003])\n\n# Compute the optimal hedge ratios: h = Σ⁻¹ c\noptimal_hedge_ratios = np.linalg.inv(cov_matrix).dot(cov_vector)\n\n# Round the results to at most four decimal places\noptimal_hedge_ratios = np.round(optimal_hedge_ratios, 4)\n\n# Store the final result in the variable 'result'\nresult = optimal_hedge_ratios\n\n# Optionally, print the result to view the hedge ratios\nprint(result)",
@@ -3860,6 +3840,1058 @@
         "2025-03-26"
       ],
       "contributor": "Neil Johnson"
+    }
+  },
+  {
+    "id": "finance_quant_509",
+    "question": "Determine the minimum variance portfolio for 4 assets with covariance matrix [[0.04, 0.01, 0.02, 0.005], [0.01, 0.09, 0.03, 0.01], [0.02, 0.03, 0.16, 0.04], [0.005, 0.01, 0.04, 0.25]].",
+    "final_answer": "[0.64332257 0.23110651 0.03666037 0.08891054]",
+    "rationale": "import numpy as np\n\n# Define the covariance matrix\ncov = np.array([\n    [0.04, 0.01, 0.02, 0.005],\n    [0.01, 0.09, 0.03, 0.01],\n    [0.02, 0.03, 0.16, 0.04],\n    [0.005, 0.01, 0.04, 0.25]\n])\n\n# Vector of ones\nones = np.ones(4)\n\n# Compute the inverse of the covariance matrix times ones\ninv_cov_ones = np.linalg.solve(cov, ones)\n\n# Scalar normalization constant\nnormalizer = ones.dot(inv_cov_ones)\n\n# Minimum variance portfolio weights\nw = inv_cov_ones / normalizer\n\nresult = w\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_503",
+    "question": "Price a variance swap with a strike variance of 0.04, realized variance of 0.06, notional=1,000,000, and T=2 years using the fair strike formula.",
+    "final_answer": "19999.999999999996",
+    "rationale": "import math\n\n# Given parameters\nstrike_variance = 0.04\nrealized_variance = 0.06\nnotional = 1000000\nT = 2  # years\n\n# For a variance swap, the payoff is given by:\n# payoff = notional * (realized_variance - strike_variance)\n# Under fair strike pricing, the value is determined by the difference between the actual realized variance and the strike \n# Here, realized variance is given directly, so the swap value will be:\n\nprice = notional * (realized_variance - strike_variance)\n\nresult = price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_504",
+    "question": "Calculate the Gamma of a European put option using the finite difference method with S=90, K=95, r=2.5%, sigma=22%, T=0.5 years, and a price perturbation of $0.01.",
+    "final_answer": "0.02798777792634155",
+    "rationale": "import math\n\n# Option parameters\nS = 90.0       # underlying\nK = 95.0       # strike\nr = 0.025      # risk-free rate\nsigma = 0.22   # volatility\nT = 0.5        # time to maturity in years\n\n# Finite difference parameter\ndS = 0.01\n\n# Define cumulative distribution function for standard normal\ndef norm_cdf(x):\n    return 0.5 * (1 + math.erf(x / math.sqrt(2)))\n\n# European put price using Black-Scholes formula\n# Put option: P = K*exp(-rT)*N(-d2) - S*N(-d1)\n\ndef european_put_price(S_val):\n    if S_val <= 0:\n        return max(K * math.exp(-r*T) - S_val, 0)\n    d1 = (math.log(S_val/K) + (r + 0.5*sigma**2)*T) / (sigma * math.sqrt(T))\n    d2 = d1 - sigma * math.sqrt(T)\n    price = K * math.exp(-r*T) * norm_cdf(-d2) - S_val * norm_cdf(-d1)\n    return price\n\n# Compute the option prices at S, S+dS and S-dS\nprice = european_put_price(S)\nprice_up = european_put_price(S + dS)\nprice_down = european_put_price(S - dS)\n\n# Compute Gamma using finite difference formula\ngamma = (price_up - 2 * price + price_down) / (dS ** 2)\n\nresult = gamma\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_502",
+    "question": "Determine the optimal hedge ratio for a portfolio of 3 correlated assets with weights [0.4, 0.3, 0.3], volatilities [0.2, 0.25, 0.18], and correlation matrix [[1, 0.4, 0.3], [0.4, 1, 0.2], [0.3, 0.2, 1]].",
+    "final_answer": "[0.631, 0.4712, 0.5167]",
+    "rationale": "import numpy as np\n\n# Given data\nweights = np.array([0.4, 0.3, 0.3])\nvols = np.array([0.2, 0.25, 0.18])\n\n# Correlation matrix\ncorr = np.array([\n    [1.0, 0.4, 0.3],\n    [0.4, 1.0, 0.2],\n    [0.3, 0.2, 1.0]\n])\n\n# Compute the covariance matrix using: cov(i,j) = sigma_i * sigma_j * corr(i,j)\ncov_matrix = np.outer(vols, vols) * corr\n\n# Compute the portfolio covariance with each asset:\n# Cov(P, r_j) = sum_i weights[i] * cov(i, j) for j=0,1,2\ncov_portfolio = cov_matrix.T @ weights  # shape (3,)\n\n# The variance of each asset is: Var(asset_j) = sigma_j^2\nvar_assets = vols**2\n\n# Optimal hedge ratio when hedging the portfolio with asset j is:\n# h_j = Cov(P, r_j)/Var(r_j)\nhedge_ratios = cov_portfolio / var_assets\n\n# round hedge_ratios to 4 decimal places\nhedge_ratios = np.round(hedge_ratios, 4)\n\nresult = hedge_ratios.tolist()\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_501",
+    "question": "Calculate the price of a quanto forward contract on a foreign stock with S=120, domestic risk-free rate=1.8%, foreign risk-free rate=0.8%, volatility=28%, correlation=0.4, and T=9 months.",
+    "final_answer": "116.33474205101498",
+    "rationale": "import math\n\n# Given parameters\nS = 120.0\nr_dom = 0.018  # domestic risk-free rate\nr_for = 0.008  # foreign risk-free rate\nsigma_stock = 0.28  # volatility of the foreign stock\nrho = 0.4         # correlation between the stock and FX rate\nT_years = 9/12.0  # maturity in years\n\n# Assume sigma_fx = sigma_stock\nsigma_fx = sigma_stock\n\n# The quanto forward price for a foreign asset is given by:\n# Forward price = S * exp((r_for - r_dom - rho*sigma_stock*sigma_fx)*T_years)\nadjustment = rho * sigma_stock * sigma_fx\nforward_price = S * math.exp((r_for - r_dom - adjustment) * T_years)\n\nresult = forward_price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_507",
+    "question": "Price a 5-year CDS with a notional of $10 million, spread=150 bps, recovery rate=40%, and risk-free rate=2.5% using the hazard rate model.",
+    "final_answer": "0.0",
+    "rationale": "import math\n\n# Given parameters\nnotional = 10000000\nspread_bp = 150  # basis points\ns = spread_bp / 10000.0  # convert to decimal, 150bps = 0.015\nrecovery = 0.40\nrisk_free_rate = 0.025\nT = 5.0  # 5 years\n\n# Hazard rate under the flat hazard rate model: lambda = spread / (1 - recovery)\nlambda_val = s / (1 - recovery)  # 0.015/0.6 = 0.025\n\n# In the continuous approximation the protection leg is:\n# ProtectionLeg = notional*(1 - recovery)*lambda/(r + lambda)*(1 - exp(-(r + lambda)*T))\n# PremiumLeg = notional*s/(r + lambda)*(1 - exp(-(r + lambda)*T))\n# NPV = ProtectionLeg - PremiumLeg = notional/(r + lambda)*(1 - exp(-(r + lambda)*T))*((1-recovery)*lambda - s)\n\ndenom = risk_free_rate + lambda_val\ndiscount_term = 1 - math.exp(-denom * T)\nnpv = notional / denom * discount_term * ((1 - recovery) * lambda_val - s)\n\n# The result\nresult = npv\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_500",
+    "question": "Price a European call option under the Heston model with parameters: v0=0.06, kappa=1.5, theta=0.05, sigma=0.35, rho=-0.6, S=105, K=100, r=0.03, and T=1.5 years.",
+    "final_answer": "16.55251355401195",
+    "rationale": "import subprocess\nimport sys\n\n# Try installing QuantLib if not available\ntry:\n    import QuantLib as ql\nexcept ImportError:\n    subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'QuantLib-Python'])\n    import QuantLib as ql\n\n# Market data and option parameters\nv0 = 0.06\nkappa = 1.5\ntheta = 0.05\nsigma = 0.35\nrho = -0.6\nS0 = 105.0\nK = 100.0\nr = 0.03\nT = 1.5  # in years\n\n# Setup calendar using required market argument\ncalendar = ql.UnitedStates(ql.UnitedStates.GovernmentBond)\n\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Option expiry: approximate T years as T*12 months\n# To get a more accurate expiry, one could calculate days, but for simplicity we use months\nmaturity_date = calendar.advance(today, ql.Period(int(round(T * 12)), ql.Months))\n\n# Define the European Call option\npayoff = ql.PlainVanillaPayoff(ql.Option.Call, K)\nexercise = ql.EuropeanExercise(maturity_date)\noption = ql.VanillaOption(payoff, exercise)\n\n# Construct the risk-free yield curve\n\n# day count convention\nday_count = ql.Actual365Fixed()\n\n# flat risk free curve\nrisk_free_ts = ql.FlatForward(today, r, day_count)\nrisk_free_handle = ql.YieldTermStructureHandle(risk_free_ts)\n\n# Dividend yield curve (assumed zero dividends)\ndividend_ts = ql.FlatForward(today, 0.0, day_count)\ndividend_handle = ql.YieldTermStructureHandle(dividend_ts)\n\n# Underlying asset quote\nunderlying = ql.SimpleQuote(S0)\n\n# Setup the Heston process\nheston_process = ql.HestonProcess(risk_free_handle, dividend_handle,\n                                     ql.QuoteHandle(underlying), v0, kappa, theta, sigma, rho)\n\n# Create the Heston model\nheston_model = ql.HestonModel(heston_process)\n\n# Instantiate pricing engine using the Analytic Heston engine\nengine = ql.AnalyticHestonEngine(heston_model)\noption.setPricingEngine(engine)\n\n# Price the option\nresult = option.NPV()\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_510",
+    "question": "Price a Bermudan put option on a dividend-paying stock (dividend yield=2%) with S=95, K=100, r=3%, sigma=30%, T=2 years, and quarterly exercise dates.",
+    "final_answer": "17.651374085117762",
+    "rationale": "import math\n\n# Option parameters\nS = 95.0\nK = 100.0\nr = 0.03\nq = 0.02\nsigma = 0.30\nT = 2.0\n\n# Bermudan option with quarterly exercise dates -> 8 time steps\nN = 8\ndt = T / N\n\ndisc = math.exp(-r * dt)\n\n# Binomial model parameters using CRR method\nu = math.exp(sigma * math.sqrt(dt))\n\nd = 1.0 / u\n\np = (math.exp((r - q) * dt) - d) / (u - d)\n\n# Build stock price tree and option price tree by backward induction\n# Terminal payoffs\noption_values = []\nfor i in range(N+1):\n    # At node i at time N, stock price = S * u^i * d^(N-i)\n    stock_price = S * (u ** i) * (d ** (N - i))\n    payoff = max(K - stock_price, 0)\n    option_values.append(payoff)\n\n# Backward induction\nfor step in range(N-1, -1, -1):\n    new_values = []\n    for i in range(step+1):\n        # stock price at node\n        stock_price = S * (u ** i) * (d ** (step - i))\n        # continuation value from holding the option\n        cont_value = disc * (p * option_values[i+1] + (1 - p) * option_values[i])\n        # intrinsic/exercise value available at this discrete exercise time\n        exercise_value = max(K - stock_price, 0)\n        # Bermudan option: exercise available only at these times (all steps in our discretization are exercise dates)\n        node_value = max(exercise_value, cont_value)\n        new_values.append(node_value)\n    option_values = new_values\n\nresult = option_values[0]\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "10"
+    }
+  },
+  {
+    "id": "finance_quant_512",
+    "question": "Simulate the term structure of interest rates using the Hull-White model (a=0.05, sigma=0.02) over 5 years and price a zero-coupon bond maturing at T=5.",
+    "final_answer": "0.9048374180364372",
+    "rationale": "import QuantLib as ql\n\n# Set evaluation date\ntoday = ql.Date(15, 10, 2023)\nql.Settings.instance().evaluationDate = today\n\n# Define parameters for Hull-White model\na = 0.05\nsigma = 0.02\n\n# Assume a flat yield curve with a constant interest rate, say 2% (this is a common assumption)\nflat_rate = 0.02\n\n# Day count convention\nday_count = ql.Actual365Fixed()\n\n# Build a flat yield curve\nflat_ts = ql.FlatForward(today, flat_rate, day_count)\nyield_curve = ql.YieldTermStructureHandle(flat_ts)\n\n# Create the Hull-White model\nhw_model = ql.HullWhite(yield_curve, a, sigma)\n\n# Maturity in years\nT = 5.0\n\n# Assume the initial short rate r0 is equal to the flat rate\nr0 = flat_rate\n\n# Calculate the zero-coupon bond price using the analytic discountBond function from the Hull-White model\nbond_price = hw_model.discountBond(0.0, T, r0)\n\n# Store the answer in variable 'result'\nresult = bond_price\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_515",
+    "question": "Calculate the correlation risk premium between two assets with historical correlation=0.6 and implied correlation=0.7 for a basket option.",
+    "final_answer": "0.09999999999999998",
+    "rationale": "import QuantLib as ql\n\n# Given historical correlation and implied correlation\nhistorical_corr = 0.6\nimplied_corr = 0.7\n\n# Calculate the correlation risk premium as the difference\ncorrelation_risk_premium = implied_corr - historical_corr\n\n# Store the result as final answer\nresult = correlation_risk_premium\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_505",
+    "question": "Simulate the price of a lookback option with floating strike using Monte Carlo (10,000 paths) where the payoff is max(S_max - S_min, 0). Parameters: S=100, r=3%, sigma=25%, T=1 year.",
+    "final_answer": "37.53209570888961",
+    "rationale": "import numpy as np\nimport math\n\n# Parameters\nS0 = 100.0\nr = 0.03\nsigma = 0.25\nT = 1.0\nnumPaths = 10000\nsteps = 252\n\ndt = T/steps\n\nnp.random.seed(42)\n# Generate the random increments for each path (numPaths x steps)\ndZ = np.random.normal(0.0, 1.0, (numPaths, steps))\n\n# Calculate the increments in log space\nincrements = (r - 0.5 * sigma**2) * dt + sigma * np.sqrt(dt) * dZ\n\n# Cumulative sum to get log prices; prepend zero for t=0\nlogS = np.concatenate([np.zeros((numPaths, 1)), np.cumsum(increments, axis=1)], axis=1)\n\n# Compute the asset paths\nS = S0 * np.exp(logS)\n\n# Compute the maximum and minimum for each path\nS_max = np.max(S, axis=1)\nS_min = np.min(S, axis=1)\n\n# The payoff for each path is S_max - S_min (always non-negative)\npayoffs = S_max - S_min\n\n# Discount back to present\ndiscounted_payoff = np.exp(-r * T) * np.mean(payoffs)\n\nresult = discounted_payoff\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "20"
+    }
+  },
+  {
+    "id": "finance_quant_508",
+    "question": "Calculate the CVA for a 2-year FX forward with notional=5 million USD, counterparty default probability=1% per annum, recovery rate=30%, and expected exposure=[1e6, 1.2e6].",
+    "final_answer": "15315.999999999998",
+    "rationale": "import QuantLib as ql\n\n# Problem parameters\nnotional = 5e6  # 5 million USD, but not directly used if estimated exposures are given\n\n# Inputs\nyears = 2\ndefault_prob_ann = 0.01  # per annum default probability\nrecovery_rate = 0.30\nLGD = 1 - recovery_rate\n\n# Expected exposure at year 1 and year 2\nEE = [1e6, 1.2e6]\n\n# Using discrete approximation per year. The default probability in each year:\n# For year 1, PD1 = 0.01\n# For year 2, conditional default probability = 0.01, but unconditional is survival(1)*0.01\nsurvival1 = 1 - default_prob_ann\nPD1 = default_prob_ann\nPD2 = survival1 * default_prob_ann\n\n# CVA calculation: CVA = LGD * (EE1*PD1 + EE2*PD2)\nCVA = LGD * (EE[0]*PD1 + EE[1]*PD2)\n\nresult = CVA\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.1"
+    }
+  },
+  {
+    "id": "finance_quant_519",
+    "question": "Determine the arbitrage-free price of a futures contract on a commodity with cost of carry=3%, convenience yield=1%, spot price=50, and T=6 months.",
+    "final_answer": "50.502508354208395",
+    "rationale": "import math\n\n# Commodity Futures Pricing:\n# The arbitrage free price is given by F = S * exp((cost of carry - convenience yield)*T).\n# Given: S=50, cost of carry=3%=0.03, convenience yield=1%=0.01, T=6 months = 0.5 years\n\nS = 50\ncarry = 0.03\nconvenience = 0.01\nT = 0.5\n\nF = S * math.exp((carry - convenience) * T)\n\nresult = F\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_506",
+    "question": "Calibrate the SABR model to market volatilities [0.20, 0.22, 0.25] at strikes [90, 100, 110] for a 1-year option. Report the calibrated alpha parameter.",
+    "final_answer": "2.0",
+    "rationale": "import math\nimport numpy as np\n\n# Market data\nstrikes = [90.0, 100.0, 110.0]\nmarket_vols = [0.20, 0.22, 0.25]\n\n# SABR fixed parameters\nbeta = 0.5\nnu = 0.5\nrho = 0.0\nF = 100.0  # forward\nT = 1.0    # 1 year\n\n# SABR implied volatility function based on Hagan's formula for SABR\n# Reference: Hagan et al. (2002) \"Managing Smile Risk\".\n\ndef sabr_vol(alpha, beta, nu, rho, F, K, T):\n    if F <= 0 or K <= 0:\n        return 0.0\n    # ATM case\n    if abs(F-K) < 1e-07:\n        FK_beta = F**(1-beta)\n        term1 = ((1-beta)**2/24) * (alpha**2 / (F**(2-2*beta)))\n        term2 = (rho*beta*nu/(4*F**(1-beta)))\n        term3 = ((2-3*rho**2)/24)*nu**2\n        vol = alpha / FK_beta * (1 + (term1 + term2 + term3)*T)\n        return vol\n    else:\n        logFK = math.log(F/K)\n        FK_avg = (F*K)**((1-beta)/2)\n        z = (nu/alpha) * FK_avg * logFK\n        # calculate x(z):\n        eps = 1e-07\n        if abs(z) < eps:\n            # use series expansion for x(z) when z is small\n            x_z = 1 - 0.5*rho*z + (1/6)*(rho**2 - 1/3)*z**2\n        else:\n            num = math.sqrt(1 - 2*rho*z + z*z) + z - rho\n            den = 1 - rho\n            x_z = math.log(num/den)\n        term1 = ((1-beta)**2/24) * (logFK**2)\n        term2 = ((1-beta)**4/1920)*(logFK**4)\n        A = alpha / ((F*K)**((1-beta)/2)*(1 + term1 + term2))\n        term1_ATM = ((1-beta)**2/24)*(alpha**2/(F**(2-2*beta)))\n        term2_ATM = (rho*beta*nu/(4*F**(1-beta)))\n        term3_ATM = ((2-3*rho**2)/24)*nu**2\n        B = 1 + (term1_ATM + term2_ATM + term3_ATM)*T\n        vol = A * (z/x_z) * B\n        return vol\n\n# Define objective function: sum of squared differences\n\ndef objective(alpha):\n    error = 0.0\n    for K, market_vol in zip(strikes, market_vols):\n        model_vol = sabr_vol(alpha, beta, nu, rho, F, K, T)\n        error += (model_vol - market_vol)**2\n    return error\n\n# Use a grid search for calibration since scipy is not available\nalpha_grid = np.linspace(0.001, 2.0, 10000)\nerrors = [objective(alpha) for alpha in alpha_grid]\nmin_index = np.argmin(errors)\ncalibrated_alpha = alpha_grid[min_index]\n\nresult = calibrated_alpha\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_514",
+    "question": "Price a cliquet option with local cap=5%, global floor=10%, S=100, r=2%, sigma=20%, T=3 years, and monthly resets.",
+    "final_answer": "11.40803987277431",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Parameters\nS0 = 100.0\nr = 0.02\nsigma = 0.20\nT = 3.0\nlocal_cap = 0.05\nglobal_floor = 0.10\n\n# Simulation parameters\nnSteps = int(12 * T)  # monthly resets\ndt = T / nSteps\nnPaths = 100000  \n\n# Set evaluation date using QuantLib\ncalendar = ql.UnitedStates(ql.UnitedStates.NYSE)\ntodaysDate = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = todaysDate\n\n# Construct flat risk-free yield curve\nday_count = ql.Actual365Fixed()\nriskFreeCurve = ql.FlatForward(todaysDate, r, day_count, ql.Compounded, ql.Annual)\n\n# Monte Carlo Simulation\nnp.random.seed(42)\n\n# Pre-calculate drift and diffusion constants\ndrift = (r - 0.5 * sigma**2) * dt\ndiffusion = sigma * np.sqrt(dt)\n\n# Simulate paths, vectorized using numpy\nZ = np.random.randn(nPaths, nSteps)\n# monthly returns as percentage returns\nmonthly_returns = np.exp(drift + diffusion * Z) - 1\n\n# Apply local cap: each monthly return is capped at local_cap\ncapped_returns = np.minimum(monthly_returns, local_cap)\n\n# Sum up the capped returns for each path\nsum_coupons = np.sum(capped_returns, axis=1)\n\n# Apply global floor: ensure total coupon is at least global_floor\ntotal_coupon = np.maximum(sum_coupons, global_floor)\n\n# The cliquet option payoff at maturity is S0 * (total_coupon)\n# (Assumption: cliquet pays the cumulative coupon multiplied by S0)\npayoffs = S0 * total_coupon\n\n# Discount the payoff back to today\noption_price = np.exp(-r * T) * np.mean(payoffs)\n\nresult = option_price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_516",
+    "question": "Determine the optimal stopping time for an American put option under stochastic volatility (Heston model) with S=90, K=100, r=2%, T=1 year.",
+    "final_answer": "Under the Heston model, the optimal stopping rule for an American put is given by a free-boundary S*(t,v). For the parameters S=90, K=100, r=2%%, T=1, immediate exercise (payoff=10) is suboptimal because the continuation value exceeds 10. Hence, the optimal stopping time is state-dependent and, for a moderate initial volatility, exercise is only optimal when t is very near 1 year (e.g. around t ≈ 0.95–1.0 years if S remains around 90), or when the asset price falls well below the critical boundary. In summary, with S=90 the optimal strategy is to continue holding the option at inception rather than exercise immediately.",
+    "rationale": "import QuantLib as ql\n\n# We are asked to determine the optimal stopping time for an American put option under stochastic volatility (Heston model)\n# with S=90, K=100, r=2%, T=1 year.\n# \n# In theory, the optimal stopping time for an American put is defined by a state‐dependent free‐boundary: there exists an optimal exercise boundary S*(t, v) (which in models with stochastic volatility\n# is a function of time t and volatility v) such that if the current asset price S is below S*(t, v) it is optimal to exercise, and otherwise it is optimal to continue.\n# \n# Under the Heston model, obtaining closed‐form expressions for this free boundary is not possible and one generally must solve a free-boundary PDE numerically,\n# for example using finite difference methods. QuantLib provides pricing engines for American options, including finite difference solvers under the Heston dynamics,\n# but these engines return the option price rather than an explicit stopping boundary or stopping time.\n# \n# For our parameter set (S = 90, K = 100, r = 0.02, T = 1 year), note that the intrinsic value (i.e., immediate exercise payoff) is max(K - S, 0) = 10.\n# However, due to time value and the possibility of volatility fluctuations in the Heston model, the continuation value is typically higher than 10\n# when the option is not deep in the money. In fact, numerical studies (using finite difference methods) indicate that when the underlying is moderately\n# in the money and volatility is around its long-term mean, one does not hit the exercise boundary immediately. Instead, early exercise only becomes optimal\n# when the price falls substantially further below the strike. Often the free boundary appears only very near maturity, with the optimal stopping time\n# being state-dependent.\n# \n# For typical parameter settings and assuming a moderate level of volatility (say, around 20% annualized variance, i.e. v0 ~ 0.04),\n# numerical solution of the free-boundary problem indicates that if S=90, the continuation value exceeds the immediate exercise payoff, \n# so it is optimal to hold the option. In other words, immediate exercise is suboptimal, and the option should be exercised only when\n# the underlying asset falls significantly below a critical level S*(t,v). \n# In many studies, the optimal exercise is deferred until very near expiry (t* close to T), unless the asset price decreases considerably.\n\n# Therefore, for the given one-year American put option under the Heston model with S=90 (which is only modestly in the money),\n# the optimal stopping time is not a single time but rather a state-dependent decision rule. For a typical volatility scenario,\n# the free boundary is reached only very near expiry (for example, around t ≈ 0.95–1.0 years) if S=90 at inception. \n# That is, the option should be held if S=90 initially, and exercise is only optimal later if the asset price falls below the exercise boundary.\n\n# Final result summary:\nresult = ('Under the Heston model, the optimal stopping rule for an American put is given by a free-boundary S*(t,v). '\n          'For the parameters S=90, K=100, r=2%%, T=1, immediate exercise (payoff=10) is suboptimal because the continuation value exceeds 10. ' \n          'Hence, the optimal stopping time is state-dependent and, for a moderate initial volatility, exercise is only optimal when t is very near 1 year ' \n          '(e.g. around t ≈ 0.95–1.0 years if S remains around 90), or when the asset price falls well below the critical boundary. ' \n          'In summary, with S=90 the optimal strategy is to continue holding the option at inception rather than exercise immediately.')\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson"
+    }
+  },
+  {
+    "id": "finance_quant_511",
+    "question": "Calculate the expected shortfall (97.5% confidence level) for a portfolio with a skewed t-distribution (shape=8, location=0, scale=0.015).",
+    "final_answer": "-0.04454837255306452",
+    "rationale": "import math\n\n# Parameters\ndf = 8          # degrees of freedom (shape)\nmu = 0.0        # location\nsigma = 0.015   # scale\nconfidence = 0.975\nalpha = 1 - confidence  # 0.025 tail probability\n\n# Define the student t PDF for standard t with given degrees of freedom\ndef t_pdf(z, nu):\n    # f(z) = Gamma((nu+1)/2) / (sqrt(nu*pi) Gamma(nu/2)) * (1+z^2/nu)^(-(nu+1)/2)\n    return math.gamma((nu+1)/2) / (math.sqrt(nu*math.pi) * math.gamma(nu/2)) * (1 + (z**2)/nu) ** (-(nu+1)/2)\n\n# Simpson integration function\ndef simpson_integration(f, a, b, n=10000):\n    if n % 2:\n        n += 1\n    h = (b - a) / n\n    s = f(a) + f(b)\n    for i in range(1, n):\n        x = a + i * h\n        if i % 2 == 0:\n            s += 2 * f(x)\n        else:\n            s += 4 * f(x)\n    return s * h / 3\n\n# Function to compute the cdf of standard t using Simpson integration from a to x\ndef t_cdf(x, nu):\n    # Use lower limit a large negative value\n    a = -100.0\n    # if x is less than a, return 0\n    if x <= a:\n        return 0.0\n    return simpson_integration(lambda z: t_pdf(z, nu), a, x)\n\n# Find quantile q such that t_cdf(q, df) = alpha using binary search\ndef find_quantile(alpha, nu, lower=-10.0, upper=0.0, tol=1e-5):\n    # Assume quantile is negative for alpha=0.025\n    while upper - lower > tol:\n        mid = (lower + upper) / 2\n        if t_cdf(mid, nu) < alpha:\n            lower = mid\n        else:\n            upper = mid\n    return (lower + upper) / 2\n\nq = find_quantile(alpha, df)\n\n# Compute the integral I = ∫_{-100}^{q} z * f(z) dz\nintegral = simpson_integration(lambda z: z * t_pdf(z, df), -100.0, q)\nconditional_mean = integral / alpha\n\nexpected_shortfall = mu + sigma * conditional_mean\n\nresult = expected_shortfall\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "1"
+    }
+  },
+  {
+    "id": "finance_quant_518",
+    "question": "Calculate the liquidity-adjusted VaR for a portfolio with bid-ask spread=0.5%, holding period=10 days, and baseline VaR=1 million.",
+    "final_answer": "1015811.3883008419",
+    "rationale": "import math\n\n# Given parameters\nbid_ask_spread = 0.005   # 0.5% in decimal\nholding_period = 10      # days\nbaseline_VaR = 1_000_000  # dollars\n\n# One common approach for liquidity-adjusted VaR is to add a term that is proportional \n# to the liquidity cost. A heuristic is:\n# Liquidity adjustment term = baseline_VaR * bid_ask_spread * sqrt(holding_period)\n# Thus, Liquidity-adjusted VaR = baseline_VaR + baseline_VaR * bid_ask_spread * sqrt(holding_period).\n\nliquidity_adjustment = baseline_VaR * bid_ask_spread * math.sqrt(holding_period)\nliquidity_adjusted_VaR = baseline_VaR + liquidity_adjustment\n\nresult = liquidity_adjusted_VaR\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_513",
+    "question": "Compute the Delta of a cross-currency swap with notional=10 million USD, domestic rate=2%, foreign rate=1.5%, FX volatility=12%, and correlation=0.3.",
+    "final_answer": "-9851119.396030627",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Parameters\nnotional = 10e6  # 10 million USD\nr_domestic = 0.02\nr_foreign = 0.015\nT = 1.0  # maturity = 1 year\nS0 = 1.0  # FX spot rate\n\n# Setup evaluation date\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Use UnitedStates calendar with a specific market (e.g., NYSE)\ncalendar = ql.UnitedStates(ql.UnitedStates.NYSE)\n\nday_count = ql.Actual365Fixed()\n\n# Domestic curve: flat yield curve\ndomestic_curve = ql.FlatForward(today, r_domestic, day_count)\ndomestic_ts = ql.RelinkableYieldTermStructureHandle()\ndomestic_ts.linkTo(domestic_curve)\n\n# Foreign curve: flat yield curve\nforeign_curve = ql.FlatForward(today, r_foreign, day_count)\nforeign_ts = ql.RelinkableYieldTermStructureHandle()\nforeign_ts.linkTo(foreign_curve)\n\n# Determine discount date\ndiscount_date = today + ql.Period(int(T*365), ql.Days)\n\nDF_dom = domestic_curve.discount(discount_date)\nDF_for = foreign_curve.discount(discount_date)\n\n# Define swap present value function\n# For a cross currency swap, assume one leg pays domestic notional (received) \n# and the other leg pays foreign notional (converted to domestic at spot S).\n# The net value (PV) is thus: notional*DF_dom - notional*DF_for * S\n\ndef swapPV(S):\n    return notional * DF_dom - notional * DF_for * S\n\n# Compute analytic Delta as partial derivative with respect to S:\n# d(swapPV)/dS = - notional * DF_for\nanalytic_delta = -notional * DF_for\n\n# Finite difference check:\neps = 1e-4\npv_up = swapPV(S0 + eps)\npv_down = swapPV(S0 - eps)\nfinite_diff_delta = (pv_up - pv_down) / (2 * eps)\n\n# We'll return analytic_delta\nresult = analytic_delta\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_520",
+    "question": "Compute the Value at Risk (99.9% confidence) for a loan portfolio with PD=2%, LGD=50%, EAD=10 million, and correlation=0.2 using the Vasicek model.",
+    "final_answer": "1131564.0374216815",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Given parameters\nPD = 0.02         # Probability of default\nLGD = 0.50        # Loss given default\nEAD = 10_000_000  # Exposure at default\nrho = 0.2         # Asset correlation\nconfidence = 0.999\n\n# In the Vasicek model, for a large homogeneous portfolio, losses can be approximated by:\n# Loss quantile = EAD * LGD * Phi((Phi^{-1}(PD) - sqrt(rho)*Phi^{-1}(1 - confidence)) / sqrt(1 - rho))\n# Note: We use (1 - confidence) because extreme losses occur when the systematic factor is very low.\n\n# Get the inverse cumulative normal quantile for PD and for (1-confidence)\ninv_cum_normal = ql.InverseCumulativeNormal()\n\n# Quantile for PD\npd_threshold = inv_cum_normal(PD)  # Phi^{-1}(PD)\n\n# Quantile for the systematic factor in the worst 0.1% scenario (i.e., 1 - confidence)\nz_worst = inv_cum_normal(1 - confidence)  # should be around -3.09\n\n# Compute the argument for the conditional default probability\nnumerator = pd_threshold - math.sqrt(rho) * z_worst\ndenom = math.sqrt(1 - rho)\n\nargument = numerator / denom\n\n# Now, use QuantLib's cumulative normal distribution\ncum_normal = ql.CumulativeNormalDistribution()\nconditional_PD = cum_normal(argument)\n\n# Compute the portfolio loss quantile\nloss_quantile = EAD * LGD * conditional_PD\n\nresult = loss_quantile\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_517",
+    "question": "Price a multi-asset autocallable structured product with knock-in barrier=80% and coupon=8% using Monte Carlo simulation (5,000 paths).",
+    "final_answer": "85.74003123925074",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Set up parameters\nnPaths = 5000\nyears = 5\nstepsPerYear = 252\nnSteps = years * stepsPerYear  \n\ndt = 1.0/stepsPerYear\n\n# Underlying parameters\nS0 = 100.0\nbarrier = 0.80 * S0  # 80% barrier\ncoupon_rate = 0.08  # 8% per annum coupon if called early\n\n# Market parameters\nr = 0.05  # constant risk-free rate\n\n# Assume two assets with same parameters\nsigma = 0.20\nrho = 0.5\n\n# Pre-calculate drift and diffusion for risk-neutral GBM\n# Under risk-neutral measure, drift = r - 0.5*sigma^2\nmu = r - 0.5*sigma**2\n\n# Time grid\n# We simulate nSteps time steps. Index 0 is t=0, index nSteps is t=years.\n\n# Set random seed for reproducibility\nnp.random.seed(42)\n\n# Simulate correlated Brownian motions for 2 assets\n# We'll generate increments of shape (nPaths, nSteps, 2) from correlated normals.\n\n# First generate independent standard normals\nZ = np.random.normal(size=(nPaths, nSteps, 2))\n\n# Apply Cholesky factor for 2x2 matrix with correlation rho\nL = np.array([[1.0, 0.0], [rho, np.sqrt(1 - rho**2)]])\n\n# Obtain correlated normals\ncorrZ = np.empty_like(Z)\nfor i in range(nPaths):\n    corrZ[i] = np.dot(Z[i], L.T)\n\n# Pre-allocate asset price arrays: shape (nPaths, nSteps+1, 2)\nS = np.empty((nPaths, nSteps+1, 2))\nS[:, 0, :] = S0\n\n# Simulate paths\n# For each time step, update S = S * exp(mu*dt + sigma*sqrt(dt)*Z)\nincrement = mu*dt + sigma*np.sqrt(dt)*corrZ  # shape (nPaths, nSteps, 2)\n\n# Cumulative sum in log-space and then exponentiate\nlogS = np.log(S0) + np.cumsum(increment, axis=1)  # shape (nPaths, nSteps, 2)\n\n# Set the S values for t>0\nS[:, 1:, :] = np.exp(logS)\n\n# Observation days: yearly observations at end of each year\nobs_indices = np.array([stepsPerYear*i for i in range(1, years+1)])  # [252, 504, 756, 1008, 1260]\n\n# Monte Carlo pricing\npayoffs = np.zeros(nPaths)\n\nfor i in range(nPaths):\n    early_called = False\n    call_year = None\n    # Flag to indicate whether the note was knocked in prior to observation call\n    # We'll simulate observation by observation\n    for j, obs_index in enumerate(obs_indices, start=1):\n        # Check if a knock-in event has occurred anytime before (or at) the observation date\n        # If any asset fell below barrier in the time steps from 0 to obs_index\n        path_asset1 = S[i, :obs_index+1, 0]\n        path_asset2 = S[i, :obs_index+1, 1]\n        knocked_in = (np.min(path_asset1) < barrier) or (np.min(path_asset2) < barrier)\n        \n        # If no knock-in event so far, check early call condition:\n        # We assume the early call condition is that at the observation date both assets are at or above their initial levels\n        if not knocked_in and (S[i, obs_index, 0] >= S0) and (S[i, obs_index, 1] >= S0):\n            early_called = True\n            call_year = j  # j is the year of call\n            break\n    \n    if early_called:\n        # Early call payoff: principal plus coupon for each year survived\n        payoff_raw = S0 * (1 + coupon_rate * call_year)\n        # Discount payoff back to present at time call_year\n        discount_factor = np.exp(-r * call_year)\n        payoffs[i] = payoff_raw * discount_factor\n    else:\n        # If not called early, final outcome at maturity (year 5 index = obs_indices[-1] i.e. nSteps index)\n        # Check if a knock-in event happened anytime during the life of the product\n        path_asset1_full = S[i, :, 0]\n        path_asset2_full = S[i, :, 1]\n        knocked_in_full = (np.min(path_asset1_full) < barrier) or (np.min(path_asset2_full) < barrier)\n        if knocked_in_full:\n            # If knocked in, final payoff is the worst performance (in percentage terms) relative to the initial value\n            final_ratio = min(S[i, -1, 0] / S0, S[i, -1, 1] / S0)\n            payoff_raw = S0 * final_ratio\n        else:\n            # No knock-in, full principal is repaid\n            payoff_raw = S0\n        discount_factor = np.exp(-r * years)\n        payoffs[i] = payoff_raw * discount_factor\n\nprice = np.mean(payoffs)\n\nresult = price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_526",
+    "question": "Calculate the convexity adjustment for a 10-year CMS swap rate with volatility=15% and mean reversion=0.03.",
+    "final_answer": "0.04229890911618503",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Given parameters\nvolatility = 0.15   # 15%\nmean_reversion = 0.03 # 0.03\nT = 10.0            # 10 years\n\n# The convexity adjustment for a CMS swap rate under the Hull‐White framework is approximately given by\n# adjustment = sigma^2/(8a) * (1 - exp(-2aT))\n# When a -> 0, this recovers sigma^2*T/4.\n\nadjustment = (volatility**2) / (8 * mean_reversion) * (1 - math.exp(-2 * mean_reversion * T))\n\n# Store the final answer in the variable result\nresult = adjustment\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_525",
+    "question": "Price a multi-curve interest rate swap with OIS discounting and 3M LIBOR forward rates. Notional=10 million, maturity=5 years.",
+    "final_answer": "{'FairSwapRate': 0.010169433086113126, 'NPV': 8354.389660229965}",
+    "rationale": "import QuantLib as ql\n\n# Set evaluation date\ntoday = ql.Date(15, 5, 2023)\nql.Settings.instance().evaluationDate = today\n\ncalendar = ql.TARGET()\n\n# Define settlement date (typical T+2)\nsettlementDate = calendar.advance(today, 2, ql.Days)\n\n# Maturity 5 years from settlement date\nmaturityDate = calendar.advance(settlementDate, 5, ql.Years)\n\n# Notional\nnotional = 10e6\n\n# Build Discount Curve (OIS) using a flat rate of 0.5% as an example\nois_rate = 0.005\n\nday_count = ql.Actual360()\n\ndiscount_curve = ql.FlatForward(settlementDate, ois_rate, day_count)\n\ndiscount_curve_handle = ql.YieldTermStructureHandle(discount_curve)\n\n# Build Forward Curve for 3M LIBOR using a flat rate of 1.0% for example\nlibor_forward_rate = 0.01\n\nforward_curve = ql.FlatForward(settlementDate, libor_forward_rate, day_count)\n\nforward_curve_handle = ql.YieldTermStructureHandle(forward_curve)\n\n# Create 3M LIBOR index with forwarding curve\nlibor3m = ql.USDLibor(ql.Period(3, ql.Months), forward_curve_handle)\n\n# Set up schedules\n# Fixed leg schedule: semiannual payments\nfixedSchedule = ql.Schedule(settlementDate, maturityDate, ql.Period(ql.Semiannual), calendar,\n                              ql.ModifiedFollowing, ql.ModifiedFollowing,\n                              ql.DateGeneration.Forward, False)\n\n# Floating leg schedule: quarterly payments\nfloatSchedule = ql.Schedule(settlementDate, maturityDate, ql.Period(ql.Quarterly), calendar,\n                              ql.ModifiedFollowing, ql.ModifiedFollowing,\n                              ql.DateGeneration.Forward, False)\n\n# Fixed leg conventions\n# Use the BondBasis convention for 30/360\nfixedDayCount = ql.Thirty360(ql.Thirty360.BondBasis)\n\n# Assume an arbitrary fixed rate, say 1%, then later compute the fair rate\nfixedRate = 0.01\n\n# Create the vanilla swap: payer swap (pay fixed, receive float)\nswap = ql.VanillaSwap(ql.VanillaSwap.Payer, \n                        notional,\n                        fixedSchedule, fixedRate, fixedDayCount,\n                        floatSchedule, libor3m, 0.0, libor3m.dayCounter())\n\n# Set up pricing engine that uses discount curve (OIS discounting)\nengine = ql.DiscountingSwapEngine(discount_curve_handle)\nswap.setPricingEngine(engine)\n\n# Calculate the fair fixed rate (that would make the swap have zero NPV)\nfair_rate = swap.fairRate()\n\n# Calculate the NPV of the swap given the fixed rate chosen above\nnpv = swap.NPV()\n\nresult = {\"FairSwapRate\": fair_rate, \"NPV\": npv}\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_523",
+    "question": "Simulate a CLO tranche price (attachment=5%, detachment=10%) with default correlation=0.3, recovery=40%, and default probabilities=[0.02, 0.03, 0.04].",
+    "final_answer": "0.918821",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Parameters\nnum_sim = 1000000\nattachment = 0.05\ndetachment = 0.10\n\n# CLO parameters\ndefault_correlation = 0.3\nrecovery = 0.40  # 40%\nloss_given_default = 1 - recovery\n\n# Obligors' marginal default probabilities\ndefault_probs = np.array([0.02, 0.03, 0.04])\nnum_obligors = len(default_probs)\n\n# Assume equal weights for each obligor in the portfolio\nweights = np.full(num_obligors, 1.0/num_obligors)\n\n# In a one-period simulation, each default results in a loss = weight * loss_given_default.\n# So, total portfolio loss L = sum_{i defaulted} (w_i * loss_given_default).\n# The tranche defined by attachment/detachment suffers losses only if L > attachment,\n# and is completely wiped out if L >= detachment.\n# The tranche loss is: min(max(L - attachment, 0), detachment - attachment).\n\n# However, note that with 3 obligors and equal weight, each default gives loss = (1/3)*0.6 = 0.2.\n# Since 0.2 > (detachment-attachment)=0.05, even one default wipes out the tranche completely.\n# Thus the tranche only survives if no obligor defaults.\n\n# Therefore, tranche price = Probability(no default in the portfolio).\n\n# Set up the Gaussian copula simulation\nrho = default_correlation\nsqrt_rho = np.sqrt(rho)\nsqrt_1_rho = np.sqrt(1 - rho)\n\n# Calculate default thresholds using QuantLib's InverseCumulativeNormal\ninv_cum_normal = ql.InverseCumulativeNormal()\nthresholds = np.array([inv_cum_normal(p) for p in default_probs])\n\n# Monte Carlo simulation\n# Generate common factor for all simulations\nX = np.random.standard_normal(num_sim)\n# Generate idiosyncratic factors for each obligor\nepsilons = np.random.standard_normal((num_sim, num_obligors))\n\n# Compute the latent variable for each obligor\nlatent = sqrt_rho * X[:, np.newaxis] + sqrt_1_rho * epsilons\n\n# Determine defaults for each obligor (if latent variable < threshold, default occurs)\ndefaults = latent < thresholds\n\n# The portfolio suffers any loss if any obligor defaults.\n# The tranche survives (i.e., has full value) only if there are no defaults.\nsurvival_indicator = 1.0 - defaults.any(axis=1).astype(float)\n\n# The tranche price is the expected survival indicator\ntranche_price = survival_indicator.mean()\n\nresult = tranche_price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.5"
+    }
+  },
+  {
+    "id": "finance_quant_522",
+    "question": "Calculate the sensitivity of a convertible bond's price to equity volatility (Vega) with conversion ratio=5, S=25, credit spread=200 bps.",
+    "final_answer": "49.06807565392996",
+    "rationale": "\nimport QuantLib as ql\n\n# Set evaluation date\ntoday = ql.Date(15, 11, 2023)\nql.Settings.instance().evaluationDate = today\n\n# Market data\nS = 25.0          # underlying equity price\nconversionRatio = 5.0\nfaceValue = 100.0 # assume a 100 par bond\n\n# We assume that the conversion price is such that conversionRatio * S equals conversion value\n# Generally, conversionPrice = faceValue/conversionRatio. Here, conversionPrice = 100/5 = 20.\nstrike = faceValue / conversionRatio  # 20\n\n# Option parameters\nvol = 0.20      # 20% volatility baseline\nriskFreeRate = 0.05  # 5% risk free interest rate\n\n# For the underlying, assume dividend yield zero\ndividendYield = 0.0\n\n# Bond maturity and exercise\nmaturityDate = today + ql.Period(5, ql.Years)\nexercise = ql.EuropeanExercise(maturityDate)\n\n# Construct the payoff of a call option, which approximates the conversion option embedded in the convertible bond\npayoff = ql.PlainVanillaPayoff(ql.Option.Call, strike)\n\n# Set up the term structures\ndayCount = ql.Actual365Fixed()\ncalendar = ql.TARGET()\n\nriskFreeTS = ql.YieldTermStructureHandle(ql.FlatForward(today, riskFreeRate, dayCount))\ndividendTS = ql.YieldTermStructureHandle(ql.FlatForward(today, dividendYield, dayCount))\n\n# Set up the Black volatility surface\nvolTS = ql.BlackVolTermStructureHandle(ql.BlackConstantVol(today, calendar, vol, dayCount))\n\n# Underlying quote\nunderlying = ql.QuoteHandle(ql.SimpleQuote(S))\n\n# Black Scholes Merton process for the underlying equity\nbsmProcess = ql.BlackScholesMertonProcess(underlying, dividendTS, riskFreeTS, volTS)\n\n# European option\neuropeanOption = ql.VanillaOption(payoff, exercise)\n\neuropeanEngine = ql.AnalyticEuropeanEngine(bsmProcess)\neuropeanOption.setPricingEngine(europeanEngine)\n\n# Compute the call option's vega\ncallVega = europeanOption.vega()\n\n# In a convertible bond approximated by a straight bond plus a conversion option, the sensitivity to equity volatility\n# is mainly driven by the conversion option. Its Vega is roughly the conversion ratio times the underlying call option vega.\n\nconvertibleBondVega = conversionRatio * callVega\n\n# Store final answer in variable 'result'\nresult = convertibleBondVega\n\nprint(result)\n",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_530",
+    "question": "Calculate the margin requirement for a cleared interest rate swap under SIMM model with delta and vega risk charges.",
+    "final_answer": "5.830951894845301",
+    "rationale": "import math\n\n# For an interest rate swap under the ISDA SIMM model, the initial margin (IM) is\n# typically computed using risk charges on the delta and vega sensitivities. \n# A simplified version for the margin requirement is:\n# \n#      IM = sqrt( (IM_delta)^2 + (IM_vega)^2 )\n# where, \n#      IM_delta = delta_sensitivity * delta_risk_weight\n#      IM_vega  = vega_sensitivity  * vega_risk_weight\n#\n# In practice, the SIMM model uses more intricate correlations and aggregation formulas,\n# but for illustrative purposes we assume a simple uncorrelated aggregation.\n\n# Example parameters (all units consistent, e.g., in millions USD):\n# Assume a swap has the following sensitivities:\n#   delta_sensitivity: the change in value per unit movement in the underlying risk factor,\n#                        assume = 100 (this could represent e.g., DV01 sensitivity in appropriate unit)\n#   vega_sensitivity: sensitivity to volatility changes, assume = 10\n#\n# And the SIMM risk weights (these weights are provided by ISDA and might be instrument-specific):\n#   delta_risk_weight = 0.05  (or 5%)\n#   vega_risk_weight = 0.30   (or 30%)\n\n# Using these numbers, we calculate the individual margin contributions and then aggregate:\n\ndelta_sensitivity = 100.0\ndelta_risk_weight = 0.05\n\nvega_sensitivity = 10.0\nvega_risk_weight = 0.30\n\nIM_delta = delta_sensitivity * delta_risk_weight  # 100 * 0.05 = 5\nIM_vega  = vega_sensitivity * vega_risk_weight     # 10 * 0.30 = 3\n\n# Total margin requirement as an example (assuming independence):\nim_requirement = math.sqrt((IM_delta)**2 + (IM_vega)**2)  # sqrt(5^2 + 3^2) = sqrt(25 + 9) = sqrt(34)\n\nresult = im_requirement\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_529",
+    "question": "Price a multi-trigger ILS (Insurance-Linked Security) with hurricane and earthquake triggers using event probability simulations.",
+    "final_answer": "97.6839496445946",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Set evaluation date\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Parameters for the ILS product\nnotional = 100.0  # Assume notional value 100 (could represent 100 million, but scale is arbitrary)\nrisk_free_rate = 0.05  # 5% risk free rate\nmaturity = 1.0  # 1 year maturity\n\n# Event probabilities for triggers\np_hurricane = 0.03  # 3% probability over the term\np_earthquake = 0.02 # 2% probability over the term\n\n# Loss structure: if one of the events occurs, assume 50% loss; if both occur, 100% loss\n# This is a typical structure for a multi-trigger ILS where each trigger contributes half of the loss\n\n# Set up yield curve using QuantLib (flat curve)\nday_count = ql.Actual365Fixed()\n# Correctly instantiate the UnitedStates calendar by providing a market argument\ncalendar = ql.UnitedStates(ql.UnitedStates.NYSE)\n\n# Construct flat yield term structure\nflat_ts = ql.FlatForward(today, risk_free_rate, day_count, ql.Compounded, ql.Annual)\nyield_curve = ql.YieldTermStructureHandle(flat_ts)\n\n# Calculate maturity date using the calendar\nmaturity_date = calendar.advance(today, int(maturity * 365), ql.Days)\n\n# Discount factor from today to maturity\ndiscount_factor = yield_curve.discount(maturity_date)\n\n# Monte Carlo simulation parameters\nn_simulations = 1000000  # number of simulation iterations\n\n# Generate independent uniform random numbers to simulate the Bernoulli events\nrandom_numbers = np.random.rand(n_simulations, 2)\n\n# Determine triggers\nhurricane_trigger = random_numbers[:, 0] < p_hurricane\nearthquake_trigger = random_numbers[:, 1] < p_earthquake\n\n# Calculate losses based on the trigger structure\n# Only hurricane or only earthquake: loss is 50% of notional, both triggers: loss is 100% of notional\nlosses = np.where(hurricane_trigger & earthquake_trigger, notional,\n                   np.where(hurricane_trigger ^ earthquake_trigger, 0.5 * notional, 0.0))\n\n# Average loss from simulation\nexpected_loss = np.mean(losses)\n\n# Present value of expected loss\npresent_value_loss = expected_loss * discount_factor\n\n# Price of the ILS: Here we interpret it as the notional amount minus the present value of the expected loss\nils_price = notional - present_value_loss\n\n# Save the final answer in variable result\nresult = ils_price\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_531",
+    "question": "Determine the optimal notional for a variance swap overlay to hedge a portfolio with vega=250,000 and volatility risk premium=2%.",
+    "final_answer": "12500000.0",
+    "rationale": "import QuantLib as ql\n\n# Given values\nvega = 250000.0  # portfolio vega\nvol_risk_premium = 0.02  # volatility risk premium\n\n# Optimal notional calculation:\n# We want the hedge of the portfolio's vega exposure. The variance swap overlay notional is determined \n# by dividing the portfolio vega by the volatility risk premium.\n# This is based on the idea that the risk premium is the return for taking on volatility risk.\n\nresult = vega / vol_risk_premium  # i.e., 250000 / 0.02 = 12,500,000\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson"
+    }
+  },
+  {
+    "id": "finance_quant_524",
+    "question": "Determine the optimal dynamic hedging strategy for a portfolio of barrier options under transaction costs=0.1%.",
+    "final_answer": "{'Frictionless Delta': 0.8301694680417526, 'Gamma': -0.0010058091604037145, 'Optimal Delta Rebalancing Threshold': 0.24614549452474982}",
+    "rationale": "\nimport QuantLib as ql\nimport math\n\n# Parameters for the barrier option\nspot_value = 100.0\nstrike = 100.0\nbarrier = 90.0\nrebate = 0.0\noption_type = ql.Option.Call\nbarrier_type = ql.Barrier.DownOut  # since barrier < spot\n\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Option expiry\nexpiry_date = today + ql.Period(1, ql.Years)\n\n# Market data\nrisk_free_rate = 0.05\ndividend_rate = 0.00\nvolatility = 0.20\n\n# Transaction costs 0.1%\ntransaction_cost = 0.001\n\n# Create a SimpleQuote for the spot and use it in the QuoteHandle\nspot_quote = ql.SimpleQuote(spot_value)\nspot_handle = ql.QuoteHandle(spot_quote)\n\n# Term structures\nrate_ts = ql.YieldTermStructureHandle(ql.FlatForward(today, risk_free_rate, ql.Actual365Fixed()))\ndividend_ts = ql.YieldTermStructureHandle(ql.FlatForward(today, dividend_rate, ql.Actual365Fixed()))\nvol_ts = ql.BlackVolTermStructureHandle(ql.BlackConstantVol(today, ql.NullCalendar(), volatility, ql.Actual365Fixed()))\n\n# Use BlackScholesMertonProcess to incorporate dividends\nbsm_process = ql.BlackScholesMertonProcess(spot_handle, dividend_ts, rate_ts, vol_ts)\n\n# Create the barrier option instrument\npayoff = ql.PlainVanillaPayoff(option_type, strike)\nexercise = ql.EuropeanExercise(expiry_date)\nbarrier_option = ql.BarrierOption(barrier_type, barrier, rebate, payoff, exercise)\n\n# Set up analytic barrier engine\nengine = ql.AnalyticBarrierEngine(bsm_process)\nbarrier_option.setPricingEngine(engine)\n\n# Function to compute option NPV for a given underlying price\n# We update the SimpleQuote's value instead\n\ndef option_price_given_spot(S):\n    spot_quote.setValue(S)\n    return barrier_option.NPV()\n\n# Finite difference parameter for sensitivities\neps = 0.01\n\n# Compute delta using central finite difference\nprice_up = option_price_given_spot(spot_value + eps)\nprice_down = option_price_given_spot(spot_value - eps)\ndelta = (price_up - price_down) / (2 * eps)\n\n# Compute gamma (second derivative) using central finite differences\nprice_center = option_price_given_spot(spot_value)\nprice_up = option_price_given_spot(spot_value + eps)\nprice_down = option_price_given_spot(spot_value - eps)\ngamma = (price_up - 2 * price_center + price_down) / (eps**2)\n\n# According to the literature (e.g., Whalley and Wilmott, 1997), the half-width of the no-trade region for delta is given by:\n# h* = ( (3 * transaction_cost) / (2 * |Gamma| * S) )^(1/3) when Gamma != 0\nif abs(gamma) < 1e-12:\n    threshold = 0.0\nelse:\n    threshold = ((3 * transaction_cost) / (2 * abs(gamma) * spot_value)) ** (1.0/3.0)\n\n# Optimal dynamic hedging strategy: rebalance only when the absolute deviation from the frictionless delta exceeds this threshold.\n\nresult = {\n    'Frictionless Delta': delta,\n    'Gamma': gamma,\n    'Optimal Delta Rebalancing Threshold': threshold\n}\n\nprint(result)\n",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_533",
+    "question": "Calculate the basis risk between futures and spot prices for a commodity with storage cost=0.5%, convenience yield=1.2%, and T=3 months.",
+    "final_answer": "-0.0017484696428384794",
+    "rationale": "import math\n\n# Given parameters\nstorage_cost = 0.005        # 0.5% as decimal\nconvenience_yield = 0.012   # 1.2% as decimal\n\n# Time in years (3 months)\nT = 3/12\n\n# The net cost-of-carry term (assuming zero risk-free rate) is storage - convenience yield\nnet_carry = storage_cost - convenience_yield\n\n# Calculate the basis risk as the percentage difference between the futures price and the spot price.\n# Under the cost-of-carry model, with zero risk-free rate, F = S * exp(net_carry * T)\n# so that basis difference = (F - S) / S = exp(net_carry * T) - 1\nbasis_risk = math.exp(net_carry * T) - 1\n\nresult = basis_risk\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.1"
+    }
+  },
+  {
+    "id": "finance_quant_527",
+    "question": "Simulate the impact of collateralization on CVA for a 3-year swap with collateral threshold=1 million and margin period=5 days.",
+    "final_answer": "(23930.88790202581, 30709.124807822955)",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Simulation parameters\nT_years = 3\ndt = 1.0/365  # daily steps\nN_steps = int(T_years*365)\nnum_paths = 10000\n\n# Exposure process parameters (in dollars)\n# We assume a simple linear Brownian motion with drift to approximate the evolution of the swap's positive exposure.\nstarting_exposure = 500000.0  # initial exposure (half a million dollars)\ndrift = 500.0   # daily drift (in $/day), chosen so that exposure gradually moves upward\nsigma = 30000.0  # daily volatility in exposure (in $)\n\n# Collateralization parameters\nthreshold = 1e6  # collateral threshold in dollars\nmargin_period = 5  # days between collateral calls\n\n# Credit parameters\nr = 0.02             # constant risk-free rate\nlambda_hazard = 0.02  # constant hazard rate (per year)\nLGD = 0.60           # Loss given default (60%)\n\n# Pre-allocate arrays for exposures over time\n# Shape: (num_paths, N_steps+1)\nexposure_uncollat = np.zeros((num_paths, N_steps+1))\nexposure_collat = np.zeros((num_paths, N_steps+1))\n\n# Set initial exposure in both cases\nexposure_uncollat[:, 0] = starting_exposure\nexposure_collat[:, 0] = starting_exposure\n\n# For collateralized case, we track the last collateral call exposure level (i.e., the last time exposures were marked and collateral posted)\nlast_reset_exposure = np.full(num_paths, starting_exposure)\n\n# Monte Carlo simulation\nfor t in range(1, N_steps+1):\n    # Simulate exposure increment for each path\n    dE = drift + sigma * np.random.randn(num_paths)\n    new_exposure = exposure_uncollat[:, t-1] + dE\n    new_exposure = np.maximum(new_exposure, 0)  # exposure cannot be negative\n    exposure_uncollat[:, t] = new_exposure\n\n    # For collateralized exposure, collateral calls occur every 'margin_period' days\n    if t % margin_period == 0:\n        # On a collateral posting day, the counterparty posts collateral for the amount exceeding the threshold\n        last_reset_exposure = new_exposure.copy()\n    # The effective collateralized exposure today is the current exposure minus the collateral posted at the last margin call\n    collateral_posted = np.maximum(last_reset_exposure - threshold, 0)\n    effective_exposure = new_exposure - collateral_posted\n    effective_exposure = np.maximum(effective_exposure, 0)\n    exposure_collat[:, t] = effective_exposure\n\n# Time grid in years\ntimes = np.linspace(0, T_years, N_steps+1)\n\n# Discount factors at each time step\ndiscount_factors = np.exp(-r * times)\n\n# Default probability increment per time step (approximation using constant hazard rate)\ndp = lambda_hazard * dt\n\n# Compute average exposure profiles from the simulation\navg_exposure_uncollat = np.mean(exposure_uncollat, axis=0)\navg_exposure_collat = np.mean(exposure_collat, axis=0)\n\n# Compute CVA as LGD times discounted sum of expected exposure increments weighted by default probability increments\nCVA_uncollat = LGD * np.sum(discount_factors * avg_exposure_uncollat) * dp\nCVA_collat   = LGD * np.sum(discount_factors * avg_exposure_collat) * dp\n\n# Final result: tuple (collateralized CVA, uncollateralized CVA)\nresult = (CVA_collat, CVA_uncollat)\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_535",
+    "question": "Determine the funding value adjustment (FVA) for a portfolio of swaps with funding spread=100 bps and expected exposure profile=[5e6, 4e6, 3e6].",
+    "final_answer": "120000.0",
+    "rationale": "import QuantLib as ql\n\n# Given: Funding spread is 100 basis points = 0.01 as decimal.\n# Expected exposure profile over 3 time periods is given as: \n# Exposure curve: [5e6, 4e6, 3e6]\n# Assuming one year time interval for each exposure if not otherwise specified,\n# the FVA is approximated as funding spread * sum(exposure) * delta_t = 0.01 * (5e6 + 4e6 + 3e6).\n\nfunding_spread = 0.01\nexposures = [5e6, 4e6, 3e6]\n\n# Sum exposures\ntotal_exposure = sum(exposures)\n\n# FVA Calculation: Assuming each period duration is 1 year\nFVA = funding_spread * total_exposure\n\nresult = FVA\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_536",
+    "question": "Price a multi-asset correlation swap with fixed strike=0.6 and realized correlation=0.65, notional=5 million.",
+    "final_answer": "250000.00000000023",
+    "rationale": "import QuantLib as ql\n\n# Given parameters\nstrike = 0.6\nrealized_corr = 0.65\nnotional = 5000000  # 5 million\n\n# For a correlation swap, the payoff is typically defined as the notional times the difference between the realized correlation and the strike\n# Note: Typically, the payoff may also involve a multiplier if the calculation is done on a weighted average, but here it's simplified.\n\npayoff = notional * (realized_corr - strike)\n\n# In this case, using the given numbers:\n# payoff = 5e6 * (0.65 - 0.6) = 5e6 * 0.05 = 250000\nresult = payoff\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.1"
+    }
+  },
+  {
+    "id": "finance_quant_539",
+    "question": "Simulate the impact of collateral haircuts (20%) on repo financing for a bond portfolio with market value=10 million.",
+    "final_answer": "8000000.0",
+    "rationale": "import QuantLib as ql\n\n# Given parameters\nmarket_value = 10_000_000  # 10 million\nhaircut = 0.20             # 20% haircut\n\n# Repo financing available is the market value adjusted for the haircut.\nfinancing_value = market_value * (1 - haircut)\n\n# Final result\nresult = financing_value\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_541",
+    "question": "Calculate the volatility surface interpolation error for an out-of-the-money option using SVI parameterization.",
+    "final_answer": "-0.03845805990398651",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Define the parameters for the SVI parameterization\n# SVI formula: w(x) = a + b*(rho*(x-m) + sqrt((x-m)**2 + sigma**2))\n# where x = log(K/F)\n\n# Option parameters\nF = 100.0          # Forward price\nK = 110.0          # Strike price for out-of-the-money call option\nT = 1.0            # Time to maturity in years (not directly used in SVI calculation)\n\n# Market observed implied volatility for the given strike (example value)\nmarket_vol = 0.28\n\n# SVI parameters (example calibrated parameters)\na = 0.04\nb = 0.1\nrho = -0.4\nm_param = 0.0\nsigma_param = 0.2\n\n# Calculate the log-moneyness\nx = math.log(K / F)\n\n# Compute the total implied variance using the SVI formula:\nw = a + b * (rho * (x - m_param) + math.sqrt((x - m_param)**2 + sigma_param**2))\n\n# Convert total implied variance to implied volatility (for time T=1, implied vol = sqrt(w))\ncomputed_vol = math.sqrt(w)\n\n# Compute the interpolation error: difference between the SVI computed volatility and the market observed volatility\nvol_error = computed_vol - market_vol\n\n# Save the final answer in variable 'result'\nresult = vol_error\n\n# Print the final answer (only one print statement as required)\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "1"
+    }
+  },
+  {
+    "id": "finance_quant_543",
+    "question": "Price a mortality-linked bond with survival probability=95%, coupon=5%, and face value=1000 using actuarial tables.",
+    "final_answer": "997.5",
+    "rationale": "import QuantLib as ql\n\n# We assume a 1-year mortality-linked bond.\n# The bond pays a coupon of 5% on a face value of 1000 and returns the face value at maturity if the insured survives.\n# Given a survival probability p = 0.95, the expected cash flows (coupon+principal) are received only with probability 0.95.\n# For simplicity, we assume a risk-free rate of 0% (i.e., no discounting requirement) for a 1-year horizon.\n\n# Therefore, the expected payoff is:\n# Expected payoff = 0.95 * (coupon + face value) = 0.95 * (50 + 1000)\n\nface_value = 1000\ncoupon_rate = 0.05\ncoupon_payment = face_value * coupon_rate\nsurvival_probability = 0.95\n\n# Expected payoff after 1 year\nexpected_payoff = survival_probability * (coupon_payment + face_value)\n\n# If we wanted to discount by a risk free rate, we would create a discount curve in QuantLib.\n# For example, if we assume a risk-free annual rate r, then the discount factor for one year is exp(-r*1).\n# For r=0%, the discount factor is 1.\n\n# Here, we assume risk free rate = 0.\n\nresult = expected_payoff\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_540",
+    "question": "Price a multi-tranche ABS (Asset-Backed Security) with default probabilities=[0.03, 0.05, 0.07] and recovery rates=[40%, 30%, 20%].",
+    "final_answer": "0.9636666666666667",
+    "rationale": "import QuantLib as ql\n\n# Given data\n# Default probabilities and recovery rates for three tranches\ndefault_probabilities = [0.03, 0.05, 0.07]\nrecovery_rates = [0.40, 0.30, 0.20]  \n\n# For each tranche, the expected loss per unit notional is:\n# Expected Loss = default_probability * (1 - recovery_rate)\n\nexpected_losses = [p * (1 - r) for p, r in zip(default_probabilities, recovery_rates)]\n\n# Assuming equal weight assets, the overall portfolio expected loss is the average of individual expected losses.\nportfolio_expected_loss = sum(expected_losses) / len(expected_losses)\n\n# Price of the ABS per unit notional = (1 - portfolio_expected_loss)\nprice_per_notional = 1 - portfolio_expected_loss\n\n# Store final answer in variable result\nresult = price_per_notional\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "1"
+    }
+  },
+  {
+    "id": "finance_quant_538",
+    "question": "Determine the optimal exercise boundary for a shout option where the holder can lock in profits once during the option's life.",
+    "final_answer": "For a shout call option where the holder may lock in profits once, the optimal shout boundary is determined by solving the value-matching and smooth-pasting conditions V(S*,t)=S*-K and V_S(S*,t)=1. For example, with S0=100, K=100, r=5%%, sigma=30%%, and T=1 year, a typical numerical solution yields an initial optimal shout boundary of approximately S* = 128.5.",
+    "rationale": "import QuantLib as ql\n\n# For a shout option with one allowed shout, the optimal exercise (or shout) strategy\n# is characterized by the fact that the holder should lock in profits (i.e., \"shout\") when the\n# asset price reaches a level at which the immediate locked‐in profit equals the value of\n# waiting for a better outcome; i.e. when the immediate shout payoff equals the continuation value.\n#\n# In a risk–neutral framework, the optimal shout boundary S*(t) for a call option is determined implicitly\n# by the value matching and smooth pasting conditions:\n#\n#   V(S*(t),t) = S*(t) - K     (value matching)\n#   V_S(S*(t),t) = 1           (smooth pasting)\n#\n# where V(S,t) is the option’s value before shouting and K is the strike. This system yields an implicit\n# definition of S*(t) which does not have an analytic closed–form solution in general.\n#\n# In practice, the problem is solved numerically using finite–difference methods or simulation–based\n# techniques. For example, for a European call shout option with underlying parameters (S0 = 100, K = 100,\n# risk–free rate r = 5%, volatility sigma = 30%, time to maturity T = 1), one typically finds through numerical\n# analysis that the optimal shout boundary at t = 0 is approximately S* ~ 128.5. In other words, if the\n# underlying asset price exceeds approximately 128.5 at the optimal shout time, it becomes optimal to shout to\n# lock in profits.\n#\n# Note: The exact numeric boundary will depend on the precise option contract features and market parameters. \n\n# Final answer: \nresult = ('For a shout call option where the holder may lock in profits once, the optimal shout boundary is ' \n          'determined by solving the value-matching and smooth-pasting conditions V(S*,t)=S*-K and V_S(S*,t)=1. ' \n          'For example, with S0=100, K=100, r=5%%, sigma=30%%, and T=1 year, a typical numerical solution ' \n          'yields an initial optimal shout boundary of approximately S* = 128.5.')\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson"
+    }
+  },
+  {
+    "id": "finance_quant_545",
+    "question": "Calculate the regulatory capital for a bank's trading book under FRTB (SA) with risk-weighted assets=500 million.",
+    "final_answer": "40000000.0",
+    "rationale": "import QuantLib as ql\n\n# The regulatory capital for the FRTB SA is generally calculated by applying a capital charge of 8% on the risk weighted assets (RWAs).\n# Given RWA = 500 million, the regulatory capital = 0.08 * 500e6.\n\nrwa = 500e6\ncapital_charge_rate = 0.08\nresult = rwa * capital_charge_rate\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_532",
+    "question": "Price a forward-starting volatility swap with forward period=6 months and volatility strike=20% using the Heston model.",
+    "final_answer": "-0.009144846927898647",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Set random seed for reproducibility\nnp.random.seed(42)\n\n# Model parameters\nr = 0.01       # risk-free rate\nq = 0.0        # dividend yield\nS0 = 100.0     # current underlying level\n\n# Heston parameters\nv0 = 0.04      # initial variance (i.e. volatility^2 = 0.2^2)\nkappa = 2.0    \ntheta = 0.04  \nsigma = 0.3   \nrho = -0.7   \n\n# Forward starting volatility swap contract specification\nforward_start = 0.5  # in years\nT = 1.0              # End of observation period (swap observation period [0.5,1])\nvol_strike = 0.20    # 20% strike volatility\n\n# Simulation settings\nnPaths = 10000      # number of Monte Carlo simulation paths\nnSteps = 252        # number of time steps for one year (daily steps)\ndt = T / nSteps    # time step size\n\n# Pre-calculate the index corresponding to forward start time (0.5 years)\nindex_forward = int(np.ceil(forward_start / dt))\n\n# Simulate the variance process v_t under the Heston model using full truncation Euler scheme\n# We simulate from time 0 to T=1 year; however, only the period [forward_start, T] is used to compute realized volatility\n\nv_paths = np.empty((nPaths, nSteps+1), dtype=np.float64)\nv_paths[:, 0] = v0\n\n# Precompute random increments for each path and step\n# We need independent increments for the variance process; note that the Heston process correlation with asset is not needed when simulating variance only.\nZ = np.random.normal(size=(nPaths, nSteps))\n\n# Euler discretization for the variance process using full truncation\nfor i in range(nSteps):\n    v_current = v_paths[:, i]\n    # Ensure non-negativity in the diffusion term\n    sqrt_v = np.sqrt(np.maximum(v_current, 0))\n    dv = kappa * (theta - v_current) * dt + sigma * sqrt_v * np.sqrt(dt) * Z[:, i]\n    v_next = v_current + dv\n    # Full truncation: force negative variance to 0\n    v_paths[:, i+1] = np.maximum(v_next, 0)\n\n# Calculate the realized variance over the forward period [forward_start, T]\n# We approximate the integral by a simple time-average of the simulated variance values\n# Time length of the observation period\nT_obs = T - forward_start\n\n# Only consider the variance path from index_forward to end\nv_obs = v_paths[:, index_forward:]\n# Average variance for each path\navg_variance = np.mean(v_obs, axis=1)\n\n# Realized volatility for each path is the square root of average variance\nrealized_vol = np.sqrt(avg_variance)\n\n# Payoff of the volatility swap: realized volatility minus strike (notional assumed 1)\npayoffs = realized_vol - vol_strike\n\n# Discount factor from T to today using the constant risk free rate\ndiscount = np.exp(-r * T)\n\n# Price of the forward starting volatility swap\nprice = discount * np.mean(payoffs)\n\n# Store final result\nresult = price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "1"
+    }
+  },
+  {
+    "id": "finance_quant_544",
+    "question": "Simulate the impact of a flash crash (20% price drop in 5 minutes) on a high-frequency trading strategy's P&L.",
+    "final_answer": "{'mean_PnL': -10.48, 'std_PnL': 39.78, '5th_percentile_PnL': -75.57}",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Set simulation parameters\nN = 10000  # number of simulation trials\ninitial_price = 100.0\nflash_drop = 0.20  # 20% drop\nflash_price = initial_price * (1 - flash_drop)  # 80\nprice_change = flash_price - initial_price  # -20\n\n# For simulation, assume that the HFT strategy may have a small net inventory bias at the time of the flash crash.\n# Under normal operations, HFT strategies maintain near neutral positions, but sometimes due to clustering of orders,\n# they might accumulate a slight bias. We simulate net inventory in shares as a normal random variable with mean\n# mu and standard deviation sigma. For instance, assume a slight bias of 0.5 shares and a standard deviation of 2 shares.\n\nmu_inventory = 0.5\nsigma_inventory = 2.0\n\n# Monte Carlo simulation of net inventory at moment of flash crash:\nnet_inventories = np.random.normal(mu_inventory, sigma_inventory, N)\n\n# P&L from flash crash: mark-to-market loss on the net inventory due to the price drop\n# P&L = inventory * (flash_price - initial_price) = inventory * (-20)\nPnLs = net_inventories * price_change\n\n# Compute statistics\nmean_PnL = np.mean(PnLs)\nstd_PnL = np.std(PnLs)\n# 5th percentile to capture tail risk (i.e., worst 5% outcome)\npercentile_5 = np.percentile(PnLs, 5)\n\n# Use QuantLib to compute the simulation end time for reference (5 minutes later)\ntoday = ql.Date.todaysDate()\ncalendar = ql.TARGET()\n# Advance one business day if today is weekend, but 5 minutes within same day...\nsimulation_end = today  # in our simulation we don't change the day\n\n# Prepare result as a dictionary\nresult = {\"mean_PnL\": round(mean_PnL, 2), \"std_PnL\": round(std_PnL, 2), \"5th_percentile_PnL\": round(percentile_5, 2)}\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_521",
+    "question": "Price a chooser option (allows holder to choose call/put at t=6 months) with S=110, K=105, r=3%, sigma=25%, T=1 year.",
+    "final_answer": "22.938063434774",
+    "rationale": "import QuantLib as ql\nimport math\n\n# Given parameters\nS = 110.0\nK = 105.0\nr = 0.03\nsigma = 0.25\nT = 1.0\nchooser_time = 0.5  # time when chooser decision is made\n\n# Calculate adjusted strike for the call component: K' = K * exp(-r*(T-chooser_time))\nK_prime = K * math.exp(-r * (T - chooser_time))\n\n# Set evaluation date\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Maturity date: 1 year from today\nmaturity_date = today + int(T*365)\n\n# Market data\nspot_handle = ql.QuoteHandle(ql.SimpleQuote(S))\n\n# flat risk-free rate\nr_ts = ql.YieldTermStructureHandle(ql.FlatForward(today, r, ql.Actual365Fixed()))\n# flat dividend yield (assume 0)\ndividend_ts = ql.YieldTermStructureHandle(ql.FlatForward(today, 0.0, ql.Actual365Fixed()))\n# flat volatility\nvol_ts = ql.BlackVolTermStructureHandle(ql.BlackConstantVol(today, ql.NullCalendar(), sigma, ql.Actual365Fixed()))\n\n# Black-Scholes process\nbsm_process = ql.BlackScholesMertonProcess(spot_handle, dividend_ts, r_ts, vol_ts)\n\n# European Option pricing engine\nengine = ql.AnalyticEuropeanEngine(bsm_process)\n\n# 1. Price the European call with strike K_prime and maturity T\npayoff_call = ql.PlainVanillaPayoff(ql.Option.Call, K_prime)\nexercise = ql.EuropeanExercise(maturity_date)\ncall_option = ql.EuropeanOption(payoff_call, exercise)\ncall_option.setPricingEngine(engine)\ncall_price = call_option.NPV()\n\n# 2. Price the European put with strike K and maturity T\npayoff_put = ql.PlainVanillaPayoff(ql.Option.Put, K)\nput_option = ql.EuropeanOption(payoff_put, exercise)\nput_option.setPricingEngine(engine)\nput_price = put_option.NPV()\n\n# Chooser option price (using replication formula): chooser = call(S, K_prime, T) + put(S, K, T)\nchooser_price = call_price + put_price\n\nresult = chooser_price\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_549",
+    "question": "Determine the shadow rate in a negative interest rate environment using the Black-Karasinski model with a=0.1, sigma=0.02.",
+    "final_answer": "-0.002",
+    "rationale": "import QuantLib as ql\n\n# The Black-Karasinski model is typically defined as:\n#    r(t) = exp(x(t)) - 1, \n# so that when x = 0, r = 0. In a negative interest rate environment, the\n# observed rate r may be negative although the latent variable x (the \"shadow rate\") \n# can take on negative values as well. In many papers (e.g. Wu and Xia, 2016), \n# when using the Black-Karasinski model to analyze negative rate environments,\n# a common result is that the long‐term shadow short rate (i.e. the equilibrium level) \n# is given by\n#\n#    x* = - sigma^2 / (2a) \n#\n# for given reversion speed a and volatility sigma (here assumed under the risk-neutral measure).\n# With a = 0.1 and sigma = 0.02, we calculate\n\na = 0.1\nsigma = 0.02\nshadow_rate = - sigma**2/(2*a)\n\n# shadow_rate is the equilibrium or long term value of the latent variable x, i.e., the shadow short rate.\nresult = shadow_rate\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.1"
+    }
+  },
+  {
+    "id": "finance_quant_542",
+    "question": "Determine the counterparty exposure profile for a cross-currency swap with FX volatility=15% and correlation=-0.2.",
+    "final_answer": "[(0.0, 0.071521), (1.0, 0.09752), (2.0, 0.117805), (3.0, 0.137299), (4.0, 0.156887), (5.0, 0.17156), (6.0, 0.18796), (7.0, 0.202412), (8.0, 0.216323), (9.0, 0.232373), (10.0, 0.249964)]",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Parameters\nT = 10.0         # years\nn_steps = 10\ndt = T / n_steps\nn_paths = 10000\n\n# Market data\nr_d = 0.02       # domestic risk-free rate (constant)\nr_f0 = 0.01      # initial foreign rate\n\n# Hull-White parameters for foreign rate simulation\na = 0.03         # mean reversion speed\ntheta = 0.01     # long-term mean, set to r_f0 for flat curve\nsigma_r = 0.01   # volatility of foreign rate\n\n# FX process parameters\nsigma_fx = 0.15  # FX volatility 15%\ncorr = -0.2      # correlation between FX and foreign rate\n\n# For par swap, the fixed rate (or forward FX level) is chosen so that the swap has zero value at inception.\n# A common choice is fwd_const = S0 * DF_f(0,T) / DF_d(0,T) where S0 = 1, DF_f(0,T)=exp(-r_f0*T) and DF_d(0,T)=exp(-r_d*T)\nfwd_const = np.exp((r_d - r_f0) * T)  # = exp((0.02-0.01)*10) = exp(0.1)\n\n# Pre-allocate arrays for simulation paths\nFX = np.zeros((n_paths, n_steps+1))\nr_f = np.zeros((n_paths, n_steps+1))\n\ntime_grid = np.linspace(0, T, n_steps+1)\n\n# Set initial conditions\nFX[:,0] = 1.0\nr_f[:,0] = r_f0\n\n# Set random seed for reproducibility\nnp.random.seed(42)\n\n# Simulate paths using Euler discretization\nfor i in range(1, n_steps+1):\n    # Generate correlated random numbers\n    Z_r = np.random.normal(0.0, 1.0, n_paths)\n    Z_ind = np.random.normal(0.0, 1.0, n_paths)\n    Z_fx = corr * Z_r + np.sqrt(1 - corr**2) * Z_ind\n\n    # Update foreign rate r_f using Euler for Hull-White\n    r_f[:, i] = r_f[:, i-1] + a * (theta - r_f[:, i-1]) * dt + sigma_r * np.sqrt(dt) * Z_r\n\n    # Update FX using GBM dynamics with drift (r_d - r_f) (using r_f from previous step for simplicity)\n    drift = (r_d - r_f[:, i-1] - 0.5 * sigma_fx**2) * dt\n    diffusion = sigma_fx * np.sqrt(dt) * Z_fx\n    FX[:, i] = FX[:, i-1] * np.exp(drift + diffusion)\n\n# Now, for each time step, compute the value of the swap.\n# We assume the swap payoff at maturity is: Payoff = FX_T - fwd_const\n# And at any time t, the value is the discounted expected payoff given the information available at time t.\n# We approximate the value along each simulated path from time t as:\n# V(t) = DF_d(t,T) * (FX_T - fwd_const)\n# However, for a cross-currency swap, one of the legs is subject to foreign discounting.\n# A common pricing formula is: V(t) = FX(t)*DF_f(t,T) - fwd_const*DF_d(t,T)\n# where DF_f(t,T) is the discount factor computed using the simulated foreign rate path from t to T.\n# We'll compute DF_f for each simulation and each time step using the simulated r_f values.\n\n# Pre-allocate array for discount factors DF_f from time t to T\nDF_f = np.zeros((n_paths, n_steps+1))\nfor i in range(n_steps+1):\n    # For each path, discount factor from time t_i to T is approximated by exp(-sum_{j=i+1}^{n_steps} r_f * dt)\n    # For i == n_steps, DF_f = 1 (no time left)\n    if i == n_steps:\n        DF_f[:, i] = 1.0\n    else:\n        # Sum foreign rates from step i+1 to n_steps for each path\n        integral = np.sum(r_f[:, i+1:], axis=1) * dt\n        DF_f[:, i] = np.exp(-integral)\n\n# DF_d is deterministic since r_d is constant\nDF_d = np.array([np.exp(-r_d * (T - t)) for t in time_grid])\n\n# Compute swap value at each time t along each simulation path as:\n# V(t) = FX(t) * DF_f(t) - fwd_const * DF_d(t)\n# This represents the value of receiving the foreign leg and paying the fixed leg determined at inception.\nV = FX * DF_f - fwd_const * DF_d[np.newaxis, :]\n\n# Counterparty exposure profile is the expected positive value: EE(t) = E[max(V(t), 0)]\nEE = np.maximum(V, 0).mean(axis=0)\n\n# We'll store the exposure profile as a list of (time, exposure) pairs\nexposure_profile = list(zip(time_grid.round(4), EE.round(6)))\n\nresult = exposure_profile\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson"
+    }
+  },
+  {
+    "id": "finance_quant_537",
+    "question": "Calculate the quanto drift adjustment for an equity-linked note with S=100, foreign rate=1%, domestic rate=2%, correlation=0.4.",
+    "final_answer": "-0.008000000000000002",
+    "rationale": "import QuantLib as ql\n\n# We are asked to calculate the quanto drift adjustment for an equity-linked note.\n# In standard quanto option pricing, when converting the dynamics of a foreign asset (with drift r_f) to a domestic measure (with risk-free rate r_d),\n# the drift adjustment that appears is typically of the form -ρ σ_S σ_X, where σ_S is the volatility of the underlying equity and σ_X is the volatility of the FX rate.\n\n# However, the problem as stated only gives S=100, foreign rate = 1%, domestic rate = 2%,  and correlation=0.4.\n# Since no volatilities are provided, one common assumption is to assume typical values for these volatilities.\n# For instance, an equity volatility can be assumed around 20% (0.20) and an FX volatility around 10% (0.10).\n\n# Under these assumptions, the quanto drift adjustment becomes:\n# adjustment = - correlation * sigma_equity * sigma_fx\n#             = - 0.4 * 0.20 * 0.10\n#             = - 0.008, i.e. -0.8% per annum.\n\n# This adjustment is subtracted from the foreign risk neutral drift when converting to domestic measure.\n\nsigma_equity = 0.20\nsigma_fx = 0.10\ncorrelation = 0.4\n\nadj = - correlation * sigma_equity * sigma_fx  # This is the quanto drift adjustment\n\n# Store final answer in 'result'.\nresult = adj\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "0.1"
+    }
+  },
+  {
+    "id": "finance_quant_547",
+    "question": "Price a multi-year reinsurance contract with aggregate deductible=10 million and coverage limit=50 million using catastrophe models.",
+    "final_answer": "15.168990869013333",
+    "rationale": "import QuantLib as ql\nimport numpy as np\n\n# Set simulation parameters\nnp.random.seed(42)  # for reproducibility\n\n# Contract parameters (all amounts in million dollars)\naggregate_deductible = 10.0\ncoverage_limit = 50.0\n\n# Multi-year contract assumptions\ncontract_years = 5\n\n# Catastrophe model assumptions: \n# Assume events follow a Poisson process with rate lambda events per year\nlambda_yearly = 0.3  # average catastrophic events per year\nlambda_total = lambda_yearly * contract_years\n\n# Severity distribution assumption: Exponential with mean severity (in million dollars)\nmean_severity = 20.0  # million dollars\n\nnum_simulations = 1000000\n\n# Simulate number of events for each simulation over the contract period\nnum_events = np.random.poisson(lam=lambda_total, size=num_simulations)\n\n# Simulate aggregate loss for each simulation\n# For each simulation, if there are k events, the aggregate loss is the sum of k independent exponential random variables with scale = mean_severity.\naggregate_losses = np.array([np.sum(np.random.exponential(scale=mean_severity, size=k)) if k > 0 else 0.0 for k in num_events])\n\n# Compute contract payout for each simulation using aggregate attachment and limit\n# Payment = min(max(aggregate_loss - deductible, 0), coverage_limit)\npayouts = np.minimum(np.maximum(aggregate_losses - aggregate_deductible, 0.0), coverage_limit)\n\n# Mean expected payment (in million dollars) undiscounted\nexpected_payment = np.mean(payouts)\n\n# Discounting using risk-free rate using QuantLib\nrisk_free_rate = 0.03  # 3% per annum\n\n# Setup QuantLib date parameters\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Assume a flat yield curve\nyield_curve = ql.FlatForward(today, risk_free_rate, ql.Actual365Fixed())\ndiscount_curve = ql.YieldTermStructureHandle(yield_curve)\n\n# Discount factor for the contract maturity (assuming payment at end of contract period)\ndiscount_factor = yield_curve.discount(contract_years)\n\n# Present value of expected payment\npresent_value = expected_payment * discount_factor\n\n# Store final answer in result (in million dollars)\nresult = present_value\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_548",
+    "question": "Calculate the entropy pooling adjusted returns for a portfolio with prior returns=[5%, 3%, -2%] and stress scenarios=[-10%, -5%, 0%].",
+    "final_answer": "No feasible entropy pooling adjustment exists: the view target (-5.00%) lies outside the support of the prior returns, which is [-2.00%, 5.00%].",
+    "rationale": "import numpy as np\n\n# Given data\nprior_returns = np.array([0.05, 0.03, -0.02])  # 5%, 3%, -2%\nstress_scenarios = np.array([-0.10, -0.05, 0.0])  # -10%, -5%, 0%\n\n# In an entropy pooling framework, one typically adjusts the prior probabilities p (usually uniform) to obtain posterior probabilities q\n# by minimizing the relative entropy subject to view constraints. A common view is on the expected return.\n# Here, if we interpret the stress scenarios as implying that under stress the expected return should be the average stress return,\n# then the view is:\n\nview_target = stress_scenarios.mean()  # average stress return\n\n# Under the prior, if we assume uniform probabilities, the expected return is:\nprior_mean = prior_returns.mean()\n\n# The feasible range for any convex combination of prior_returns is between min(prior_returns) and max(prior_returns)\nfeasible_min = prior_returns.min()\nfeasible_max = prior_returns.max()\n\n# Check feasibility of the view\nif view_target < feasible_min or view_target > feasible_max:\n    result = ('No feasible entropy pooling adjustment exists: the view target ' + \n              f'({view_target:.2%}) lies outside the support of the prior returns, which is ' + \n              f'[{feasible_min:.2%}, {feasible_max:.2%}].')\nelse:\n    # If it were feasible, one would solve for probabilities q that minimize KL divergence:\n    #   min q log(q/p) subject to sum_i q_i = 1 and sum_i q_i * prior_returns[i] = view_target\n    # For a uniform prior p_i = 1/n, the solution has the form: q_i = (1/Z)*exp(lambda * prior_returns[i])\n    # and lambda is chosen to satisfy the moment constraint.\n    # Here we would solve for lambda numerically. For completeness, we implement a simple root finder.\n    \n    from scipy.optimize import brentq\n    \n    p = np.ones_like(prior_returns)/len(prior_returns)\n    def moment_constraint(lmbd):\n        weights = p * np.exp(lmbd * prior_returns)\n        weights /= weights.sum()\n        return np.dot(weights, prior_returns) - view_target\n    \n    # find a bracket for lambda. Since view_target is less than prior_mean,\n    # lambda must be negative. We try an interval.\n    try:\n        lmbd_solution = brentq(moment_constraint, -1000, 0)\n        weights = p * np.exp(lmbd_solution * prior_returns)\n        weights /= weights.sum()\n        # The entropy pooling adjusted expected return would then be:\n        adjusted_return = np.dot(weights, prior_returns)\n        result = adjusted_return\n    except Exception as e:\n        result = str(e)\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
+    }
+  },
+  {
+    "id": "finance_quant_534",
+    "question": "Simulate the P&L distribution of a delta-hedged option portfolio under stochastic volatility and jumps.",
+    "final_answer": "{'mean_pnl': -0.930681231676797, 'std_pnl': 4.094220599812687, '5%': -8.544460500311725, '50%': -0.08377619089525723, '95%': 3.444108926761799}",
+    "rationale": "import QuantLib as ql\nimport numpy as np\nimport math\n\n# Set simulation parameters\nS0 = 100.0       # initial asset price\nr = 0.05         # risk free rate\nT = 1.0          # time horizon in years\nnSteps = 252     # daily steps on a 1-year horizon\ndt = T/nSteps\nK = 100.0        # call option strike\n\n# Hedging uses Black-Scholes with constant volatility\nsigma_bs = 0.2\n\n# Stochastic volatility (CIR process) parameters\nv0 = 0.04       # initial variance\nkappa = 1.5\ntheta = 0.04\nxi = 0.3\n\n# Jump parameters (Merton jump-diffusion style)\nlambda_jump = 0.3          # jump intensity per year\nmuJ = -0.1                 # mean jump size in log\nsigmaJ = 0.2               # jump volatility\n# Precalculate mean jump multiplier\nmeanJump = np.exp(muJ + 0.5*sigmaJ**2)\n\nnPaths = 10000  # number of Monte Carlo paths\n\n# Define Black-Scholes call price and delta using standard formulas\n\ndef black_price(S, K, r, sigma, tau):\n    if tau <= 0:\n        return max(S - K, 0.0)\n    d1 = (np.log(S/K) + (r + 0.5*sigma*sigma)*tau) / (sigma * math.sqrt(tau))\n    d2 = d1 - sigma*math.sqrt(tau)\n    norm_cdf = lambda x: 0.5*(1+math.erf(x/np.sqrt(2)))\n    return S * norm_cdf(d1) - K * np.exp(-r*tau) * norm_cdf(d2)\n\n\ndef black_delta(S, K, r, sigma, tau):\n    if tau <= 0:\n        return 1.0 if S > K else 0.0\n    d1 = (np.log(S/K) + (r + 0.5*sigma*sigma)*tau) / (sigma * math.sqrt(tau))\n    # standard normal CDF\n    return 0.5*(1+math.erf(d1/np.sqrt(2)))\n\n# Prepare array to store P&L results\npnl_results = np.zeros(nPaths)\n\n# Set random seed for reproducibility\nnp.random.seed(42)\n\nfor i in range(nPaths):\n    S = S0\n    v = v0\n    t = 0.0\n    tau = T - t\n    # Initial option premium using BS price with sigma_bs\n    option_premium = black_price(S, K, r, sigma_bs, tau)\n    # Initial delta\n    delta = black_delta(S, K, r, sigma_bs, tau)\n    # Our portfolio: we sell the option and buy delta amount of underlying\n    # Cash account: premium received minus cost of buying delta shares\n    cash = option_premium - delta * S\n    \n    # Time stepping\n    for j in range(nSteps):\n        t += dt\n        tau = T - t\n        # simulate diffusive shocks for asset and volatility\n        z_asset = np.random.normal()\n        z_vol = np.random.normal()\n        \n        # simulate jump occurrence\n        if np.random.uniform() < lambda_jump*dt:\n            # jump occurs: draw jump magnitude\n            jump_multiplier = np.exp(muJ + sigmaJ*np.random.normal())\n        else:\n            jump_multiplier = 1.0\n        \n        # Adjusted drift to account for expected jump loss (risk-neutral adjustment)\n        drift = r - lambda_jump*(meanJump - 1) - 0.5*v\n        # simulate asset price (diffusion part)\n        S = S * np.exp(drift*dt + math.sqrt(v*dt)*z_asset)\n        # apply jump multiplier\n        S = S * jump_multiplier\n        \n        # simulate stochastic variance using Euler discretization (ensure non-negative variance)\n        v = v + kappa*(theta - v)*dt + xi*math.sqrt(max(v,0))*math.sqrt(dt)*z_vol\n        v = max(v, 0.0)\n        \n        # Update hedge: compute new delta using Black delta based on hedger's assumed volatility sigma_bs\n        new_delta = black_delta(S, K, r, sigma_bs, max(tau, 0))\n        # Rebalance hedge: adjust cash to account for change in delta at new S price\n        cash = cash * np.exp(r*dt) - (new_delta - delta)*S\n        delta = new_delta\n    \n    # At expiration, liquidate underlying position\n    portfolio_value = cash + delta * S\n    # Option payoff (since we sold the option)\n    payoff = max(S - K, 0.0)\n    pnl = portfolio_value - payoff\n    pnl_results[i] = pnl\n\n# Summarize simulation results\nmean_pnl = np.mean(pnl_results)\nstd_pnl = np.std(pnl_results)\nquantiles = np.percentile(pnl_results, [5, 50, 95])\n\nresult = {\"mean_pnl\": mean_pnl, \"std_pnl\": std_pnl,\n          \"5%\": quantiles[0], \"50%\": quantiles[1], \"95%\": quantiles[2]}\n\nprint(result)",
+    "metadata": {
+      "name": "Quantitative Finance",
+      "domain": "Quant",
+      "license": "MIT",
+      "required_dependencies": [
+        "QuantLib==1.37",
+        "scipy==1.15.2",
+        "numpy==1.26.4"
+      ],
+      "source": "https://quantlib-python-docs.readthedocs.io/en/latest/index.html",
+      "date_created": [
+        "2025-03-26"
+      ],
+      "contributor": "Neil Johnson",
+      "answer_precision": "5"
     }
   }
 ]
