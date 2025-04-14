@@ -9,28 +9,13 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
     "rationale": "import math\n\n# Constants and given values\npH = 7.48\npKa = 6.10\nCO2_total = 28.5  # mmol/L\n\n# Calculating the concentration of CO2\nHCO3_CO2_ratio = 10**(pH - pKa)\nC_CO2 = CO2_total / (HCO3_CO2_ratio + 1)  # Concentration of CO2\n\n# Calculating the concentration of HCO3-\nC_HCO3 = CO2_total - C_CO2  # Concentration of HCO3-\n\nresult = (C_HCO3, C_CO2)\nprint(result)\n"
   },
-  {
-    "question": "The pKa of most fatty acids is around 4.5. Using the Henderson-Hasselbach equation, calculate the ratio of the deprotonated to protonated form of a fatty acid at physiological pH (approximately 7.4). Explain your answer and discuss the implications for the existence of fatty acids in their anion form in the cellular environment.",
-    "final_answer": "794.3282347242822",
-    "metadata": {
-      "license": "CC-BY-NC-SA-4.0",
-      "source": "Meta/natural_reasoning",
-      "contributor": "Yifeng Wang",
-      "date_created": "2025-3-29",
-      "domain": "computational biology",
-      "required_dependencies": [
-        "biopython"
-      ],
-      "name": "loong_computational_biology"
-    },
-    "rationale": "result = 10**(7.4 - 4.5)\nprint(result)"
-  },
+
   {
     "question": "Given the total carbon dioxide content (HCO3- + CO2) in a blood sample is 28.5 mmol/L, and the blood pH at 37°C is 7.48, what are the concentrations of HCO3- and CO2 in the blood? The pKa of the reaction is 6.10.",
     "final_answer": "(27.359467562513824, 1.1405324374861756)",
@@ -41,7 +26,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -57,7 +42,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -73,7 +58,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -89,7 +74,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -105,7 +90,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -121,7 +106,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -137,7 +122,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -153,7 +138,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -169,7 +154,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -185,7 +170,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -201,7 +186,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -217,7 +202,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -233,7 +218,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -249,7 +234,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -265,7 +250,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -281,7 +266,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -297,7 +282,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -313,7 +298,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -329,7 +314,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -345,7 +330,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -361,7 +346,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -377,7 +362,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -393,7 +378,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -409,7 +394,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -425,7 +410,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -441,7 +426,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -457,7 +442,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -473,7 +458,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -489,7 +474,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -505,7 +490,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -521,7 +506,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -537,7 +522,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -553,7 +538,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -569,7 +554,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -585,7 +570,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -601,7 +586,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -617,7 +602,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -633,7 +618,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -649,7 +634,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -665,7 +650,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -681,7 +666,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -697,7 +682,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -713,7 +698,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -729,7 +714,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -745,7 +730,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -761,7 +746,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -777,7 +762,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -793,7 +778,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -809,7 +794,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
@@ -825,7 +810,7 @@
       "date_created": "2025-3-29",
       "domain": "computational biology",
       "required_dependencies": [
-        "biopython"
+        
       ],
       "name": "loong_computational_biology"
     },
