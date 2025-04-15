@@ -486,7 +486,7 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         if item.get("metadata", {}).get("required_dependencies"):
             packages = item.get("metadata", {}).get("required_dependencies", [])
         if item.get("metadata", {}).get("domain") == "Loong_Graph_Discrete_Math":
-            packages.extend(["numpy==1.26.4", "sympy==1.13.3"])
+            packages.extend(["numpy==1.26.4", "sympy==1.13.3", "scipy==1.12.1"])
         # Check for Mathematical Programming domain that needs pyscipopt
         # elif item.get("metadata", {}).get("domain") == "Mathematical Programming" or \
         #      (item.get("metadata", {}).get("name") == "SCIP"):
