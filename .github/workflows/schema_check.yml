@@ -1,4 +1,4 @@
-name: Schema Validation
+name: Data Schema Validation
 
 on:
     push:

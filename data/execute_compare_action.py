@@ -168,7 +168,7 @@ def extract_numbers(data):
     return [num for _, num in sorted(numbers)]
 
 
-def compare_answer_str(s1, s2, rel_tol=1e-2, abs_tol=1e-2):
+def compare_answer_str(s1, s2, rel_tol=0, abs_tol=0):
     d1 = parse_answer_str(s1)
     d2 = parse_answer_str(s2)
     nums1 = extract_numbers(d1)
@@ -236,9 +236,12 @@ async def compare_results(
             final_answer,
             rel_tol=precision,
             abs_tol=precision)
+    elif execution_result == final_answer:
+        return True
+    elif compare_answer_str(execution_result, final_answer):
+        return True
     else:
-        # Compare normalized strings
-        return execution_result == final_answer
+        return False
 
 
 # Cache to store verifiers by package requirements
@@ -473,7 +476,7 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         Dictionary mapping package combinations to lists of items.
     """
     grouped = {}
-    
+
     for item_tuple in items:
         _, item = item_tuple
         # Check multiple possible locations for dependencies
@@ -482,18 +485,20 @@ async def group_by_packages(items: List[Tuple[int, Dict[str, Any]]]) -> Dict[Tup
         # Check in metadata.required_packages (all domain)
         if item.get("metadata", {}).get("required_dependencies"):
             packages = item.get("metadata", {}).get("required_dependencies", [])
+        if item.get("metadata", {}).get("domain") == "Loong_Graph_Discrete_Math":
+            packages.extend(["numpy==1.26.4", "sympy==1.13.3", "scipy==1.11.3"])
         # Check for Mathematical Programming domain that needs pyscipopt
         # elif item.get("metadata", {}).get("domain") == "Mathematical Programming" or \
         #      (item.get("metadata", {}).get("name") == "SCIP"):
         #     packages = ["pyscipopt", "pandas", "gurobi", "cvxpy", "matplotlib", "geopy"]
-        
+
         # Sort packages to ensure consistent grouping
         key = tuple(sorted(packages))
-        
+
         if key not in grouped:
             grouped[key] = []
         grouped[key].append(item_tuple)
-    
+
     return grouped
 
 

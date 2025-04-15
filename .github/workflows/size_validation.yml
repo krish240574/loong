@@ -1,4 +1,4 @@
-name: Validate Dataset Size
+name: Dataset Size Validation
 
 on:
     push:
