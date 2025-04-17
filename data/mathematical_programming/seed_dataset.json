@@ -1786,5 +1786,196 @@
       "license": "Apache-2.0",
       "source": "https://github.com/cvxpy/cvxpy"
     }
+  },
+  {
+      "question": "You are analyzing economic indicators from the Longley dataset and need to build a linear regression model to predict the total employment (TOTEMP) based on other economic variables.\n\nThe dataset contains several economic indicators including GNP deflator, Gross National Product, unemployment numbers, armed forces personnel, population, and year. You need to use OLS (Ordinary Least Squares) regression to analyze the relationship between these variables and total employment.\n\nYour task is to:\nLoad the provided markdown data\nBuild a regression model\nTest the statistical significance of the variables in the model\nOutput the t-statistic for one of the variables\nThe dataset contains:\n|GNPDEFL|GNP     |UNEMP |ARMED |POP     |YEAR  |TOTEMP |\n|-------|--------|------|------|--------|------|-------|\n|83.0   |234289.0|2356.0|1590.0|107608.0|1947.0|60323.0|\n|88.5   |259426.0|2325.0|1456.0|108632.0|1948.0|61122.0|\n|88.2   |258054.0|3682.0|1616.0|109773.0|1949.0|60171.0|\n|89.5   |284599.0|3351.0|1650.0|110929.0|1950.0|61187.0|\n|96.2   |328975.0|2099.0|3099.0|112075.0|1951.0|63221.0|\n|98.1   |346999.0|1932.0|3594.0|113270.0|1952.0|63639.0|\n|99.0   |365385.0|1870.0|3547.0|115094.0|1953.0|64989.0|\n|100.0  |363112.0|3578.0|3350.0|116219.0|1954.0|63761.0|\n|101.2  |397469.0|2904.0|3048.0|117388.0|1955.0|66019.0|\n|104.6  |419180.0|2822.0|2857.0|118734.0|1956.0|67857.0|\n|108.4  |442769.0|2936.0|2798.0|120445.0|1957.0|68169.0|\n|110.8  |444546.0|4681.0|2637.0|121950.0|1958.0|66513.0|\n|112.6  |482704.0|3813.0|2552.0|123366.0|1959.0|68655.0|\n|114.2  |502601.0|3931.0|2514.0|125368.0|1960.0|69564.0|\n|115.7  |518173.0|4806.0|2572.0|127852.0|1961.0|69331.0|\n|116.9  |554894.0|4007.0|2827.0|130081.0|1962.0|70551.0|\n\nWhat is the t-value for the GNP coefficient in the regression model? \n",
+      "rationale": "import pandas as pd\nfrom io import StringIO\n\nimport statsmodels.api as sm\n\nlongley_str = '''GNPDEFL,GNP,UNEMP,ARMED,POP,YEAR,TOTEMP\n83.0,234289.0,2356.0,1590.0,107608.0,1947.0,60323.0\n88.5,259426.0,2325.0,1456.0,108632.0,1948.0,61122.0\n88.2,258054.0,3682.0,1616.0,109773.0,1949.0,60171.0\n89.5,284599.0,3351.0,1650.0,110929.0,1950.0,61187.0\n96.2,328975.0,2099.0,3099.0,112075.0,1951.0,63221.0\n98.1,346999.0,1932.0,3594.0,113270.0,1952.0,63639.0\n99.0,365385.0,1870.0,3547.0,115094.0,1953.0,64989.0\n100.0,363112.0,3578.0,3350.0,116219.0,1954.0,63761.0\n101.2,397469.0,2904.0,3048.0,117388.0,1955.0,66019.0\n104.6,419180.0,2822.0,2857.0,118734.0,1956.0,67857.0\n108.4,442769.0,2936.0,2798.0,120445.0,1957.0,68169.0\n110.8,444546.0,4681.0,2637.0,121950.0,1958.0,66513.0\n112.6,482704.0,3813.0,2552.0,123366.0,1959.0,68655.0\n114.2,502601.0,3931.0,2514.0,125368.0,1960.0,69564.0\n115.7,518173.0,4806.0,2572.0,127852.0,1961.0,69331.0\n116.9,554894.0,4007.0,2827.0,130081.0,1962.0,70551.0\n'''\n\ndata_io = StringIO(longley_str)\nfull_df = pd.read_csv(data_io)\n\nendog_name = 'TOTEMP'\nexog_names = [col for col in full_df.columns if col != endog_name]\n\nendog = full_df[endog_name]\nexog = full_df[exog_names]\n\nexog = sm.add_constant(exog)\n\nmodel = sm.OLS(endog, exog)\nresults = model.fit()\nols_resid = results.resid\n\nprint(f'T-value for GNP: \\\\boxed{{{results.tvalues[\"GNP\"]:.2f}}}')",
+      "final_answer": "-1.07",
+      "metadata": {
+          "problem_id": "Linear Regression Models/gls",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "Given the following oil price data (oildata) from 1996 to 2007:\n\n| Year | Oil Price |\n|------|-----------|\n| 1996 | 446.6565  |\n| 1997 | 454.4733  |\n| 1998 | 455.663   |\n| 1999 | 423.6322  |\n| 2000 | 456.2713  |\n| 2001 | 440.5881  |\n| 2002 | 425.3325  |\n| 2003 | 485.1494  |\n| 2004 | 506.0482  |\n| 2005 | 526.792   |\n| 2006 | 514.2689  |\n| 2007 | 494.211   |\n\nUsing Simple Exponential Smoothing method with smoothing level \u03b1 = 0.6, heuristic initialization, and no parameter optimization, forecast the oil price for the year 2010.\n",
+      "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import SimpleExpSmoothing\n\ndata = [\n    446.6565,\n    454.4733,\n    455.663,\n    423.6322,\n    456.2713,\n    440.5881,\n    425.3325,\n    485.1494,\n    506.0482,\n    526.792,\n    514.2689,\n    494.211,\n]\nindex = pd.date_range(start=\"1996\", end=\"2008\", freq=\"Y\")\noildata = pd.Series(data, index)\n\nfit1 = SimpleExpSmoothing(oildata, initialization_method=\"heuristic\").fit(\n    smoothing_level=0.6, optimized=False\n)\nfcast1 = fit1.forecast(3).rename(r\"$\\alpha=0.6$\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2010-12-31\"]:.2f}}}')",
+      "final_answer": "501.84",
+      "metadata": {
+          "problem_id": "Time Series Analysis/exponential_smoothing",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "You are analyzing stock market volatility during the period from 1926 to 1930, which includes the beginning of the Great Depression. Using monthly excess returns data, you need to estimate a 3-regime Markov switching model where the variance of returns switches between regimes (while keeping the mean constant across regimes).\n\nSpecifically, you need to:\n\nFit a Markov switching model with 3 regimes (k_regimes=3)\nExclude the trend component (trend=\"n\")\nAllow the variance to switch between regimes (switching_variance=True)\nBased on this specific model, what is the expected duration (in months) of the high-volatility regime (regime 3) during this turbulent period of market history?\n\nHere is the data:\n|date      |excess_returns        |\n|----------|----------------------|\n|1926-01-01|0.009447291809972677  |\n|1926-02-01|-0.06639970819002733  |\n|1926-03-01|-0.11017370819002732  |\n|1926-04-01|0.018424958809972677  |\n|1926-05-01|-0.009769874520027323 |\n|1926-06-01|0.03796212580997268   |\n|1926-07-01|-0.0001930411900273217|\n|1926-08-01|0.01416962580997268   |\n|1926-09-01|-0.01994087449002732  |\n|1926-10-01|-0.044712208190027324 |\n|1926-11-01|0.010270458809972677  |\n|1926-12-01|0.012658458809972678  |\n|1927-01-01|-0.0029882078900273223|\n|1927-02-01|0.04299395880997268   |\n|1927-03-01|-0.03271454119002732  |\n|1927-04-01|-0.0051295411900273225|\n|1927-05-01|0.04846029180997268   |\n|1927-06-01|-0.032608041190027325 |\n|1927-07-01|0.04531962580997268   |\n|1927-08-01|-0.009384374490027322 |\n|1927-09-01|0.019748625809972678  |\n|1927-10-01|-0.05137604119002732  |\n|1927-11-01|0.08401879180997267   |\n|1927-12-01|0.01647879180997268   |\n|1928-01-01|0.018680791809972674  |\n|1928-02-01|-0.03591970819002732  |\n|1928-03-01|0.057382125809972685  |\n|1928-04-01|0.07253229180997267   |\n|1928-05-01|0.023896125809972676  |\n|1928-06-01|-0.08224470819002733  |\n|1928-07-01|-0.010447707860027322 |\n|1928-08-01|0.04297012580997268   |\n|1928-09-01|0.03539979180997268   |\n|1928-10-01|0.001754125809972678  |\n|1928-11-01|0.10223012880997268   |\n|1928-12-01|-0.01923287449002732  |\n|1929-01-01|0.018550291809972676  |\n|1929-02-01|-0.008096374490027322 |\n|1929-03-01|-0.04677237419002732  |\n|1929-04-01|-0.0009585411900273223|\n|1929-05-01|-0.10442920819002732  |\n|1929-06-01|0.05902129180997268   |\n|1929-07-01|0.0044124588099726785 |\n|1929-08-01|0.011637458809972677  |\n|1929-09-01|-0.05721637419002732  |\n|1929-10-01|-0.22652754119002733  |\n|1929-11-01|-0.1348757111900273   |\n|1929-12-01|-0.038576041190027326 |\n|1930-01-01|0.09471645880997268   |\n|1930-02-01|0.01869379180997268   |\n\nThe answer should be a number representing the quantity of months that the market typically remains in the high-volatility state before transitioning to another state.\n",
+      "rationale": "from io import StringIO\nimport pandas as pd\nimport statsmodels.api as sm\n\n# Get the dataset\ndta_kns_str = '''date,excess_returns\n1926-01-01,0.009447291809972677\n1926-02-01,-0.06639970819002733\n1926-03-01,-0.11017370819002732\n1926-04-01,0.018424958809972677\n1926-05-01,-0.009769874520027323\n1926-06-01,0.03796212580997268\n1926-07-01,-0.0001930411900273217\n1926-08-01,0.01416962580997268\n1926-09-01,-0.01994087449002732\n1926-10-01,-0.044712208190027324\n1926-11-01,0.010270458809972677\n1926-12-01,0.012658458809972678\n1927-01-01,-0.0029882078900273223\n1927-02-01,0.04299395880997268\n1927-03-01,-0.03271454119002732\n1927-04-01,-0.0051295411900273225\n1927-05-01,0.04846029180997268\n1927-06-01,-0.032608041190027325\n1927-07-01,0.04531962580997268\n1927-08-01,-0.009384374490027322\n1927-09-01,0.019748625809972678\n1927-10-01,-0.05137604119002732\n1927-11-01,0.08401879180997267\n1927-12-01,0.01647879180997268\n1928-01-01,0.018680791809972674\n1928-02-01,-0.03591970819002732\n1928-03-01,0.057382125809972685\n1928-04-01,0.07253229180997267\n1928-05-01,0.023896125809972676\n1928-06-01,-0.08224470819002733\n1928-07-01,-0.010447707860027322\n1928-08-01,0.04297012580997268\n1928-09-01,0.03539979180997268\n1928-10-01,0.001754125809972678\n1928-11-01,0.10223012880997268\n1928-12-01,-0.01923287449002732\n1929-01-01,0.018550291809972676\n1929-02-01,-0.008096374490027322\n1929-03-01,-0.04677237419002732\n1929-04-01,-0.0009585411900273223\n1929-05-01,-0.10442920819002732\n1929-06-01,0.05902129180997268\n1929-07-01,0.0044124588099726785\n1929-08-01,0.011637458809972677\n1929-09-01,-0.05721637419002732\n1929-10-01,-0.22652754119002733\n1929-11-01,-0.1348757111900273\n1929-12-01,-0.038576041190027326\n1930-01-01,0.09471645880997268\n1930-02-01,0.01869379180997268\n'''\n\ndta_kns_data = StringIO(dta_kns_str)\n\ndta_kns = pd.read_csv(dta_kns_data, parse_dates=[\"date\"], index_col=\"date\")\n\n# Fit the model\nmod_kns = sm.tsa.MarkovRegression(\n    dta_kns, k_regimes=3, trend=\"n\", switching_variance=True\n)\nres_kns = mod_kns.fit()\n\nres_kns.summary()\n\nprint(f'Expected duration of high-variance regime: \\\\boxed{{{res_kns.expected_durations[2]:.2f}}}')",
+      "final_answer": "2.63",
+      "metadata": {
+          "problem_id": "Time Series Analysis/markov_autoregression",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with linear trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+      "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2, optimized=False\n)\nfcast1 = fit1.forecast(5).rename(\"Holt's linear trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+      "final_answer": "50.58",
+      "metadata": {
+          "problem_id": "Time Series Analysis/exponential_smoothing",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "You are analyzing a physics experiment where you need to determine the relationship between two variables. You have collected data with measurement errors and need to fit a linear model using Weighted Least Squares (WLS) regression.\n\nWe split the data into training and test sets, where you use the training set to build the model and the test set to evaluate its performance.\n\nHere is the training set:\n  x   y y_err\n201 592    61\n244 401    25\n 47 583    38\n287 402    15\n203 495    21\n 58 173    15\n210 479    27\n202 504    14\n198 510    30\n158 416    16\n165 393    14\n201 442    25\n157 317    52\n131 311    16\n166 400    34\n\nHere is the testing data:\n  x   y y_err\n160 337    31\n186 423    42\n125 334    26\n218 533    16\n146 344    22\n\nThe model is trained on 15 data points and evaluated on 5 test points. Your code calculates the Root Mean Square Error (RMSE) as the evaluation metric.\nPlease print RMSE in the end of your code.\n",
+      "rationale": "import numpy as np\nimport pandas as pd\nimport statsmodels.api as sm\nfrom io import StringIO\nfrom sklearn.metrics import mean_squared_error\n\ntrain_data = '''\n  x   y y_err\n201 592    61\n244 401    25\n 47 583    38\n287 402    15\n203 495    21\n 58 173    15\n210 479    27\n202 504    14\n198 510    30\n158 416    16\n165 393    14\n201 442    25\n157 317    52\n131 311    16\n166 400    34\n'''\n\ntest_data = '''\n  x   y y_err\n160 337    31\n186 423    42\n125 334    26\n218 533    16\n146 344    22\n'''\n\ntrain_data = pd.read_csv(StringIO(train_data), delim_whitespace=True).astype(float)\ntest_data = pd.read_csv(StringIO(test_data), delim_whitespace=True).astype(float)\n\nprint(f\"Training set: {len(train_data)}\")\nprint(f\"Test set: {len(test_data)}\")\n\n# Fit model on training data\nexog_train = sm.add_constant(train_data[\"x\"])\nendog_train = train_data[\"y\"]\nweights_train = 1.0 / (train_data[\"y_err\"] ** 2)\n\nwls = sm.WLS(endog_train, exog_train, weights_train)\nresults = wls.fit(cov_type=\"fixed scale\")\n\nprint(results.summary())\n\n# Predictions on test data\nexog_test = sm.add_constant(test_data[\"x\"])\npredictions = results.predict(exog_test)\n\n# Calculate multiple evaluation metrics\nmse = mean_squared_error(test_data[\"y\"], predictions)\nrmse = np.sqrt(mse)\n\nprint(\"\\nResults on the evaluation set:\")\nprint(f'RMSE: \\\\boxed{{{rmse:.2f}}}')",
+      "final_answer": "49.33",
+      "metadata": {
+          "problem_id": "Linear Regression Models/chi2_fitting",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4",
+              "scikit-learn==1.6.1"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with exponential trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+      "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, exponential=True, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2, optimized=False\n)\nfcast1 = fit1.forecast(5).rename(\"Exponential trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+      "final_answer": "54.52",
+      "metadata": {
+          "problem_id": "Time Series Analysis/exponential_smoothing",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "U.S. historical economic data shows that business cycles typically alternate between periods of expansion and contraction. As an economic analyst, you are tasked with analyzing quarterly growth rates of U.S. Real Gross National Product (RGNP) from 1951 to 1958.\nYou need to estimate a 2-regime Markov-switching autoregressive model with the following specifications:\n\n1. Use 2 regimes (k_regimes=2) to represent expansion and contraction states\n2. Include 4 autoregressive lags (order=4)\n3. Keep the autoregressive coefficients constant across regimes (switching_ar=False)\n4. Based on this specific model, if the economy is currently in a recession state (i.e., downturn regime, typically characterized by negative growth rates), how many quarters would this downturn state be expected to last according to historical patterns?\n\nThe answer should be a number representing the quantity of quarters. \n\nPlease use a Markov-switching autoregressive model to estimate this duration.\n\nHere is the data:\n| date | rgnp |\n|------------|------------|\n| 1951-04-01 | 2.5931642 |\n| 1951-07-01 | 2.2021713 |\n| 1951-10-01 | 0.45827562 |\n| 1952-01-01 | 0.9687438 |\n| 1952-04-01 | -0.24130757 |\n| 1952-07-01 | 0.8964748 |\n| 1952-10-01 | 2.0539322 |\n| 1953-01-01 | 1.7335365 |\n| 1953-04-01 | 0.9387129 |\n| 1953-07-01 | -0.46477833 |\n| 1953-10-01 | -0.80983406 |\n| 1954-01-01 | -1.3976369 |\n| 1954-04-01 | -0.39886093 |\n| 1954-07-01 | 1.1918416 |\n| 1954-10-01 | 1.4562005 |\n| 1955-01-01 | 2.1180823 |\n| 1955-04-01 | 1.0895786 |\n| 1955-07-01 | 1.3239027 |\n| 1955-10-01 | 0.87296367 |\n| 1956-01-01 | -0.19773273 |\n| 1956-04-01 | 0.45420215 |\n| 1956-07-01 | 0.07221876 |\n| 1956-10-01 | 1.1030364 |\n| 1957-01-01 | 0.8209749 |\n| 1957-04-01 | -0.05795795 |\n| 1957-07-01 | 0.5844777 |\n| 1957-10-01 | -1.5619267 |\n| 1958-01-01 | -2.0504103 |\n| 1958-04-01 | 0.5363718 |\n| 1958-07-01 | 2.3367684 |\n\nThe answer should be a number representing the quantity of quarters.\n",
+      "rationale": "from io import StringIO\n\nimport pandas as pd\nimport statsmodels.api as sm\n\n\ncsv_data = '''\ndate,rgnp\n1951-04-01,2.5931642\n1951-07-01,2.2021713\n1951-10-01,0.45827562\n1952-01-01,0.9687438\n1952-04-01,-0.24130757\n1952-07-01,0.8964748\n1952-10-01,2.0539322\n1953-01-01,1.7335365\n1953-04-01,0.9387129\n1953-07-01,-0.46477833\n1953-10-01,-0.80983406\n1954-01-01,-1.3976369\n1954-04-01,-0.39886093\n1954-07-01,1.1918416\n1954-10-01,1.4562005\n1955-01-01,2.1180823\n1955-04-01,1.0895786\n1955-07-01,1.3239027\n1955-10-01,0.87296367\n1956-01-01,-0.19773273\n1956-04-01,0.45420215\n1956-07-01,0.07221876\n1956-10-01,1.1030364\n1957-01-01,0.8209749\n1957-04-01,-0.05795795\n1957-07-01,0.5844777\n1957-10-01,-1.5619267\n1958-01-01,-2.0504103\n1958-04-01,0.5363718\n1958-07-01,2.3367684\n'''\n\ndata = StringIO(csv_data)\n\ndta_hamilton = pd.read_csv(data, parse_dates=[\"date\"], index_col=\"date\").squeeze()\n\n# dta_hamilton.to_csv('rgnp_data_first_30.csv', header=True)\n\n# Fit the model\nmod_hamilton = sm.tsa.MarkovAutoregression(\n    dta_hamilton, k_regimes=2, order=4, switching_ar=False\n)\nres_hamilton = mod_hamilton.fit()\n\n\n\nres_hamilton.summary()\n\n\nprint(f'Expected Duration: \\\\boxed{{{res_hamilton.expected_durations[1]:.2f}}}')",
+      "final_answer": "2.56",
+      "metadata": {
+          "problem_id": "Time Series Analysis/markov_autoregression",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "You are analyzing economic indicators from the Longley dataset and need to account for autocorrelation in your regression model predicting total employment (TOTEMP) based on economic variables.\n\nThe dataset contains several economic indicators including GNP deflator, Gross National Product, unemployment numbers, armed forces personnel, population, and year. You will first build an OLS model, then test for autocorrelation in the residuals, and finally estimate a Generalized Least Squares (GLS) model that accounts for this autocorrelation.\n\nYour task is to:\n1. Load the provided dataset\n2. Build an initial OLS regression model\n3. Test for autocorrelation in the residuals\n4. Build a GLS model with appropriate autocorrelation structure\n5. Print the statistical significance of GLS models\nThe dataset contains:\n|GNPDEFL|GNP     |UNEMP |ARMED |POP     |YEAR  |TOTEMP |\n|-------|--------|------|------|--------|------|-------|\n|83.0   |234289.0|2356.0|1590.0|107608.0|1947.0|60323.0|\n|88.5   |259426.0|2325.0|1456.0|108632.0|1948.0|61122.0|\n|88.2   |258054.0|3682.0|1616.0|109773.0|1949.0|60171.0|\n|89.5   |284599.0|3351.0|1650.0|110929.0|1950.0|61187.0|\n|96.2   |328975.0|2099.0|3099.0|112075.0|1951.0|63221.0|\n|98.1   |346999.0|1932.0|3594.0|113270.0|1952.0|63639.0|\n|99.0   |365385.0|1870.0|3547.0|115094.0|1953.0|64989.0|\n|100.0  |363112.0|3578.0|3350.0|116219.0|1954.0|63761.0|\n|101.2  |397469.0|2904.0|3048.0|117388.0|1955.0|66019.0|\n|104.6  |419180.0|2822.0|2857.0|118734.0|1956.0|67857.0|\n|108.4  |442769.0|2936.0|2798.0|120445.0|1957.0|68169.0|\n|110.8  |444546.0|4681.0|2637.0|121950.0|1958.0|66513.0|\n|112.6  |482704.0|3813.0|2552.0|123366.0|1959.0|68655.0|\n|114.2  |502601.0|3931.0|2514.0|125368.0|1960.0|69564.0|\n|115.7  |518173.0|4806.0|2572.0|127852.0|1961.0|69331.0|\n|116.9  |554894.0|4007.0|2827.0|130081.0|1962.0|70551.0|\n\nAfter accounting for first-order autocorrelation in the residuals using GLS, what is the t-value for the GNP coefficient in the new model?\n\nRound your answer to two decimal places.\n",
+      "rationale": "import pandas as pd\nimport numpy as np\nfrom io import StringIO\n\nimport statsmodels.api as sm\n\nlongley_str = '''GNPDEFL,GNP,UNEMP,ARMED,POP,YEAR,TOTEMP\n83.0,234289.0,2356.0,1590.0,107608.0,1947.0,60323.0\n88.5,259426.0,2325.0,1456.0,108632.0,1948.0,61122.0\n88.2,258054.0,3682.0,1616.0,109773.0,1949.0,60171.0\n89.5,284599.0,3351.0,1650.0,110929.0,1950.0,61187.0\n96.2,328975.0,2099.0,3099.0,112075.0,1951.0,63221.0\n98.1,346999.0,1932.0,3594.0,113270.0,1952.0,63639.0\n99.0,365385.0,1870.0,3547.0,115094.0,1953.0,64989.0\n100.0,363112.0,3578.0,3350.0,116219.0,1954.0,63761.0\n101.2,397469.0,2904.0,3048.0,117388.0,1955.0,66019.0\n104.6,419180.0,2822.0,2857.0,118734.0,1956.0,67857.0\n108.4,442769.0,2936.0,2798.0,120445.0,1957.0,68169.0\n110.8,444546.0,4681.0,2637.0,121950.0,1958.0,66513.0\n112.6,482704.0,3813.0,2552.0,123366.0,1959.0,68655.0\n114.2,502601.0,3931.0,2514.0,125368.0,1960.0,69564.0\n115.7,518173.0,4806.0,2572.0,127852.0,1961.0,69331.0\n116.9,554894.0,4007.0,2827.0,130081.0,1962.0,70551.0\n'''\n\ndata_io = StringIO(longley_str)\nfull_df = pd.read_csv(data_io)\n\nendog_name = 'TOTEMP'\nexog_names = [col for col in full_df.columns if col != endog_name]\n\nendog = full_df[endog_name]\nexog = full_df[exog_names]\n\nexog = sm.add_constant(exog)\n\nmodel = sm.OLS(endog, exog)\nresults = model.fit()\nols_resid = results.resid\n\nresid_fit = sm.OLS(\n    np.asarray(ols_resid)[1:], sm.add_constant(np.asarray(ols_resid)[:-1])\n).fit()\n\nrho = resid_fit.params[1]\n\nfrom scipy.linalg import toeplitz\n\ntoeplitz(range(5))\n\norder = toeplitz(range(len(ols_resid)))\n\nsigma = rho ** order\ngls_model = sm.GLS(endog, exog, sigma=sigma)\ngls_results = gls_model.fit()\n\ngls_tvalues = gls_results.tvalues\n\nprint(f'GLS t-value for GNP: \\\\boxed{{{gls_results.tvalues[\"GNP\"]:.2f}}}')",
+      "final_answer": "-1.45",
+      "metadata": {
+          "problem_id": "Linear Regression Models/gls",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "Given the following oil price data (oildata) from 1996 to 2007:\n\n| Year | Oil Price |\n|------|-----------|\n| 1996 | 446.6565  |\n| 1997 | 454.4733  |\n| 1998 | 455.663   |\n| 1999 | 423.6322  |\n| 2000 | 456.2713  |\n| 2001 | 440.5881  |\n| 2002 | 425.3325  |\n| 2003 | 485.1494  |\n| 2004 | 506.0482  |\n| 2005 | 526.792   |\n| 2006 | 514.2689  |\n| 2007 | 494.211   |\n\nUsing Simple Exponential Smoothing method with smoothing level \u03b1 = 0.2, heuristic initialization, and no parameter optimization, forecast the oil price for the year 2010.\n",
+      "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import SimpleExpSmoothing\n\ndata = [\n    446.6565,\n    454.4733,\n    455.663,\n    423.6322,\n    456.2713,\n    440.5881,\n    425.3325,\n    485.1494,\n    506.0482,\n    526.792,\n    514.2689,\n    494.211,\n]\nindex = pd.date_range(start=\"1996\", end=\"2008\", freq=\"Y\")\noildata = pd.Series(data, index)\n\nfit1 = SimpleExpSmoothing(oildata, initialization_method=\"heuristic\").fit(\n    smoothing_level=0.2, optimized=False\n)\nfcast1 = fit1.forecast(3).rename(r\"$\\alpha=0.2$\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2010-12-31\"]:.2f}}}')",
+      "final_answer": "483.07",
+      "metadata": {
+          "problem_id": "Time Series Analysis/exponential_smoothing",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
+  },
+  {
+      "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with damped trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+      "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, damped_trend=True, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2\n)\nfcast1 = fit1.forecast(5).rename(\"Additive damped trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+      "final_answer": "46.06",
+      "metadata": {
+          "problem_id": "Time Series Analysis/exponential_smoothing",
+          "name": "stats_model",
+          "date_created": "2025-04-15",
+          "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+          "domain": "Mathematical Programming",
+          "required_dependencies": [
+              "pandas==1.5.3",
+              "statsmodels==0.14.4",
+              "numpy==1.26.4"
+          ],
+          "license": "BSD 3-Clause",
+          "source": "https://github.com/statsmodels/statsmodels"
+      }
   }
 ]
