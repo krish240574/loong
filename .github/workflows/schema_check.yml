@@ -1,7 +1,7 @@
 name: Data Schema Validation
 
 on:
-  push:
+  pull_request:
     paths:
       # Only trigger when seed_dataset.json files are modified
       - 'data/*/seed_dataset.json'

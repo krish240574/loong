@@ -11,7 +11,8 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4"
             ],
             "date_created": "2025-03-21",
             "name": "large_clique_size",
