@@ -1,11 +1,12 @@
 name: Data Schema Validation
 
 on:
-    pull_request:
-        paths:
-            - 'data/*/seed_dataset.json'
-            - 'data/games/*/seed_dataset.json'
-    workflow_dispatch:
+  push:
+    paths:
+      # Only trigger when seed_dataset.json files are modified
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  workflow_dispatch:
 
 jobs:
   validate:
