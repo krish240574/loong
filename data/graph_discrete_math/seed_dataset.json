@@ -3653,7 +3653,7 @@
     },
     {
         "question": "In a complete graph with 5 vertices, how many spanning trees can be formed from this graph?",
-        "rationale": "import networkx as nx\n\nG = nx.complete_graph(5)\nprint(nx.number_of_spanning_trees(G))",
+        "rationale": "import networkx as nx\n\nG = nx.complete_graph(5)\nprint(int(nx.number_of_spanning_trees(G)))",
         "final_answer": "125",
         "metadata": {
             "license": "CC0 1.0 Universal",
