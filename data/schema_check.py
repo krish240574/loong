@@ -115,23 +115,34 @@ def main():
     print("=" * 80)
     
     if args.file_path:
-        # Validate single file
+        # Handle file path
         file_path = Path(args.file_path)
-        if not file_path.exists():
-            print(f"\nFile not found: {file_path}")
-            sys.exit(1)
+        # Handle both absolute and relative paths
+        if not file_path.is_absolute():
+            # If path starts with 'data/', remove it as we're already in the data directory
+            if str(file_path).startswith('data/'):
+                file_path = Path(str(file_path)[5:])
+            file_path = Path(__file__).parent / file_path
             
-        domain = file_path.parent.name
-        results = validate_dataset(file_path)
-        if results:
-            missing_summary = summarize_validation_results(results, domain)
-            if missing_summary:
-                print(f"\n{domain}:")
-                for field, count in missing_summary.items():
-                    print(f"  {field}: {count} items")
-                has_errors = True
-        else:
-            print(f"\n{domain}: All required fields present")
+        try:
+            domain = file_path.parent.name
+            results = validate_dataset(file_path)
+            if results:
+                missing_summary = summarize_validation_results(results, domain)
+                if missing_summary:
+                    print(f"\n{domain}:")
+                    for field, count in missing_summary.items():
+                        print(f"  {field}: {count} items")
+                    has_errors = True
+            else:
+                print(f"\n{domain}: All required fields present")
+        except FileNotFoundError:
+            print(f"\nFile not found: {file_path}")
+            print("Please ensure the file path is correct relative to the script location")
+            sys.exit(1)
+        except Exception as e:
+            print(f"\nError processing {file_path}: {str(e)}")
+            sys.exit(1)
     else:
         # Validate all domains
         for domain, path in domain_paths.items():
