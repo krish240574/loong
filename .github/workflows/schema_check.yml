@@ -1,16 +1,18 @@
 name: Data Schema Validation
 
 on:
-    push:
-        paths:
-            # Only trigger when seed_dataset.json files are modified
-            - 'data/*/seed_dataset.json'
-            - 'data/games/*/seed_dataset.json'
-    pull_request:
-        paths:
-            - 'data/*/seed_dataset.json'
-            - 'data/games/*/seed_dataset.json'
-    workflow_dispatch:
+  push:
+    branches:
+      - main 
+    paths:
+      # Only trigger when seed_dataset.json files are modified
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  pull_request:
+    paths:
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -43,5 +45,5 @@ jobs:
         # Loop through all changed files and run validation for each
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           echo "Processing $file"
-          python schema_check.py --file_path "$file" > "validation_${file//\//_}.txt" 2>&1
+          python schema_check.py --file_path "$file"
         done

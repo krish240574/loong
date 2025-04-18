@@ -52,20 +52,31 @@ def main():
     print("=" * 50)
     
     if args.file_path:
-        # Validate single file
+        # Handle file path
         file_path = Path(args.file_path)
-        if not file_path.exists():
-            print(f"\nFile not found: {file_path}")
-            sys.exit(1)
+        # Handle both absolute and relative paths
+        if not file_path.is_absolute():
+            # If path starts with 'data/', remove it as we're already in the data directory
+            if str(file_path).startswith('data/'):
+                file_path = Path(str(file_path)[5:])
+            file_path = Path(__file__).parent / file_path
             
         domain = file_path.parent.name
-        passed, size = validate_dataset_size(file_path)
-        if not passed:
-            print(f"\n{domain}:")
-            print(f"  Insufficient dataset size: {size}/100")
-            all_passed = False
-        else:
-            print(f"\n{domain}: Passed ({size} entries)")
+        try:
+            passed, size = validate_dataset_size(file_path)
+            if not passed:
+                print(f"\n{domain}:")
+                print(f"  Insufficient dataset size: {size}/100")
+                all_passed = False
+            else:
+                print(f"\n{domain}: Passed ({size} entries)")
+        except FileNotFoundError:
+            print(f"\nFile not found: {file_path}")
+            print("Please ensure the file path is correct relative to the script location")
+            sys.exit(1)
+        except Exception as e:
+            print(f"\nError processing {file_path}: {str(e)}")
+            sys.exit(1)
     else:
         # Check each domain's dataset
         for domain, path in domain_paths.items():
