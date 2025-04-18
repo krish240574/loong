@@ -9,8 +9,7 @@
       "domain": "Quant",
       "license": "MIT",
       "required_dependencies": [
-        "QuantLib==1.37",
-        "numpy==1.26.4"
+        "QuantLib==1.37"
       ],
       "source": "https://huggingface.co/datasets/dreamerdeo/finqa",
       "date_created": [

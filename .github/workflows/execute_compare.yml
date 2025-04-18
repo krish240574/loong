@@ -45,7 +45,7 @@ jobs:
         # Loop through all changed files and run validation for each
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           echo "Processing $file"
-          python execute_compare_action.py --file_path "$file" > "validation_${file//\//_}.txt" 2>&1
+          python execute_compare_action.py --file_path "$file" 2>&1 | tee "validation_${file//\//_}.txt"
         done
 
     - name: Upload validation results
