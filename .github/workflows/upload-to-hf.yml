@@ -33,6 +33,7 @@ jobs:
         pip install torch
         pip install huggingface_hub
         pip install camel-ai[datasets,datahubs]==0.2.45
+        pip install Pillow
 
     - name: Run upload to hf
       run: |
