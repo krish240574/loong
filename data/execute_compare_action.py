@@ -691,14 +691,26 @@ async def main():
     # If file_path is provided, only process that specific file
     if args.file_path:
         # Extract domain name from file path
-        domain = Path(args.file_path).parent.name
+        file_path = Path(args.file_path)
+        # Handle both absolute and relative paths
+        if not file_path.is_absolute():
+            # If path starts with 'data/', remove it as we're already in the data directory
+            if str(file_path).startswith('data/'):
+                file_path = Path(str(file_path)[5:])
+            file_path = Path(__file__).parent / file_path
+        
+        domain = file_path.parent.name
         try:
-            with open(args.file_path, 'r', encoding='utf-8') as f:
+            with open(file_path, 'r', encoding='utf-8') as f:
                 domain_data = json.load(f)
                 dataset = {domain: domain_data}
-                logger.info(f"Processing single domain {domain} from {args.file_path}")
+                logger.info(f"Processing single domain {domain} from {file_path}")
+        except FileNotFoundError:
+            logger.error(f"File not found: {file_path}")
+            logger.error("Please ensure the file path is correct relative to the script location")
+            sys.exit(1)
         except Exception as e:
-            logger.error(f"Error loading file {args.file_path}: {e}")
+            logger.error(f"Error loading file {file_path}: {e}")
             sys.exit(1)
     else:
         # Original behavior - process all domains

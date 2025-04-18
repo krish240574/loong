@@ -43,5 +43,5 @@ jobs:
         # Loop through all changed files and run validation for each
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           echo "Processing $file"
-          python schema_check.py --file_path "$file" > "validation_${file//\//_}.txt" 2>&1
+          python schema_check.py --file_path "$file"
         done
