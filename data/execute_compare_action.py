@@ -48,15 +48,15 @@ def combine_seed_data():
 
     # Define the domains to process with their paths
     domain_paths = {
-        # "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
-        # "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
-        # "finance": data_dir / "finance" / "seed_dataset.json",
-        # "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
-        # "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        # "logic": data_dir / "logic" / "seed_dataset.json",
+        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
+        "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
+        "finance": data_dir / "finance" / "seed_dataset.json",
+        "games": data_dir / "games" / "blackjack" / "seed_dataset.json",  # Special case for games
+        "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
+        "logic": data_dir / "logic" / "seed_dataset.json",
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        # "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
-        # "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
+        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
@@ -665,8 +665,6 @@ async def main():
     """
     import argparse
 
-    dataset = combine_seed_data()
-
     parser = argparse.ArgumentParser(description="Execute rationale code and compare with final answers")
 
     parser.add_argument("--batch-size", type=int, default=DEFAULT_BATCH_SIZE,
@@ -681,12 +679,30 @@ async def main():
                         help="Skip execution and just generate visualizations from existing results")
     parser.add_argument("--disable-cache", action="store_true",
                         help="Disable caching of virtual environments")
+    parser.add_argument("--file_path", type=str,
+                        help="Path to specific seed_dataset.json file to process")
 
     args = parser.parse_args()
 
     # Set global configuration
     global ENV_CACHE_ENABLED
     ENV_CACHE_ENABLED = not args.disable_cache
+
+    # If file_path is provided, only process that specific file
+    if args.file_path:
+        # Extract domain name from file path
+        domain = Path(args.file_path).parent.name
+        try:
+            with open(args.file_path, 'r', encoding='utf-8') as f:
+                domain_data = json.load(f)
+                dataset = {domain: domain_data}
+                logger.info(f"Processing single domain {domain} from {args.file_path}")
+        except Exception as e:
+            logger.error(f"Error loading file {args.file_path}: {e}")
+            sys.exit(1)
+    else:
+        # Original behavior - process all domains
+        dataset = combine_seed_data()
 
     if args.single_item:
         # For testing with a single item

@@ -1,11 +1,16 @@
 name: Execution Result Validation
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    workflow_dispatch:
+  push:
+    paths:
+      # Only trigger when seed_dataset.json files are modified
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  pull_request:
+    paths:
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -31,15 +36,27 @@ jobs:
         pip install uv==0.6.12
         pip install math_verify
     
-    - name: Run validation
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v42
+      with:
+        files: |
+          data/*/seed_dataset.json
+          data/games/*/seed_dataset.json
+
+    - name: Run validation for changed files
       run: |
         cd data
-        python execute_compare_action.py > validation_output.txt 2>&1
+        # Loop through all changed files and run validation for each
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          echo "Processing $file"
+          python execute_compare_action.py --file_path "$file" > "validation_${file//\//_}.txt" 2>&1
+        done
 
     - name: Upload validation results
       if: always()
       uses: actions/upload-artifact@v4
       with:
         name: validation-results
-        path: data/validation_output.txt
+        path: data/validation_*.txt
         retention-days: 14
