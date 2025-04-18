@@ -11,7 +11,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "large_clique_size",
@@ -30,7 +33,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "all_pairs_node_connectivity",
@@ -49,7 +55,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "local_node_connectivity",
@@ -68,7 +77,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "diameter_undirected",
@@ -87,7 +99,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "diameter_directed",
@@ -106,7 +121,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "min_edge_dominating_set",
@@ -125,7 +143,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "min_weighted_dominating_set",
@@ -144,7 +165,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "k_components",
@@ -163,7 +187,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "one_exchange_maxcut",
@@ -182,7 +209,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "randomized_partitioning_cutsize",
@@ -201,7 +231,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "average_degree_connectivity",
@@ -220,7 +253,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "attribute_assortativity_coefficient",
@@ -239,7 +275,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "degree_assortativity_coefficient",
@@ -258,7 +297,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "numeric_assortativity_coefficient",
@@ -277,7 +319,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "attribute_mixing_dict",
@@ -296,7 +341,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "degree_mixing_matrix",
@@ -315,7 +363,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "average_neighbor_degree",
@@ -334,7 +385,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_attribute_xy",
@@ -353,7 +407,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_degree_xy_out_x_in_y",
@@ -372,7 +429,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_degree_xy_in_x_out_y",
@@ -391,7 +451,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_at_free_true",
@@ -410,7 +473,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_at_free_false",
@@ -429,7 +495,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "color",
@@ -448,7 +517,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "degrees",
@@ -467,7 +539,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "density",
@@ -486,7 +561,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_bipartite",
@@ -505,7 +583,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_bipartite_node_set",
@@ -524,7 +605,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "latapy_clustering",
@@ -543,7 +627,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "robins_alexander_clustering",
@@ -562,7 +649,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "jaccard_projected_graph",
@@ -581,7 +671,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "projected_graph",
@@ -600,7 +693,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "weighted_projected_graph",
@@ -619,7 +715,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "spectral_bipartivity",
@@ -638,7 +737,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "edge_boundary",
@@ -657,7 +759,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_boundary",
@@ -676,7 +781,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "bridges",
@@ -695,7 +803,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "closeness_centrality",
@@ -714,7 +825,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "degree_centrality",
@@ -733,7 +847,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "in_degree_centrality",
@@ -752,7 +869,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "out_degree_centrality",
@@ -771,7 +891,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "eigenvector_centrality",
@@ -790,7 +913,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "laplacian_centrality",
@@ -809,7 +935,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "global_reaching_centrality",
@@ -828,7 +957,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "local_reaching_centrality",
@@ -847,7 +979,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "second_order_centrality",
@@ -866,7 +1001,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "communicability_betweenness_centrality",
@@ -885,7 +1023,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "estrada_index",
@@ -904,7 +1045,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "voterank_undirected",
@@ -923,7 +1067,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "voterank_directed",
@@ -942,7 +1089,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "chain_decomposition",
@@ -961,7 +1111,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "complete_to_chordal_graph_edgelist",
@@ -980,7 +1133,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "complete_to_chordal_graph_elimorder",
@@ -999,7 +1155,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "find_induced_nodes",
@@ -1018,7 +1177,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "find_cliques",
@@ -1037,7 +1199,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "find_cliques_clique_num",
@@ -1056,7 +1221,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "average_clustering",
@@ -1075,7 +1243,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "clustering",
@@ -1094,7 +1265,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "square_clustering",
@@ -1113,7 +1287,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "transitivity",
@@ -1132,7 +1309,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "triangles",
@@ -1151,7 +1331,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "equitable_color",
@@ -1170,7 +1353,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "modularity",
@@ -1189,7 +1375,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_biconnected",
@@ -1208,7 +1397,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_connected",
@@ -1227,7 +1419,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_connected_component",
@@ -1246,7 +1441,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "number_connected_components",
@@ -1265,7 +1463,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_semiconnected",
@@ -1284,7 +1485,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_strongly_connected",
@@ -1303,7 +1507,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_weakly_connected",
@@ -1322,7 +1529,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "number_weakly_connected_components",
@@ -1341,7 +1551,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "edge_connectivity",
@@ -1360,7 +1573,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_connectivity",
@@ -1379,7 +1595,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "node_disjoint_paths",
@@ -1398,7 +1617,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "stoer_wagner",
@@ -1417,7 +1639,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_edge_cover",
@@ -1436,7 +1661,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "min_edge_cover",
@@ -1455,7 +1683,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "cut_size",
@@ -1474,7 +1705,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "cycle_basis",
@@ -1493,7 +1727,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "girth",
@@ -1512,7 +1749,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "minimum_cycle_basis",
@@ -1531,7 +1771,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "simple_cycles",
@@ -1550,7 +1793,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_minimal_d_separator",
@@ -1569,7 +1815,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "all_topological_sorts",
@@ -1588,7 +1837,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "ancestors",
@@ -1607,7 +1859,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "antichains",
@@ -1626,7 +1881,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "descendants",
@@ -1645,7 +1903,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_aperiodic",
@@ -1664,7 +1925,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_directed_acyclic_graph",
@@ -1683,7 +1947,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "topological_sort",
@@ -1702,7 +1969,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "transitive_closure",
@@ -1721,7 +1991,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "transitive_closure_dag",
@@ -1740,7 +2013,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "transitive_reduction",
@@ -1759,7 +2035,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "barycenter",
@@ -1778,7 +2057,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "center",
@@ -1797,7 +2079,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "diameter",
@@ -1816,7 +2101,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "effective_graph_resistance",
@@ -1835,7 +2123,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "kemeny_constant",
@@ -1854,7 +2145,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "periphery",
@@ -1873,7 +2167,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "radius",
@@ -1892,7 +2189,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "resistance_distance",
@@ -1911,7 +2211,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "global_parameters",
@@ -1930,7 +2233,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_distance_regular",
@@ -1949,7 +2255,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_strongly_regular",
@@ -1968,7 +2277,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dominance_frontiers",
@@ -1987,7 +2299,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "immediate_dominators",
@@ -2006,7 +2321,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "efficiency",
@@ -2025,7 +2343,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "global_efficiency",
@@ -2044,7 +2365,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "local_efficiency",
@@ -2063,7 +2387,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "has_eulerian_path",
@@ -2082,7 +2409,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "boykov_kolmogorov",
@@ -2101,7 +2431,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "cost_of_flow",
@@ -2120,7 +2453,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "preflow_push",
@@ -2139,7 +2475,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_isolate",
@@ -2158,7 +2497,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "isolates",
@@ -2177,7 +2519,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "lowest_common_ancestor",
@@ -2196,7 +2541,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_matching",
@@ -2215,7 +2563,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_maximal_matching",
@@ -2234,7 +2585,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_perfect_matching",
@@ -2253,7 +2607,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "max_weight_matching",
@@ -2272,7 +2629,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "maximal_matching",
@@ -2291,7 +2651,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "contracted_nodes",
@@ -2310,7 +2673,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "moral_graph",
@@ -2329,7 +2695,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "harmonic_function",
@@ -2348,7 +2717,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "local_and_global_consistency",
@@ -2367,7 +2739,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "compose_all_edges",
@@ -2386,7 +2761,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "compose_all_nodes",
@@ -2405,7 +2783,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "intersection_all_nodes",
@@ -2424,7 +2805,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "intersection_all_edges",
@@ -2443,7 +2827,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "union_all_nodes",
@@ -2462,7 +2849,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "union_all_edges",
@@ -2481,7 +2871,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "difference",
@@ -2500,7 +2893,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "power",
@@ -2519,7 +2915,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "complement",
@@ -2538,7 +2937,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "reverse",
@@ -2557,7 +2959,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_planar",
@@ -2576,7 +2981,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "chromatic_polynomial",
@@ -2595,7 +3003,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_k_regular",
@@ -2614,7 +3025,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_regular",
@@ -2633,7 +3047,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "k_factor",
@@ -2652,7 +3069,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "rich_club_coefficient",
@@ -2671,7 +3091,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "all_pairs_all_shortest_paths",
@@ -2690,7 +3113,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "shortest_path",
@@ -2709,7 +3135,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "shortest_path_length",
@@ -2728,7 +3157,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "predecessor",
@@ -2747,7 +3179,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "all_pairs_bellman_ford_path",
@@ -2766,7 +3201,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "bellman_ford_path_length",
@@ -2785,7 +3223,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dijkstra_predecessor_and_distance",
@@ -2804,7 +3245,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "negative_edge_cycle",
@@ -2823,7 +3267,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "simrank_similarity",
@@ -2842,7 +3289,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_simple_path",
@@ -2861,7 +3311,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_threshold_graph",
@@ -2880,7 +3333,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "hamiltonian_path",
@@ -2899,7 +3355,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_reachable",
@@ -2918,7 +3377,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_strongly_connected_tournament",
@@ -2937,7 +3399,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_tournament",
@@ -2956,7 +3421,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "score_sequence",
@@ -2975,7 +3443,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "bfs_layers",
@@ -2994,7 +3465,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "bfs_predecessors",
@@ -3013,7 +3487,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "bfs_successors",
@@ -3032,7 +3509,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "descendants_at_distance",
@@ -3051,7 +3531,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dfs_edges",
@@ -3070,7 +3553,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dfs_postorder_nodes",
@@ -3089,7 +3575,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dfs_predecessors",
@@ -3108,7 +3597,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dfs_preorder_nodes",
@@ -3127,7 +3619,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "dfs_successors",
@@ -3146,7 +3641,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "to_prufer_sequence",
@@ -3165,7 +3663,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "number_of_spanning_trees",
@@ -3184,7 +3685,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_arborescence",
@@ -3203,7 +3707,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_branching",
@@ -3222,7 +3729,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_forest",
@@ -3241,7 +3751,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_tree",
@@ -3260,7 +3773,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "is_triad",
@@ -3279,7 +3795,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "triad_type",
@@ -3298,7 +3817,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "triads_by_type",
@@ -3317,7 +3839,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "closeness_vitality",
@@ -3336,7 +3861,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "voronoi_cells",
@@ -3355,7 +3883,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "number_of_walks",
@@ -3374,7 +3905,10 @@
                 "Zifeng Ding"
             ],
             "required_dependencies": [
-                "networkx==3.4.2"
+                "networkx==3.4.2",
+                "numpy==1.26.4",
+                "sympy==1.13.1",
+                "scipy==1.15.2"
             ],
             "date_created": "2025-03-21",
             "name": "wiener_index",
