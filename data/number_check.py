@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 import sys
+import argparse
 
 def validate_dataset_size(file_path: Path, min_size: int = 100) -> tuple[bool, int]:
     """
@@ -26,6 +27,12 @@ def validate_dataset_size(file_path: Path, min_size: int = 100) -> tuple[bool, i
         return False, 0
 
 def main():
+    # Add argument parser for file_path
+    parser = argparse.ArgumentParser(description="Validate dataset size")
+    parser.add_argument("--file_path", type=str,
+                       help="Path to specific seed_dataset.json file to validate")
+    args = parser.parse_args()
+
     # Define the base data directory and paths to each domain's dataset
     data_dir = Path(__file__).parent
     domain_paths = {
@@ -44,21 +51,37 @@ def main():
     print("\nDataset Size Validation Report:")
     print("=" * 50)
     
-    # Check each domain's dataset
-    for domain, path in domain_paths.items():
-        if not path.exists():
-            print(f"\n{domain}:")
-            print("  File not found")
-            all_passed = False
-            continue
+    if args.file_path:
+        # Validate single file
+        file_path = Path(args.file_path)
+        if not file_path.exists():
+            print(f"\nFile not found: {file_path}")
+            sys.exit(1)
             
-        passed, size = validate_dataset_size(path)
+        domain = file_path.parent.name
+        passed, size = validate_dataset_size(file_path)
         if not passed:
             print(f"\n{domain}:")
             print(f"  Insufficient dataset size: {size}/100")
             all_passed = False
         else:
             print(f"\n{domain}: Passed ({size} entries)")
+    else:
+        # Check each domain's dataset
+        for domain, path in domain_paths.items():
+            if not path.exists():
+                print(f"\n{domain}:")
+                print("  File not found")
+                all_passed = False
+                continue
+                
+            passed, size = validate_dataset_size(path)
+            if not passed:
+                print(f"\n{domain}:")
+                print(f"  Insufficient dataset size: {size}/100")
+                all_passed = False
+            else:
+                print(f"\n{domain}: Passed ({size} entries)")
     
     # Final validation result
     if not all_passed:

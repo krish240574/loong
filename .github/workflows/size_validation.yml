@@ -1,11 +1,16 @@
 name: Dataset Size Validation
 
 on:
-    push:
-        branches: [main]
-    pull_request:
-        branches: [main]
-    workflow_dispatch:
+  push:
+    paths:
+      # Only trigger when seed_dataset.json files are modified
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  pull_request:
+    paths:
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  workflow_dispatch:
 
 jobs:
   validate:
@@ -19,7 +24,19 @@ jobs:
       with:
         python-version: '3.12.0'
     
-    - name: Run dataset size validation
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v42
+      with:
+        files: |
+          data/*/seed_dataset.json
+          data/games/*/seed_dataset.json
+
+    - name: Run dataset size validation for changed files
       run: |
-        cd data  # Adjust to correct directory
-        python number_check.py
+        cd data
+        # Loop through all changed files and run validation for each
+        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+          echo "Processing $file"
+          python number_check.py --file_path "$file"
+        done
