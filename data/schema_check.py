@@ -6,6 +6,7 @@ from typing import List, Dict, Any
 import jsonschema
 from collections import defaultdict
 import sys
+import argparse
 
 def validate_date_format(date_str: str) -> bool:
     try:
@@ -89,6 +90,12 @@ def summarize_validation_results(results: List[Dict[str, Any]], domain: str) -> 
     return dict(missing_fields)
 
 def main():
+    # Add argument parser for file_path
+    parser = argparse.ArgumentParser(description="Validate seed dataset schema")
+    parser.add_argument("--file_path", type=str,
+                       help="Path to specific seed_dataset.json file to validate")
+    args = parser.parse_args()
+
     data_dir = Path(__file__).parent
     domain_paths = {
         "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
@@ -107,14 +114,15 @@ def main():
     print("\nValidation Summary:")
     print("=" * 80)
     
-    for domain, path in domain_paths.items():
-        if not path.exists():
-            print(f"\n{domain}:")
-            print("  File not found")
-            has_errors = True
-            continue
+    if args.file_path:
+        # Validate single file
+        file_path = Path(args.file_path)
+        if not file_path.exists():
+            print(f"\nFile not found: {file_path}")
+            sys.exit(1)
             
-        results = validate_dataset(path)
+        domain = file_path.parent.name
+        results = validate_dataset(file_path)
         if results:
             missing_summary = summarize_validation_results(results, domain)
             if missing_summary:
@@ -124,6 +132,25 @@ def main():
                 has_errors = True
         else:
             print(f"\n{domain}: All required fields present")
+    else:
+        # Validate all domains
+        for domain, path in domain_paths.items():
+            if not path.exists():
+                print(f"\n{domain}:")
+                print("  File not found")
+                has_errors = True
+                continue
+                
+            results = validate_dataset(path)
+            if results:
+                missing_summary = summarize_validation_results(results, domain)
+                if missing_summary:
+                    print(f"\n{domain}:")
+                    for field, count in missing_summary.items():
+                        print(f"  {field}: {count} items")
+                    has_errors = True
+            else:
+                print(f"\n{domain}: All required fields present")
     
     if has_errors:
         print("\nValidation failed!")
