@@ -2,10 +2,16 @@ name: Upload to Hugging Face
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main 
     paths:
-      - 'data/**/*.json'
-  
+      # Only trigger when seed_dataset.json files are modified
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
+  pull_request:
+    paths:
+      - 'data/*/seed_dataset.json'
+      - 'data/games/*/seed_dataset.json'
   workflow_dispatch:
 
 jobs:
