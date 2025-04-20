@@ -31,8 +31,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install camel-ai
-        pip install huggingface_hub datasets backoff requests
+        pip install datasets
+        pip install torch
+        pip install huggingface_hub
+        pip install camel-ai[datasets,datahubs]==0.2.45
+        pip install Pillow
+        pip install requests_oauthlib
 
     - name: Upload to HuggingFace
       run: |
