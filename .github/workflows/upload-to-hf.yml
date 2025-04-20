@@ -26,7 +26,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '3.12.0'
         
     - name: Install dependencies
       run: |
@@ -37,6 +37,7 @@ jobs:
         pip install camel-ai[datasets,datahubs]==0.2.45
         pip install Pillow
         pip install requests_oauthlib
+        pip install backoff
 
     - name: Upload to HuggingFace
       run: |
