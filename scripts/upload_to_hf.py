@@ -16,6 +16,37 @@ from camel.datahubs.models import Record
 # Import Hugging Face Dataset
 from datasets import Dataset as HFDataset
 
+
+def split_train_test(data, train_ratio=0.7, random_seed=42):
+    """
+    Split dataset into training and testing sets.
+
+    Args:
+        data (list): List of data entries to split
+        train_ratio (float): Ratio of training data, defaults to 0.7
+        random_seed (int): Random seed for reproducibility, defaults to 42
+
+    Returns:
+        tuple: (training_data, testing_data)
+    """
+    import random
+    random.seed(random_seed)
+    
+    # Copy data to avoid modifying original
+    data_copy = data.copy()
+    # Shuffle data randomly
+    random.shuffle(data_copy)
+    
+    # Calculate training set size
+    train_size = int(len(data_copy) * train_ratio)
+    
+    # Split data
+    train_data = data_copy[:train_size]
+    test_data = data_copy[train_size:]
+    
+    return train_data, test_data
+
+
 def load_dataset_files(file_paths):
     """
     Load and parse multiple JSON dataset files.
@@ -217,7 +248,7 @@ def push_to_hub_with_retry(dataset, dataset_name, config_name, split):
         token=os.environ.get("HF_TOKEN")
     )
     # Add delay after successful push
-    time.sleep(10)
+    time.sleep(5)
 
 def upload_domain_dataset(data_entries: List[Dict[str, Any]], 
                         username: str, 
@@ -382,46 +413,40 @@ def main():
     
     # Process data for each domain
     for domain, file_path in domain_paths.items():
-        try:
-            if not file_path.exists():
-                print(f"Skipping {domain} due to missing file")
-                continue
-                
-            print(f"\nProcessing domain: {domain}")
-            
-            # Load data for this domain
-            domain_data = load_dataset_files([str(file_path)])
-            
-            # Ensure metadata contains the correct domain
-            for entry in domain_data:
-                if 'metadata' not in entry:
-                    entry['metadata'] = {}
-                entry['metadata']['domain'] = domain
-            
-            # Split into train/test
-            train_data, test_data = split_train_test(domain_data)
-            
-            print(f"Uploading {len(train_data)} training examples and {len(test_data)} test examples")
-            
-            # Upload train split
-            upload_domain_dataset(train_data, username, base_dataset_name, domain, 'train')
-            
-            # Add delay between train and test uploads
-            time.sleep(30)
-            
-            # Upload test split
-            upload_domain_dataset(test_data, username, base_dataset_name, domain, 'test')
-            
-            print(f"Completed uploading {domain} dataset")
-            
-            # Add delay between domains
-            time.sleep(60)
-            
-        except Exception as e:
-            print(f"Error processing domain {domain}: {e}")
-            print("Waiting before continuing...")
-            time.sleep(120)  # Longer wait after error
+        if not file_path.exists():
+            print(f"Skipping {domain} due to missing file")
             continue
+            
+        print(f"\nProcessing domain: {domain}")
+        
+        # Load data for this domain
+        domain_data = load_dataset_files([str(file_path)])
+        
+        # Ensure metadata contains the correct domain
+        for entry in domain_data:
+            if 'metadata' not in entry:
+                entry['metadata'] = {}
+            entry['metadata']['domain'] = domain
+        
+        # Split into train/test
+        train_data, test_data = split_train_test(domain_data)
+        
+        print(f"Uploading {len(train_data)} training examples and {len(test_data)} test examples")
+        
+        # Upload train split
+        upload_domain_dataset(train_data, username, base_dataset_name, domain, 'train')
+        
+        # Add delay between train and test uploads
+        time.sleep(5)
+        
+        # Upload test split
+        upload_domain_dataset(test_data, username, base_dataset_name, domain, 'test')
+        
+        print(f"Completed uploading {domain} dataset")
+        
+        # Add delay between domains
+        time.sleep(10)
+
 
 if __name__ == "__main__":
     main()
