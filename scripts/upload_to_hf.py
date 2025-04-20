@@ -3,6 +3,10 @@ import json
 from pathlib import Path
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Union, Tuple
+import time
+import backoff
+from huggingface_hub.utils import HfHubHTTPError
+import requests
 
 # CAMEL imports
 from camel.datasets import DataPoint, StaticDataset
@@ -11,6 +15,37 @@ from camel.datahubs.models import Record
 
 # Import Hugging Face Dataset
 from datasets import Dataset as HFDataset
+
+
+def split_train_test(data, train_ratio=0.7, random_seed=42):
+    """
+    Split dataset into training and testing sets.
+
+    Args:
+        data (list): List of data entries to split
+        train_ratio (float): Ratio of training data, defaults to 0.7
+        random_seed (int): Random seed for reproducibility, defaults to 42
+
+    Returns:
+        tuple: (training_data, testing_data)
+    """
+    import random
+    random.seed(random_seed)
+    
+    # Copy data to avoid modifying original
+    data_copy = data.copy()
+    # Shuffle data randomly
+    random.shuffle(data_copy)
+    
+    # Calculate training set size
+    train_size = int(len(data_copy) * train_ratio)
+    
+    # Split data
+    train_data = data_copy[:train_size]
+    test_data = data_copy[train_size:]
+    
+    return train_data, test_data
+
 
 def load_dataset_files(file_paths):
     """
@@ -193,80 +228,27 @@ def add_records_to_dataset(manager, dataset_name, records):
     """
     manager.add_records(dataset_name, records)
 
-
-def upload_to_huggingface(data_entries, username, dataset_name=None):
+# Add retry decorator for API calls
+@backoff.on_exception(
+    backoff.expo,
+    (HfHubHTTPError, requests.exceptions.HTTPError),
+    max_tries=5,
+    max_time=300,
+    giveup=lambda e: e.response.status_code not in [429, 500, 502, 503, 504] if hasattr(e, 'response') else False
+)
+def push_to_hub_with_retry(dataset, dataset_name, config_name, split):
     """
-    Uploads transformed data to the Hugging Face dataset platform.
-
-    Args:
-        data_entries (list): Transformed data, typically a list of dictionaries.
-        username (str): Hugging Face username.
-        dataset_name (str, optional): Custom dataset name.
-
-    Returns:
-        str: URL of the uploaded dataset.
+    Push dataset to hub with retry mechanism.
     """
-    # Initialize HuggingFaceDatasetManager to interact with Hugging Face datasets
-    manager = HuggingFaceDatasetManager()
-
-    # Generate or validate the dataset name
-    dataset_name = generate_or_validate_dataset_name(username, dataset_name)
-
-    # Create the dataset on Hugging Face and get the dataset URL
-    dataset_url = create_dataset(manager, dataset_name)
-
-    # Create a dataset card to add metadata
-    create_dataset_card(manager, dataset_name, username)
-
-    # Convert the transformed data into a list of Record objects
-    records = transform_data_to_records(data_entries)
-
-    # Add the Record objects to the dataset
-    add_records_to_dataset(manager, dataset_name, records)
-
-    # Return the dataset URL
-    return dataset_url
-
-def split_data_by_domain(data_entries: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
-    """
-    Split data entries by domain.
-
-    Args:
-        data_entries (List[Dict[str, Any]]): List of data dictionaries.
-
-    Returns:
-        Dict[str, List[Dict[str, Any]]]: Dictionary with domain as key and list of entries as value.
-    """
-    domain_data = {}
-    for entry in data_entries:
-        domain = entry.get('metadata', {}).get('domain', 'unknown')
-        if domain not in domain_data:
-            domain_data[domain] = []
-        domain_data[domain].append(entry)
-    return domain_data
-
-def split_train_test(data: List[Dict[str, Any]], test_ratio: float = 0.3) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
-    """
-    Split data into train and test sets.
-
-    Args:
-        data (List[Dict[str, Any]]): List of data entries.
-        test_ratio (float): Ratio of test set size.
-
-    Returns:
-        Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]: Train and test sets.
-    """
-    import random
-    random.seed(42)  # For reproducibility
-    
-    data_copy = data.copy()
-    random.shuffle(data_copy)
-    
-    test_size = int(len(data_copy) * test_ratio)
-    test_set = data_copy[:test_size]
-    train_set = data_copy[test_size:]
-    
-    return train_set, test_set
+    dataset.push_to_hub(
+        dataset_name,
+        config_name=config_name,
+        split=split,
+        private=False,
+        token=os.environ.get("HF_TOKEN")
+    )
+    # Add delay after successful push
+    time.sleep(5)
 
 def upload_domain_dataset(data_entries: List[Dict[str, Any]], 
                         username: str, 
@@ -283,45 +265,46 @@ def upload_domain_dataset(data_entries: List[Dict[str, Any]],
         domain (str): Domain name.
         split (str): Split name ('train' or 'test').
     """
-    # Generate dataset name in format: username/base_dataset_name
-    dataset_name = f"{username}/{base_dataset_name}"
-    
-    # Transform data while keeping original structure
-    formatted_data = []
-    for entry in data_entries:
-        # Ensure metadata is in string format
-        metadata = entry.get('metadata', {})
-        if isinstance(metadata, str):
-            try:
-                metadata = json.loads(metadata)
-            except json.JSONDecodeError:
-                metadata = {}
+    try:
+        # Generate dataset name in format: username/base_dataset_name
+        dataset_name = f"{username}/{base_dataset_name}"
         
-        # Add domain to metadata
-        metadata['domain'] = domain
+        # Transform data while keeping original structure
+        formatted_data = []
+        for entry in data_entries:
+            # Ensure metadata is in string format
+            metadata = entry.get('metadata', {})
+            if isinstance(metadata, str):
+                try:
+                    metadata = json.loads(metadata)
+                except json.JSONDecodeError:
+                    metadata = {}
+            
+            # Add domain to metadata
+            metadata['domain'] = domain
+            
+            # Convert metadata to string
+            metadata_str = json.dumps(metadata)
+            
+            formatted_data.append({
+                'question': str(entry.get('question', '')),
+                'rationale': str(entry.get('rationale', '')),
+                'final_answer': str(entry.get('final_answer', '')),
+                'metadata': metadata_str,
+                'domain': domain
+            })
         
-        # Convert metadata to string
-        metadata_str = json.dumps(metadata)
+        # Create HuggingFace Dataset
+        hf_dataset = HFDataset.from_list(formatted_data)
         
-        formatted_data.append({
-            'question': str(entry.get('question', '')),
-            'rationale': str(entry.get('rationale', '')),
-            'final_answer': str(entry.get('final_answer', '')),
-            'metadata': metadata_str,  # Use string format for metadata
-            'domain': domain
-        })
-    
-    # Create HuggingFace Dataset
-    hf_dataset = HFDataset.from_list(formatted_data)
-    
-    # Push to hub with specific configuration and split
-    hf_dataset.push_to_hub(
-        dataset_name,
-        config_name=domain,  # Use domain as configuration name
-        split=split,
-        private=False,
-        token=os.environ.get("HF_TOKEN")
-    )
+        # Push to hub with retry mechanism
+        push_to_hub_with_retry(hf_dataset, dataset_name, domain, split)
+        
+        print(f"Successfully uploaded {domain} {split} split")
+        
+    except Exception as e:
+        print(f"Error uploading {domain} {split} split: {e}")
+        raise
 
 def create_domain_dataset_card(manager, dataset_name, username):
     """
@@ -453,10 +436,17 @@ def main():
         # Upload train split
         upload_domain_dataset(train_data, username, base_dataset_name, domain, 'train')
         
+        # Add delay between train and test uploads
+        time.sleep(5)
+        
         # Upload test split
         upload_domain_dataset(test_data, username, base_dataset_name, domain, 'test')
         
         print(f"Completed uploading {domain} dataset")
+        
+        # Add delay between domains
+        time.sleep(10)
+
 
 if __name__ == "__main__":
     main()
