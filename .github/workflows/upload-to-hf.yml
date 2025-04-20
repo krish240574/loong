@@ -1,45 +1,35 @@
 name: Upload to Hugging Face
 
-env:
-  HF_TOKEN: ${{ secrets.HF_TOKEN }}
-
-
 on:
   push:
-    branches:
-      - main 
+    branches: [ main ]
     paths:
-      # Only trigger when seed_dataset.json files are modified
-      - 'data/*/seed_dataset.json'
-      - 'data/games/*/seed_dataset.json'
-  pull_request:
-    paths:
-      - 'data/*/seed_dataset.json'
-      - 'data/games/*/seed_dataset.json'
+      - 'data/**/*.json'
+  
   workflow_dispatch:
 
 jobs:
-  validate:
+  upload:
     runs-on: ubuntu-latest
+    timeout-minutes: 120  # Increase timeout to 2 hours
     
     steps:
-    - uses: actions/checkout@v3
-    
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12.0'
-    
+        python-version: '3.11'
+        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install datasets
-        pip install torch
-        pip install huggingface_hub
-        pip install camel-ai[datasets,datahubs]==0.2.45
-        pip install Pillow
-        pip install requests_oauthlib
+        pip install camel-ai
+        pip install huggingface_hub datasets backoff requests
 
-    - name: Run upload to hf
+    - name: Upload to HuggingFace
       run: |
         python scripts/upload_to_hf.py
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
