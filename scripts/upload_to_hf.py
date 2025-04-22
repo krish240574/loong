@@ -398,8 +398,9 @@ def main():
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
         "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
         "medicine": data_dir / "medicine" / "seed_dataset.json",
+        "programming": data_dir / "programming" / "seed_dataset.json",
     }
-    
+
     username = "camel-ai"
     base_dataset_name = "loong"
     
