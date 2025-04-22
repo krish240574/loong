@@ -17,13 +17,13 @@ from camel.datahubs.models import Record
 from datasets import Dataset as HFDataset
 
 
-def split_train_test(data, train_ratio=0.7, random_seed=42):
+def split_train_test(data, train_ratio, random_seed=42):
     """
     Split dataset into training and testing sets.
 
     Args:
         data (list): List of data entries to split
-        train_ratio (float): Ratio of training data, defaults to 0.7
+        train_ratio (float): Ratio of training data
         random_seed (int): Random seed for reproducibility, defaults to 42
 
     Returns:
@@ -198,15 +198,18 @@ def create_dataset_card(manager, dataset_name, username):
         content="# Project Loong Seed Dataset\n\n"
                 "This dataset is part of Project Loong, a collaborative effort to explore whether reasoning-capable models can bootstrap themselves from small, high-quality seed datasets by generating synthetic data and verifying LLM agent responses.\n\n"
                 "## Dataset Description\n\n"
-                "This comprehensive collection contains 3,551 human-vetted problems across 8 diverse domains:\n\n"
-                "- 🧮 **Advanced Math:** 1,615 questions\n"
-                "- ⚛️ **Advanced Physics:** 434 questions\n"
-                "- 🧬 **Computational Biology:** 304 questions\n"
-                "- 💹 **Finance:** 320 questions\n"
-                "- 📈 **Graph & Discrete Math:** 179 questions\n"
-                "- 🧠 **Logic:** 110 questions\n"
-                "- 📐 **Mathematical Programming:** 68 questions\n"
-                "- 🔒 **Security & Safety:** 521 questions\n\n"
+                "This comprehensive collection contains 3,551 human-vetted problems across 11 diverse domains:\n\n"
+                "- 🧮 **Advanced Math:** 1,611 questions\n"
+                "- ⚛️ **Advanced Physics:** 429 questions\n"
+                "- 🧬 **Computational Biology:** 51 questions\n"
+                "- 💹 **Finance:** 235 questions\n"
+                "- 🎮 **Game:** 926 questions\n"
+                "- 📈 **Graph & Discrete Math:** 178 questions\n"
+                "- 🧠 **Logic:** 130 questions\n"
+                "- 📐 **Mathematical Programming:** 76 questions\n"
+                "- 💊 **Medicine:** 916 questions\n"
+                "- 🔒 **Security & Safety:** 516 questions\n"
+                "- 🧑‍💻 **Programming:** 585 questions\n\n"
                 "## Data Structure\n\n"
                 "Each entry includes:\n\n"
                 "- A problem statement\n"
@@ -323,7 +326,9 @@ def create_domain_dataset_card(manager, dataset_name, username):
         "graph_discrete_math": "Graph theory and discrete mathematics problems",
         "logic": "Logical reasoning and proof problems",
         "mathematical_programming": "Optimization and mathematical programming problems",
-        "security_and_safety": "Security and safety analysis problems"
+        "security_and_safety": "Security and safety analysis problems",
+        "medicine": "Medicine and biology problems",
+        "programming": "Programming problems"
     }
 
     content = """# Project Loong Dataset
@@ -332,7 +337,7 @@ This dataset is part of Project Loong, a collaborative effort to explore whether
 
 ## Dataset Description
 
-This comprehensive collection contains problems across multiple domains, each split into train (70%) and test (30%) sets.
+This comprehensive collection contains problems across multiple domains, each split is determined by the domain.
 
 ### Available Domains:
 
@@ -386,20 +391,61 @@ def main():
     
     print(f"Looking for data in: {data_dir}")
     
-    # Define file paths for each domain
-    domain_paths = {
-        "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
-        "advanced_physics": data_dir / "advanced_physics" / "seed_dataset.json",
-        "computational_biology": data_dir / "computational_biology" / "seed_dataset.json",
-        "finance": data_dir / "finance" / "seed_dataset.json",
-        "games": data_dir / "games" / "blackjack" / "seed_dataset.json",
-        "graph_discrete_math": data_dir / "graph_discrete_math" / "seed_dataset.json",
-        "logic": data_dir / "logic" / "seed_dataset.json",
-        "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
-        "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
-        "medicine": data_dir / "medicine" / "seed_dataset.json",
-        "programming": data_dir / "programming" / "seed_dataset.json",
+    # Define domain paths and their corresponding train/test split ratios
+    # Higher ratio means more training data, lower ratio means more test data
+    # For example:
+    # - 0.7: 70% training, 30% testing (standard split)
+    # - 0.8: 80% training, 20% testing (for domains with less data)
+    # - 0.6: 60% training, 40% testing (for domains needing more testing)
+    domain_configs = {
+        "advanced_math": {
+            "path": data_dir / "advanced_math" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "advanced_physics": {
+            "path": data_dir / "advanced_physics" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "computational_biology": {
+            "path": data_dir / "computational_biology" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "finance": {
+            "path": data_dir / "finance" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "games": {
+            "path": data_dir / "games" / "blackjack" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "graph_discrete_math": {
+            "path": data_dir / "graph_discrete_math" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "logic": {
+            "path": data_dir / "logic" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "mathematical_programming": {
+            "path": data_dir / "mathematical_programming" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "security_and_safety": {
+            "path": data_dir / "security_and_safety" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "medicine": {
+            "path": data_dir / "medicine" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        },
+        "programming": {
+            "path": data_dir / "programming" / "seed_dataset.json",
+            "train_ratio": 0.7  # Standard split
+        }
     }
+
+    # When using the configurations:
+    domain_paths = {domain: config["path"] for domain, config in domain_configs.items()}
 
     username = "camel-ai"
     base_dataset_name = "loong"
@@ -431,7 +477,7 @@ def main():
             entry['metadata']['domain'] = domain
         
         # Split into train/test
-        train_data, test_data = split_train_test(domain_data)
+        train_data, test_data = split_train_test(domain_data, domain_configs[domain]["train_ratio"])
         
         print(f"Uploading {len(train_data)} training examples and {len(test_data)} test examples")
         
