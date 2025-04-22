@@ -57,6 +57,7 @@ def combine_seed_data():
         "mathematical_programming": data_dir / "mathematical_programming" / "seed_dataset.json",
         "security_and_safety": data_dir / "security_and_safety" / "seed_dataset.json",
         "advanced_math": data_dir / "advanced_math" / "seed_dataset.json",
+        "medicine": data_dir / "medicine" / "seed_dataset.json",
     }
     # Dictionary to hold all domain data
     all_domains_data = {}
