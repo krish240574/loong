@@ -400,47 +400,47 @@ def main():
     domain_configs = {
         "advanced_math": {
             "path": data_dir / "advanced_math" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "advanced_physics": {
             "path": data_dir / "advanced_physics" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "computational_biology": {
             "path": data_dir / "computational_biology" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "finance": {
             "path": data_dir / "finance" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "games": {
             "path": data_dir / "games" / "blackjack" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "graph_discrete_math": {
             "path": data_dir / "graph_discrete_math" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "logic": {
             "path": data_dir / "logic" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "mathematical_programming": {
             "path": data_dir / "mathematical_programming" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "security_and_safety": {
             "path": data_dir / "security_and_safety" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "medicine": {
             "path": data_dir / "medicine" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         },
         "programming": {
             "path": data_dir / "programming" / "seed_dataset.json",
-            "train_ratio": 0.7  # Standard split
+            "train_ratio": 0.3  # Standard split
         }
     }
 
