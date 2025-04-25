@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import time
 import ast
+import math
 from typing import Dict, List, Any, Optional, Tuple
 from tqdm import tqdm
 
@@ -85,8 +86,7 @@ async def execute_rationale(
             "execution_successful": False
         }
 
-
-async def compare_results(execution_result: str, final_answer: str, domain: str = None) -> bool:
+async def compare_results(execution_result: str, final_answer: str, domain: str = None, precision: float = None) -> bool:
     """
     Enhanced comparison between execution result and final answer.
     Performs normalization before comparison for more accurate matching.
@@ -96,6 +96,7 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
         execution_result: The result from code execution.
         final_answer: The expected final answer.
         domain: The problem domain (e.g., 'mathematical_programming').
+        precision: The precision (tolerance) for numeric comparison.
         
     Returns:
         True if the results match, False otherwise.
@@ -121,9 +122,30 @@ async def compare_results(execution_result: str, final_answer: str, domain: str 
             return verification_result.status == VerificationOutcome.SUCCESS
         except Exception:
             pass
-    
-    if execution_result == final_answer:
-        return True
+    elif domain == "advanced_physics" and execution_result is not None and final_answer is not None:
+        try:
+            physics_verifier = await get_physics_verifier()
+            verification_result = await physics_verifier.verify(
+                solution=execution_result,
+                reference_answer=final_answer
+            )
+            return verification_result.status == VerificationOutcome.SUCCESS
+        except Exception:
+            pass
+    # Add precision-based comparison for numeric answers
+    elif precision is not None and execution_result is not None and final_answer is not None:
+        try:
+            exec_float = float(execution_result)
+            ans_float = float(final_answer)
+            if abs(exec_float - ans_float) <= float(precision):
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
+
+    # Fall back to simple string comparison
+    return execution_result == final_answer
 
 
 # Cache to store verifiers by package requirements
@@ -258,6 +280,15 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
     
     rationale = item.get("rationale", "")
     final_answer = item.get("final_answer", "")
+    
+    # Extract precision/tolerance from metadata
+    precision = None
+    
+    # Check for answer_tolerance in meta_data or metadata (support both formats)
+    if "meta_data" in item and isinstance(item["meta_data"], dict):
+        precision = item["meta_data"].get("answer_tolerance")
+    if precision is None and "metadata" in item and isinstance(item["metadata"], dict):
+        precision = item["metadata"].get("answer_tolerance")
 
     # Handle advanced_physics domain using PhysicsVerifier directly
     if domain == "advanced_physics":
@@ -319,7 +350,7 @@ async def process_single_item(item_tuple: Tuple[int, Dict[str, Any]], verifier: 
 
     # Compare results for other domains
     if execution_output["execution_successful"]:
-        match_status = await compare_results(execution_output["result"], final_answer, domain)
+        match_status = await compare_results(execution_output["result"], final_answer, domain, precision)
         return idx, {
             "execution_status": execution_status,
             "execution_successful": True,
