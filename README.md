@@ -84,10 +84,11 @@ Each dataset is designed to allow automatic evaluation via **verifiers**, usuall
 
 ###  Dataset Overview
 
-The repository currently includes a total of **4,144 questions** spanning **9 diverse domains** (and growing!):
+The repository currently includes a total of **8,729 questions** spanning **12 diverse domains** (and growing!):
 
 - 🧮 **Advanced Math:** 1,611 questions  
 - ⚛️ **Advanced Physics:** 429 questions   
+- 🧪 **Chemistry:** 3076 questions   
 - 🧬 **Computational Biology:** 51 questions  
 - 💹 **Finance:** 235 questions
 - 🎮 **Game:** 926 questions

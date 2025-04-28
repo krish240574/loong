@@ -189,7 +189,7 @@ def create_dataset_card(manager, dataset_name, username):
     """
     manager.create_dataset_card(
         dataset_name=dataset_name,
-        description="A comprehensive collection of 6,627 high-quality problems across 12 diverse domains, curated for Project Loong. Each problem includes a detailed executable rationale and solution, designed for training and evaluating reasoning models.",
+        description="A comprehensive collection of 8,729 high-quality problems across 12 diverse domains, curated for Project Loong. Each problem includes a detailed executable rationale and solution, designed for training and evaluating reasoning models.",
         license="mit",  # Using lowercase 'mit' as required by HuggingFace
         tags=["reasoning", "problem-solving", "project-loong", "multi-domain", "mathematics", "physics", "chemistry", "finance", "optimization"],
         authors=[username],
@@ -198,7 +198,7 @@ def create_dataset_card(manager, dataset_name, username):
         content="# Project Loong Seed Dataset\n\n"
                 "This dataset is part of Project Loong, a collaborative effort to explore whether reasoning-capable models can bootstrap themselves from small, high-quality seed datasets by generating synthetic data and verifying LLM agent responses.\n\n"
                 "## Dataset Description\n\n"
-                "This comprehensive collection contains 3,551 human-vetted problems across 11 diverse domains:\n\n"
+                "This comprehensive collection contains 8,729 human-vetted problems across 12 diverse domains:\n\n"
                 "- 🧮 **Advanced Math:** 1,611 questions\n"
                 "- ⚛️ **Advanced Physics:** 429 questions\n"
                 "- 🧪 **Chemistry:** 3,076 questions\n"
