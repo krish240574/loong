@@ -232,6 +232,16 @@ async def compare_results(
             return verification_result.status == VerificationOutcome.SUCCESS
         except Exception:
             pass
+    elif precision and execution_result and final_answer and (domain == "chemistry" or domain == "finance"):
+        try:
+            exec_float = float(execution_result)
+            ans_float = float(final_answer)
+            if abs(exec_float - ans_float) <= float(precision):
+                return True
+            else:
+                return False
+        except ValueError:
+            return False
     elif precision:
         return compare_answer_str(
             execution_result,
