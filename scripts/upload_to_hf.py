@@ -189,9 +189,9 @@ def create_dataset_card(manager, dataset_name, username):
     """
     manager.create_dataset_card(
         dataset_name=dataset_name,
-        description="A comprehensive collection of 3,551 high-quality problems across 8 diverse domains, curated for Project Loong. Each problem includes a detailed executable rationale and solution, designed for training and evaluating reasoning models.",
+        description="A comprehensive collection of 6,627 high-quality problems across 12 diverse domains, curated for Project Loong. Each problem includes a detailed executable rationale and solution, designed for training and evaluating reasoning models.",
         license="mit",  # Using lowercase 'mit' as required by HuggingFace
-        tags=["reasoning", "problem-solving", "project-loong", "multi-domain", "mathematics", "physics",  "finance", "optimization"],
+        tags=["reasoning", "problem-solving", "project-loong", "multi-domain", "mathematics", "physics", "chemistry", "finance", "optimization"],
         authors=[username],
         language=["en"],
         task_categories=["question-answering"],
@@ -201,6 +201,7 @@ def create_dataset_card(manager, dataset_name, username):
                 "This comprehensive collection contains 3,551 human-vetted problems across 11 diverse domains:\n\n"
                 "- 🧮 **Advanced Math:** 1,611 questions\n"
                 "- ⚛️ **Advanced Physics:** 429 questions\n"
+                "- 🧪 **Chemistry:** 3,076 questions\n"
                 "- 🧬 **Computational Biology:** 51 questions\n"
                 "- 💹 **Finance:** 235 questions\n"
                 "- 🎮 **Game:** 926 questions\n"
@@ -321,6 +322,7 @@ def create_domain_dataset_card(manager, dataset_name, username):
     domain_descriptions = {
         "advanced_math": "Advanced mathematics problems including calculus, algebra, and number theory",
         "advanced_physics": "Physics problems covering mechanics, thermodynamics, and quantum physics",
+        "chemistry": "Chemistry problems covering organic, inorganic, physical chemistry and chemical reactions",
         "computational_biology": "Biological computation and analysis problems",
         "finance": "Financial analysis and modeling problems",
         "graph_discrete_math": "Graph theory and discrete mathematics problems",
@@ -377,7 +379,7 @@ test_data = dataset["test"]
         dataset_name=dataset_name,
         description="A comprehensive collection of high-quality problems across diverse domains, curated for Project Loong. Each problem includes a detailed executable rationale and solution.",
         license="mit",
-        tags=["reasoning", "problem-solving", "project-loong", "multi-domain", "mathematics", "physics", "finance", "optimization"],
+        tags=["reasoning", "problem-solving", "project-loong", "multi-domain", "mathematics", "physics", "chemistry", "finance", "optimization"],
         authors=[username],
         language=["en"],
         task_categories=["question-answering"],
@@ -404,6 +406,10 @@ def main():
         },
         "advanced_physics": {
             "path": data_dir / "advanced_physics" / "seed_dataset.json",
+            "train_ratio": 0.3  # Standard split
+        },
+        "chemistry": {
+            "path": data_dir / "chemistry" / "seed_dataset.json",
             "train_ratio": 0.3  # Standard split
         },
         "computational_biology": {
