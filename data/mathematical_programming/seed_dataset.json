@@ -449,37 +449,6 @@
     }
   },
   {
-    "question": "Finding the delicate balance between price and demand is a difficult problem to solve and one that is prevalent in a number of huge industries like retail, e-commerce, ticketing, and hospitality.\\n\\nIt just so happens that this is a problem that data scientists have recently been getting better and better at addressing. Still, a key piece is missing: How can I make the right pricing decision given all the other constraints and business rules that exist for this problem? That's where optimization comes in.\\n\\nIn this scenario, we have a product that has several categories, but we have a limited amount of \\\"space\\\" for our products. This could be shelf or warehouse space in retail, seats for events, or for airline ticketing, or rooms at a hotel.\\n\\nThis problem considers two similar products that are offered where it's our job to use the data available with some optimization know-how to determine the optimal mix of products to offer that maximize revenue while also adhering to a few other business rules. First, we'll create a predictive model to forecast sales based on the prices of each product. Then we'll build an optimization model to find this optimal mix. Finally, we\u2019ll also use the Gurobi-sponsored open-source package Gurobi Machine Learning to seamlessly combine the features of a machine learning model with a decision of an optimization model.\\n\\N\\n\n\nThis data contains prices and sales for two of our competing products.\np[1],p[2],n[1]\n356.12,197.67,108.0\n358.05,189.68,66.0\n340.79,260.35,130.0\n353.76,133.53,55.0\n341.37,229.8,91.0\n349.58,234.82,88.0\n369.35,202.2,46.0\n345.84,190.64,88.0\n335.87,195.82,144.0\n371.73,215.6,36.0\n362.01,236.55,61.0\n352.59,207.53,122.0\n352.34,206.27,80.0\n359.48,220.19,82.0\n353.41,158.61,87.0\n388.1,173.02,27.0\n363.04,178.25,59.0\n344.78,191.34,120.0\n335.26,168.82,125.0\n371.51,204.59,59.0\n355.35,244.51,103.0\n374.14,216.88,77.0\n321.55,200.93,188.0\n367.15,214.69,83.0\n372.78,184.39,60.0\n356.46,249.85,86.0\n346.59,229.38,120.0\n349.46,243.6,99.0\n394.36,207.55,9.0\n\n### What's in the data?\\nThe data contains three columns:\\n1. `p[1]` is the price (in dollars) of the first category (let's call it Category 1).\\n2. `p[2]` is the price (in dollars) of the second category (Category 2).\\n3. `n[1]` is the number of the items sold that are of Category 1.\\n\\nWe don't see a column for `n[2]`, which would be the number of items sold that are Category 2. Here is where we make a **pretty big assumption** that we will sell all of the items. This makes our decision to be how to divvy up the limited space we have in order to maximize our revenue.\\nThe data was created to have a couple of key characteristics.\\n1. As the price of Category 1 goes up, the number sold should decrease, so `p[1]` and `n[1]` have a negative correlation.\\n2. As the price of Category 2 goes up, the number sold of Category 1 should increase, so `p[2]` and `n[1]` have a positive correlation.\\n\\n In this problem, we've assumed that the amount of space we have available for the products is 200 units. In retail, this could be the amount of warehouse space, or for ticketing this could represent the number of seats available.\\n\n\n## Price optimization model with competing products\\n\\nOur problem is to:\\n1.\\tDetermine the number of each category of product to make available given the overall restriction of what we can offer.\\n2.\\tWe are also instructed to make sure there are a minimum number of each category made available as well as a minimum and maximum price for each category.\\n3.\\tLastly, the product categories should be decreasing in price, meaning Category 1 should be the most expensive, and so on. Specifically, we must make sure there is at least a $50 gap between categories, but no more than $100.\\n\\nWith the predictive part in place, it's time to build the optimization model. The model is formulated (i.e. the mathematical representation) for an unspecified number of categories, but the code will reflect that we have two categories of products in this problem. We start by setting some parameter values (not to be confused with ML hyperparameters) and initialize the optimization model.\\n\\n\\n### Initialize model and set input parameters\\n- $C$: Number of product categories\\n- $N$: Total amount of space available\\n- $\\\\lambda$: Price control parameter\\n\\nHere is the first mention of a price control parameter. It is fairly common in optimization modeling to add penalty terms to try and prevent undesirable outcomes. This is akin to using penalty terms in machine learning and applied statistics to prevent overfitting, with [Lasso](https://en.wikipedia.org/wiki/Lasso_(statistics)) and [Ridge](https://en.wikipedia.org/wiki/Ridge_regression) regression as a couple of common examples.\\n#### Initialize the model\\nm = gp.Model(\\\"price optimization\\\")\\n\\nproducts = [1,2]            #### Category 1 and Category 2\\nN = 200                     #### limit on available space\\nl = 0                       #### price control, we'll start this at 0\\n### Decision variables\\n- $p_c$: price per item in category $c = 1,2,\\\\dots, C$\\n- $n_c$: number of items allocated to category, predicted using features $p_c$, $c = 1,2,\\\\dots, C$\\n\n\n### Constraints\\nWe need to have a minimum number of each category available.\\n\\\\begin{align*}\\nn_c \\\\ge l_{n_c}\\n\\\\end{align*}\\n\\nWe also set lower and upper bounds on the prices.\\n\\\\begin{align*}\\nl_{n_c} \\\\le p_c \\\\le u_{p_c}\\n\\\\end{align*}\\nmin_items = {1:50,2:50}\\nprice_bounds = {1:[300,400], 2:[100,300]}\\nm.addConstrs(n[c] >= min_items[c] for c in products)        #### we could hardcode 50 instead of min_items, but this is more flexible\\nm.addConstr(p[1] == [300,400])                              #### this is a shorthand way to code 300 <= p[1] <= 400\\nm.addConstr(p[2] == [100,300]);\\n\n\nIn general, the number of items allocated must equal the total available space.\\n\\\\begin{equation*}\\nn_1 + n_2 + \\\\dots + n_C = \\\\sum_{c}n_c = N \\\\\\\\\\n\\\\end{equation*}\\nNote that this, along with the constraint on the minimum number available means we don't have to specify an upper bound for each $n_c$.\\nm.addConstr(n.sum() ==  N);     #### remember we set N = 200 earlier\\nThe last set of constraints are for price ordering. This requires the subsequent category to be cost between $50 and $100 less than the previous.\\n\\\\begin{equation*}\\n50 \\\\le p_c - p_{c+1} \\\\le 100\\n\\\\end{equation*}\\nm.addConstr(p[1]-p[2] == [50,100]);\\n### Objective function\\nWe want to maximize total revenue with the portion of total revenue coming from category $c$ being $p_cn_c$. This makes the total revenue $\\\\sum_{c} p_c n_c$. That is the first part of the objective. Earlier a price control parameter was introduced which is the second part of the objective. The lambda parameter captures the trade-off between the revenue and price-control pieces. This term penalizes the model from setting too high of prices since doing so could lose sales. Our model assumed we'll sell all of the items so having this penalty term can make this assumption more realistic. For reference, [here is a good source](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4565407).\\n\\nThis term will be defined as $\u03bb (\\\\sum_{c} p_c^2)$ for this problem. So, the complete objective is:\\n\\\\begin{equation*}\\n\\\\textrm{maximize} \\\\sum_{c} p_c n_c - \u03bb (\\\\sum_{c} p_c^2)\\n\\\\end{equation*}\\\n Return the Total revenue.",
-    "rationale": "import gurobipy as gp\nfrom gurobipy import GRB\n\nimport numpy as np\nimport pandas as pd\nimport seaborn as sns\nimport matplotlib.pyplot as plt\nimport warnings\nfrom sklearn.model_selection import train_test_split\nfrom sklearn import tree\n\nwarnings.filterwarnings(\"ignore\")\n\ndata = [\n    [356.12, 197.67, 108.0],\n    [358.05, 189.68, 66.0],\n    [340.79, 260.35, 130.0],\n    [353.76, 133.53, 55.0],\n    [341.37, 229.8, 91.0],\n    [349.58, 234.82, 88.0],\n    [369.35, 202.2, 46.0],\n    [345.84, 190.64, 88.0],\n    [335.87, 195.82, 144.0],\n    [371.73, 215.6, 36.0],\n    [362.01, 236.55, 61.0],\n    [352.59, 207.53, 122.0],\n    [352.34, 206.27, 80.0],\n    [359.48, 220.19, 82.0],\n    [353.41, 158.61, 87.0],\n    [388.1, 173.02, 27.0],\n    [363.04, 178.25, 59.0],\n    [344.78, 191.34, 120.0],\n    [335.26, 168.82, 125.0],\n    [371.51, 204.59, 59.0],\n    [355.35, 244.51, 103.0],\n    [374.14, 216.88, 77.0],\n    [321.55, 200.93, 188.0],\n    [367.15, 214.69, 83.0],\n    [372.78, 184.39, 60.0],\n    [356.46, 249.85, 86.0],\n    [346.59, 229.38, 120.0],\n    [349.46, 243.6, 99.0],\n    [394.36, 207.55, 9.0]\n]\n\ndf = pd.DataFrame(data, columns=['p[1]', 'p[2]', 'n[1]'])\n\nfig, axes = plt.subplots(nrows=1, ncols=1, figsize=(15, 5))\nsns.heatmap(df[['p[1]','p[2]','n[1]']].corr(),annot=True, center=0,ax=axes)\n\naxes.set_title('Correlations')\n\n\nfrom sklearn.compose import make_column_transformer\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.pipeline import make_pipeline\nfrom sklearn.metrics import r2_score\nfrom sklearn.model_selection import train_test_split      #importing scikit-learn's function for data splitting\nfrom sklearn.ensemble import GradientBoostingRegressor    #importing scikit-learn's gradient booster regressor function\nfrom sklearn.model_selection import cross_validate        #improting scikit-learn's cross validation function\n\n\n\nX = df[[\"p[1]\",\"p[2]\"]]\ny = df[\"n[1]\"]\n# Split the data for training and testing\nX_train, X_test, y_train, y_test = train_test_split(\n    X, y, train_size=0.75, random_state=1\n)\n\n\n\nlinear_regressor = make_pipeline(LinearRegression())\nlinear_regressor.fit(X_train, y_train)\nlinear_regression_validation = cross_validate(linear_regressor, X_train, y_train, cv=5, return_train_score=True, return_estimator=True)\n\nlinear_regression_validation['train_score'],linear_regression_validation['test_score']\n\n\n\nfrom sklearn.ensemble import GradientBoostingRegressor\nxgb_regressor = make_pipeline(GradientBoostingRegressor(n_estimators=10))\nxgb_regressor.fit(X_train, y_train)\nxgb_regressor_validation = cross_validate(xgb_regressor, X_train, y_train, cv=5, return_train_score=True, return_estimator=True)\n\nxgb_regressor_validation['train_score'], xgb_regressor_validation['test_score']\n\n\n\n\n#### Initialize the model\nm = gp.Model(\"price optimization\")\nm.setParam('OutputFlag', 0)     #### this is to suppress the output, you can set it to 1 if you want to see the output\n\nproducts = [1,2]            #### Category 1 and Category 2\nN = 200                     #### limit on available space\nl = 0                       #### price control, we'll start this at 0\n\n\n\np = m.addVars(products, name=\"p\")            #### price decision variables\nn = m.addVars(products, name=\"n\")            #### decision variable for number of items in each category\n\n\n\nmin_items = {1:50,2:50}\nprice_bounds = {1:[300,400], 2:[100,300]}\nm.addConstrs(n[c] >= min_items[c] for c in products)        #### we could hardcode 50 instead of min_items, but this is more flexible\nm.addConstr(p[1] == [300,400])                              #### this is a shorthand way to code 300 <= p[1] <= 400\nm.addConstr(p[2] == [100,300]);\n\n\n\n#price_lb = {1:300, 2:100}\n#price_ub = {1:400, 2:300}\n#p = m.addVars(products, lb = price_lb, ub = price_ub, name=\"p\")     #### each price is now bounded\n#n = m.addVars(products, lb = min_items, name=\"n\")\n\n\n\nm.addConstr(n.sum() ==  N);     #### remember we set N = 200 earlier\n\n\n\nm.addConstr(p[1]-p[2] == [50,100]);\n\n\n\nrevenue = gp.quicksum(p[c]*n[c] for c in products)          #### you could also use the more simple p.prod(n)\npenalty = l*(p[1]**2+p[2]**2)                               #### we used l as the lambda parameter earlier\nm.setObjective(revenue - penalty, sense = GRB.MAXIMIZE)\n\n\nfrom gurobi_ml import add_predictor_constr\n\n\n\nm_feats = pd.DataFrame({\"p[1]\":[p[1]],\"p[2]\":[p[2]]})\n\n\n\npred_constr = add_predictor_constr(m, xgb_regressor, m_feats, n[1])\n\n\n\nm.Params.NonConvex = 2\nm.optimize()\n\nprint(\"Total revenue:\",f\"\\\\boxed{{{round(revenue.getValue(),2)}}}\")\n",
-    "final_answer": "66094.85",
-    "metadata": {
-      "problem_id": "price_optimization_with_competing_products",
-      "version": "12.0.1",
-      "name": "gurobi",
-      "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi, Yvonne Wang, Zhaowei Wang, Ziyi Yang, Astitwa Lathe, Chen Li, Xiang Long, Rishabh",
-      "date_created": "2025-03-11",
-      "domain": "Mathematical Programming",
-      "required_dependencies": [
-        "gurobipy==12.0.1",
-        "numpy==1.26.4",
-        "pandas==1.5.3",
-        "scikit-learn==1.6.1",
-        "matplotlib==3.10.0",
-        "seaborn==0.13.2",
-        "gurobi-machinelearning==1.5.3",
-        "plotly",
-        "IPython==8.29.0",
-        "networkx==3.4.2",
-        "ipywidgets",
-        "statsmodels==0.14.4",
-        "gurobipy_pandas==1.2.2",
-        "requests==2.32.3"
-      ],
-      "source": "https://github.com/Gurobi/modeling-examples",
-      "license": "Apache-2.0"
-    }
-  },
-  {
     "question": "# Widget Production and Distribution Optimization Problem\n\n## Problem Description\n\nThe goal of this problem is to optimize the production and distribution of widgets to minimize transportation costs while ensuring that production capacities and demand requirements are met. The following constraints must be satisfied:\n\n1. **Production capacity constraints**: The total amount of widgets produced by each production facility cannot exceed its production capacity.\n2. **Minimum production constraint**: Each production facility must produce at least 75% of its maximum production capacity.\n3. **Demand satisfaction**: The total amount of widgets delivered to each distribution center must meet or exceed its demand.\n$$\n\\begin{align*} \n{\\rm minimize} \\space &\\sum_{p,d}c_{p,d}x_{p,d}, \\forall p \\in P, d \\in D\\\\ \n\\sum_{p}&x_{p,d} \\ge n_d, \\forall d \\in D \\\\ \n\\sum_{d}&x_{p,d} \\le m_p, \\forall p \\in P \\\\ \n\\sum_{d}&x_{p,d} \\ge a*m_p, \\forall p \\in P\\\\ \n&x_{p,d} \\in \\{0\\} \\cup [30, u_p]\n\\end{align*}\n$$\n### Data:\n\n1. **Transportation Costs**: The transportation costs between each production location and distribution center are given in the table below:\n\n| production   | distribution | cost |\n|--------------|--------------|------|\n| Baltimore    | Columbia     | 4.5  |\n| Baltimore    | Indianapolis | 5.09 |\n| Baltimore    | Lexington    | 4.33 |\n| Baltimore    | Nashville    | 5.96 |\n| Baltimore    | Richmond     | 1.96 |\n| Baltimore    | St. Louis    | 7.3  |\n| Cleveland    | Columbia     | 2.43 |\n| Cleveland    | Indianapolis | 2.37 |\n| Cleveland    | Lexington    | 2.54 |\n| Cleveland    | Nashville    | 4.13 |\n| Cleveland    | Richmond     | 3.2  |\n| Cleveland    | St. Louis    | 4.88 |\n| Little Rock  | Columbia     | 6.42 |\n| Little Rock  | Indianapolis | 4.83 |\n| Little Rock  | Lexington    | 3.39 |\n| Little Rock  | Nashville    | 4.4  |\n| Little Rock  | Richmond     | 7.44 |\n| Little Rock  | St. Louis    | 2.92 |\n| Birmingham   | Columbia     | 3.33 |\n| Birmingham   | Indianapolis | 4.33 |\n| Birmingham   | Lexington    | 3.38 |\n| Birmingham   | Nashville    | 1.53 |\n| Birmingham   | Richmond     | 5.95 |\n| Birmingham   | St. Louis    | 4.01 |\n| Charleston   | Columbia     | 3.02 |\n| Charleston   | Indianapolis | 2.61 |\n| Charleston   | Lexington    | 1.61 |\n| Charleston   | Nashville    | 4.44 |\n| Charleston   | Richmond     | 2.36 |\n| Charleston   | St. Louis    | 4.6  |\n\n2. **Production capacities**: Each production location has a maximum production capacity, which is given as follows:\n   - Example: `max_prod = [180, 200, 140, 80, 180]`\n   \n   These correspond to the production locations in the order: `['Baltimore', 'Cleveland', 'Little Rock', 'Birmingham', 'Charleston']`.\n\n3. **Demand for distribution centers**: The number of widgets required by each distribution location is given as:\n   - Example: `n_demand = [89, 95, 121, 101, 116, 181]`\n   \n   These correspond to the distribution locations in the order: `['Columbia', 'Indianapolis', 'Lexington', 'Nashville', 'Richmond', 'St. Louis']`.\n\n### Decision Variables:\n- Let `x[p,d]` be the number of widgets shipped from production location `p` to distribution location `d`, where `p` is in the production set and `d` is in the distribution set.\n\n### Constraints:\n1. **Production capacity**: \n   \\[\n   \\sum_{d} x_{p,d} \\le \\text{max_prod}[p], \\quad \\forall p \\in \\text{Production}\n   \\]\n   \n2. **Minimum production**: \n   \\[\n   \\sum_{d} x_{p,d} \\ge 0.75 \\times \\text{max_prod}[p], \\quad \\forall p \\in \\text{Production}\n   \\]\n\n3. **Demand satisfaction**: \n   \\[\n   \\sum_{p} x_{p,d} \\ge \\text{n_demand}[d], \\quad \\forall d \\in \\text{Distribution}\n   \\]\n\n4. **Decision variable bounds**:\n   - For each `p` and `d`, `x[p,d]` is a continuous variable that represents the number of widgets shipped. It must satisfy `x[p,d] >= 30` and `x[p,d] <= max_prod[p]`.\n\n### Objective:\nMinimize the total transportation cost:\n\\[\n\\text{minimize} \\sum_{p,d} \\text{transp_cost}[p,d] \\times x_{p,d}\n\\]. Return the total cost.",
     "rationale": "import pandas as pd\nfrom io import StringIO\nimport gurobipy as gp\nfrom gurobipy import GRB\n\ndata = \"\"\"\nproduction,distribution,cost\nBaltimore,Columbia,4.5\nBaltimore,Indianapolis,5.09\nBaltimore,Lexington,4.33\nBaltimore,Nashville,5.96\nBaltimore,Richmond,1.96\nBaltimore,St. Louis,7.3\nCleveland,Columbia,2.43\nCleveland,Indianapolis,2.37\nCleveland,Lexington,2.54\nCleveland,Nashville,4.13\nCleveland,Richmond,3.2\nCleveland,St. Louis,4.88\nLittle Rock,Columbia,6.42\nLittle Rock,Indianapolis,4.83\nLittle Rock,Lexington,3.39\nLittle Rock,Nashville,4.4\nLittle Rock,Richmond,7.44\nLittle Rock,St. Louis,2.92\nBirmingham,Columbia,3.33\nBirmingham,Indianapolis,4.33\nBirmingham,Lexington,3.38\nBirmingham,Nashville,1.53\nBirmingham,Richmond,5.95\nBirmingham,St. Louis,4.01\nCharleston,Columbia,3.02\nCharleston,Indianapolis,2.61\nCharleston,Lexington,1.61\nCharleston,Nashville,4.44\nCharleston,Richmond,2.36\nCharleston,St. Louis,4.6\n\"\"\"\n\ntransp_cost = pd.read_csv(StringIO(data))\n\n# get production and distribution locations from data frame\nproduction = list(transp_cost['production'].unique())\ndistribution = list(transp_cost['distribution'].unique())\ntransp_cost = transp_cost.set_index(['production','distribution']).squeeze()\n\nmax_prod = pd.Series([180,200,140,80,180], index = production, name = \"max_production\")\nn_demand = pd.Series([89,95,121,101,116,181], index = distribution, name = \"demand\")\n\n# min overall production requirement, and min shipment amount from p to d\nfrac = 0.75\nC = 30\n\nm = gp.Model('widgets')\nm.setParam('OutputFlag',0)\nm.setParam('PoolSearchMode',2)   \nm.setParam('PoolSolutions',2)   \n\n# decision vars\nx = m.addVars(production, distribution, vtype=GRB.SEMICONT, lb = C, name = 'prod_ship')\n\n# constraints\ncan_produce = m.addConstrs((gp.quicksum(x[p,d] for d in distribution) <= max_prod[p] for p in production), name = 'can_produce')\nmust_produce = m.addConstrs((gp.quicksum(x[p,d] for d in distribution) >= frac*max_prod[p] for p in production), name = 'must_produce')\nmeet_demand = m.addConstrs((x.sum('*', d) >= n_demand[d] for d in distribution), 'meet_demand')\n\n# objective\ntotal_cost = gp.quicksum(transp_cost[p,d]*x[p,d] for p in production for d in distribution)\nm.setObjective(total_cost, GRB.MINIMIZE)\n\n# optimize and extract and show solution\nm.optimize()\n\nx_values = pd.Series(m.getAttr('X', x), name = \"shipment\", index = transp_cost.index)\nsol = pd.concat([transp_cost, x_values], axis=1)\n\nm_ObjVal = m.ObjVal\nprint(f\"This model has a total cost of \\\\boxed{{{round(m_ObjVal,2)}}}\")",
     "final_answer": "1748.42",
@@ -1610,31 +1579,10 @@
   },
   {
     "question": "Solve the minimum-length least squares problem:\n\nMinimize the length of vector x ∈ ℝⁿ such that the mean-squared error (1/n)||Ax - b||²₂ ≤ ε.\n\nGiven:\n- A = [[1.62434536, -0.61175641, -0.52817175],\n       [-1.07296862, 0.86540763, -2.3015387],\n       [1.74481176, -0.7612069, 0.3190391]]\n- b = [-1.2174592, 3.05135325, -2.06792084]\n- ε = 0.01\n\nWhat is the length of the optimal solution x? Return your answer as \\boxed{value}.",
-    "rationale": "import cvxpy as cp\nimport numpy as np\n\nA = np.array([[ 1.62434536, -0.61175641, -0.52817175],\n       [-1.07296862,  0.86540763, -2.3015387 ],\n       [ 1.74481176, -0.7612069 ,  0.3190391 ]]\nb = np.array([-1.2174592 ,  3.05135325, -2.06792084])\nepsilon = 1e-2\n\nn=A.shape[1]\nx = cp.Variable(n)\nmse = cp.sum_squares(A @ x - b)/n\nproblem = cp.Problem(cp.Minimize(cp.length(x)), [mse <= epsilon])\nproblem.solve(qcp=True)\nprint(\"Found a optimal solution, with length: \\\\boxed{{{result}}}\".format(result=problem.value))",
+    "rationale": "import cvxpy as cp\nimport numpy as np\n\nA = np.array([[ 1.62434536, -0.61175641, -0.52817175],[-1.07296862,  0.86540763, -2.3015387 ],[ 1.74481176, -0.7612069 ,  0.3190391 ]])\nb = np.array([-1.2174592 ,  3.05135325, -2.06792084])\nepsilon = 1e-2\n\nn=A.shape[1]\nx = cp.Variable(n)\nmse = cp.sum_squares(A @ x - b)/n\nproblem = cp.Problem(cp.Minimize(cp.length(x)), [mse <= epsilon])\nproblem.solve(qcp=True)\nprint(\"Found a optimal solution, with length: \\\\boxed{{{result}}}\".format(result=problem.value))",
     "final_answer": "3.0",
     "metadata": {
       "problem_id": "minimum_length_least_squares",
-      "name": "cvxpy",
-      "date_created": "2025-03-11",
-      "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi, Yvonne Wang, Zhaowei Wang, Ziyi Yang, Astitwa Lathe, Chen Li, Xiang Long, Rishabh",
-      "domain": "Mathematical Programming",
-      "required_dependencies": [
-        "cvxpy==1.6.4",
-        "numpy==1.26.4",
-        "pandas==1.5.3",
-        "matplotlib==3.10.0",
-        "scipy==1.15.1"
-      ],
-      "license": "Apache-2.0",
-      "source": "https://github.com/cvxpy/cvxpy"
-    }
-  },
-  {
-    "question": "Solve the following mixed-integer least-squares problem:\n\nMinimize ‖Ax - b‖²₂\nsubject to x ∈ ℤ²\n\nGiven:\n- A = [[0.5488135, 0.71518937],\n       [0.60276338, 0.54488318],\n       [0.4236548, 0.64589411],\n       [0.43758721, 0.891773]]\n- b = [-0.10321885, 0.4105985, 0.14404357, 1.45427351]\n\nWhat is the optimal value of the objective function? Express your answer as \\boxed{value}.",
-    "rationale": "import cvxpy as cp\nimport numpy as np\n\nA = np.array([[0.5488135 , 0.71518937],\n       [0.60276338, 0.54488318],\n       [0.4236548 , 0.64589411],\n       [0.43758721, 0.891773  ]])\nb = np.array([-0.10321885,  0.4105985 ,  0.14404357,  1.45427351])\n\n# Construct a CVXPY problem\nn=A.shape[1]\nx = cp.Variable(n, integer=True)\nobjective = cp.Minimize(cp.sum_squares(A@x - b))\nprob = cp.Problem(objective)\nprob.solve(cp.ECOS_BB)\n\nprint(\"The optimal value is \\\\boxed{{{:4g}}}\".format(prob.value))",
-    "final_answer": "0.855394",
-    "metadata": {
-      "problem_id": "mixed_integer_quadratic_program",
       "name": "cvxpy",
       "date_created": "2025-03-11",
       "contributor": "Xingyue Huang, Zhuangzhuang He, Jinhe Bi, Yvonne Wang, Zhaowei Wang, Ziyi Yang, Astitwa Lathe, Chen Li, Xiang Long, Rishabh",
@@ -1840,5 +1788,196 @@
       "license": "Apache-2.0",
       "source": "https://github.com/cvxpy/cvxpy"
     }
-  }
+  },
+  {
+    "question": "You are analyzing economic indicators from the Longley dataset and need to build a linear regression model to predict the total employment (TOTEMP) based on other economic variables.\n\nThe dataset contains several economic indicators including GNP deflator, Gross National Product, unemployment numbers, armed forces personnel, population, and year. You need to use OLS (Ordinary Least Squares) regression to analyze the relationship between these variables and total employment.\n\nYour task is to:\nLoad the provided markdown data\nBuild a regression model\nTest the statistical significance of the variables in the model\nOutput the t-statistic for one of the variables\nThe dataset contains:\n|GNPDEFL|GNP     |UNEMP |ARMED |POP     |YEAR  |TOTEMP |\n|-------|--------|------|------|--------|------|-------|\n|83.0   |234289.0|2356.0|1590.0|107608.0|1947.0|60323.0|\n|88.5   |259426.0|2325.0|1456.0|108632.0|1948.0|61122.0|\n|88.2   |258054.0|3682.0|1616.0|109773.0|1949.0|60171.0|\n|89.5   |284599.0|3351.0|1650.0|110929.0|1950.0|61187.0|\n|96.2   |328975.0|2099.0|3099.0|112075.0|1951.0|63221.0|\n|98.1   |346999.0|1932.0|3594.0|113270.0|1952.0|63639.0|\n|99.0   |365385.0|1870.0|3547.0|115094.0|1953.0|64989.0|\n|100.0  |363112.0|3578.0|3350.0|116219.0|1954.0|63761.0|\n|101.2  |397469.0|2904.0|3048.0|117388.0|1955.0|66019.0|\n|104.6  |419180.0|2822.0|2857.0|118734.0|1956.0|67857.0|\n|108.4  |442769.0|2936.0|2798.0|120445.0|1957.0|68169.0|\n|110.8  |444546.0|4681.0|2637.0|121950.0|1958.0|66513.0|\n|112.6  |482704.0|3813.0|2552.0|123366.0|1959.0|68655.0|\n|114.2  |502601.0|3931.0|2514.0|125368.0|1960.0|69564.0|\n|115.7  |518173.0|4806.0|2572.0|127852.0|1961.0|69331.0|\n|116.9  |554894.0|4007.0|2827.0|130081.0|1962.0|70551.0|\n\nWhat is the t-value for the GNP coefficient in the regression model? \n",
+    "rationale": "import pandas as pd\nfrom io import StringIO\n\nimport statsmodels.api as sm\n\nlongley_str = '''GNPDEFL,GNP,UNEMP,ARMED,POP,YEAR,TOTEMP\n83.0,234289.0,2356.0,1590.0,107608.0,1947.0,60323.0\n88.5,259426.0,2325.0,1456.0,108632.0,1948.0,61122.0\n88.2,258054.0,3682.0,1616.0,109773.0,1949.0,60171.0\n89.5,284599.0,3351.0,1650.0,110929.0,1950.0,61187.0\n96.2,328975.0,2099.0,3099.0,112075.0,1951.0,63221.0\n98.1,346999.0,1932.0,3594.0,113270.0,1952.0,63639.0\n99.0,365385.0,1870.0,3547.0,115094.0,1953.0,64989.0\n100.0,363112.0,3578.0,3350.0,116219.0,1954.0,63761.0\n101.2,397469.0,2904.0,3048.0,117388.0,1955.0,66019.0\n104.6,419180.0,2822.0,2857.0,118734.0,1956.0,67857.0\n108.4,442769.0,2936.0,2798.0,120445.0,1957.0,68169.0\n110.8,444546.0,4681.0,2637.0,121950.0,1958.0,66513.0\n112.6,482704.0,3813.0,2552.0,123366.0,1959.0,68655.0\n114.2,502601.0,3931.0,2514.0,125368.0,1960.0,69564.0\n115.7,518173.0,4806.0,2572.0,127852.0,1961.0,69331.0\n116.9,554894.0,4007.0,2827.0,130081.0,1962.0,70551.0\n'''\n\ndata_io = StringIO(longley_str)\nfull_df = pd.read_csv(data_io)\n\nendog_name = 'TOTEMP'\nexog_names = [col for col in full_df.columns if col != endog_name]\n\nendog = full_df[endog_name]\nexog = full_df[exog_names]\n\nexog = sm.add_constant(exog)\n\nmodel = sm.OLS(endog, exog)\nresults = model.fit()\nols_resid = results.resid\n\nprint(f'T-value for GNP: \\\\boxed{{{results.tvalues[\"GNP\"]:.2f}}}')",
+    "final_answer": "-1.07",
+    "metadata": {
+        "problem_id": "Linear Regression Models/gls",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "Given the following oil price data (oildata) from 1996 to 2007:\n\n| Year | Oil Price |\n|------|-----------|\n| 1996 | 446.6565  |\n| 1997 | 454.4733  |\n| 1998 | 455.663   |\n| 1999 | 423.6322  |\n| 2000 | 456.2713  |\n| 2001 | 440.5881  |\n| 2002 | 425.3325  |\n| 2003 | 485.1494  |\n| 2004 | 506.0482  |\n| 2005 | 526.792   |\n| 2006 | 514.2689  |\n| 2007 | 494.211   |\n\nUsing Simple Exponential Smoothing method with smoothing level \u03b1 = 0.6, heuristic initialization, and no parameter optimization, forecast the oil price for the year 2010.\n",
+    "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import SimpleExpSmoothing\n\ndata = [\n    446.6565,\n    454.4733,\n    455.663,\n    423.6322,\n    456.2713,\n    440.5881,\n    425.3325,\n    485.1494,\n    506.0482,\n    526.792,\n    514.2689,\n    494.211,\n]\nindex = pd.date_range(start=\"1996\", end=\"2008\", freq=\"Y\")\noildata = pd.Series(data, index)\n\nfit1 = SimpleExpSmoothing(oildata, initialization_method=\"heuristic\").fit(\n    smoothing_level=0.6, optimized=False\n)\nfcast1 = fit1.forecast(3).rename(r\"$\\alpha=0.6$\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2010-12-31\"]:.2f}}}')",
+    "final_answer": "501.84",
+    "metadata": {
+        "problem_id": "Time Series Analysis/exponential_smoothing",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "You are analyzing stock market volatility during the period from 1926 to 1930, which includes the beginning of the Great Depression. Using monthly excess returns data, you need to estimate a 3-regime Markov switching model where the variance of returns switches between regimes (while keeping the mean constant across regimes).\n\nSpecifically, you need to:\n\nFit a Markov switching model with 3 regimes (k_regimes=3)\nExclude the trend component (trend=\"n\")\nAllow the variance to switch between regimes (switching_variance=True)\nBased on this specific model, what is the expected duration (in months) of the high-volatility regime (regime 3) during this turbulent period of market history?\n\nHere is the data:\n|date      |excess_returns        |\n|----------|----------------------|\n|1926-01-01|0.009447291809972677  |\n|1926-02-01|-0.06639970819002733  |\n|1926-03-01|-0.11017370819002732  |\n|1926-04-01|0.018424958809972677  |\n|1926-05-01|-0.009769874520027323 |\n|1926-06-01|0.03796212580997268   |\n|1926-07-01|-0.0001930411900273217|\n|1926-08-01|0.01416962580997268   |\n|1926-09-01|-0.01994087449002732  |\n|1926-10-01|-0.044712208190027324 |\n|1926-11-01|0.010270458809972677  |\n|1926-12-01|0.012658458809972678  |\n|1927-01-01|-0.0029882078900273223|\n|1927-02-01|0.04299395880997268   |\n|1927-03-01|-0.03271454119002732  |\n|1927-04-01|-0.0051295411900273225|\n|1927-05-01|0.04846029180997268   |\n|1927-06-01|-0.032608041190027325 |\n|1927-07-01|0.04531962580997268   |\n|1927-08-01|-0.009384374490027322 |\n|1927-09-01|0.019748625809972678  |\n|1927-10-01|-0.05137604119002732  |\n|1927-11-01|0.08401879180997267   |\n|1927-12-01|0.01647879180997268   |\n|1928-01-01|0.018680791809972674  |\n|1928-02-01|-0.03591970819002732  |\n|1928-03-01|0.057382125809972685  |\n|1928-04-01|0.07253229180997267   |\n|1928-05-01|0.023896125809972676  |\n|1928-06-01|-0.08224470819002733  |\n|1928-07-01|-0.010447707860027322 |\n|1928-08-01|0.04297012580997268   |\n|1928-09-01|0.03539979180997268   |\n|1928-10-01|0.001754125809972678  |\n|1928-11-01|0.10223012880997268   |\n|1928-12-01|-0.01923287449002732  |\n|1929-01-01|0.018550291809972676  |\n|1929-02-01|-0.008096374490027322 |\n|1929-03-01|-0.04677237419002732  |\n|1929-04-01|-0.0009585411900273223|\n|1929-05-01|-0.10442920819002732  |\n|1929-06-01|0.05902129180997268   |\n|1929-07-01|0.0044124588099726785 |\n|1929-08-01|0.011637458809972677  |\n|1929-09-01|-0.05721637419002732  |\n|1929-10-01|-0.22652754119002733  |\n|1929-11-01|-0.1348757111900273   |\n|1929-12-01|-0.038576041190027326 |\n|1930-01-01|0.09471645880997268   |\n|1930-02-01|0.01869379180997268   |\n\nThe answer should be a number representing the quantity of months that the market typically remains in the high-volatility state before transitioning to another state.\n",
+    "rationale": "from io import StringIO\nimport pandas as pd\nimport statsmodels.api as sm\n\n# Get the dataset\ndta_kns_str = '''date,excess_returns\n1926-01-01,0.009447291809972677\n1926-02-01,-0.06639970819002733\n1926-03-01,-0.11017370819002732\n1926-04-01,0.018424958809972677\n1926-05-01,-0.009769874520027323\n1926-06-01,0.03796212580997268\n1926-07-01,-0.0001930411900273217\n1926-08-01,0.01416962580997268\n1926-09-01,-0.01994087449002732\n1926-10-01,-0.044712208190027324\n1926-11-01,0.010270458809972677\n1926-12-01,0.012658458809972678\n1927-01-01,-0.0029882078900273223\n1927-02-01,0.04299395880997268\n1927-03-01,-0.03271454119002732\n1927-04-01,-0.0051295411900273225\n1927-05-01,0.04846029180997268\n1927-06-01,-0.032608041190027325\n1927-07-01,0.04531962580997268\n1927-08-01,-0.009384374490027322\n1927-09-01,0.019748625809972678\n1927-10-01,-0.05137604119002732\n1927-11-01,0.08401879180997267\n1927-12-01,0.01647879180997268\n1928-01-01,0.018680791809972674\n1928-02-01,-0.03591970819002732\n1928-03-01,0.057382125809972685\n1928-04-01,0.07253229180997267\n1928-05-01,0.023896125809972676\n1928-06-01,-0.08224470819002733\n1928-07-01,-0.010447707860027322\n1928-08-01,0.04297012580997268\n1928-09-01,0.03539979180997268\n1928-10-01,0.001754125809972678\n1928-11-01,0.10223012880997268\n1928-12-01,-0.01923287449002732\n1929-01-01,0.018550291809972676\n1929-02-01,-0.008096374490027322\n1929-03-01,-0.04677237419002732\n1929-04-01,-0.0009585411900273223\n1929-05-01,-0.10442920819002732\n1929-06-01,0.05902129180997268\n1929-07-01,0.0044124588099726785\n1929-08-01,0.011637458809972677\n1929-09-01,-0.05721637419002732\n1929-10-01,-0.22652754119002733\n1929-11-01,-0.1348757111900273\n1929-12-01,-0.038576041190027326\n1930-01-01,0.09471645880997268\n1930-02-01,0.01869379180997268\n'''\n\ndta_kns_data = StringIO(dta_kns_str)\n\ndta_kns = pd.read_csv(dta_kns_data, parse_dates=[\"date\"], index_col=\"date\")\n\n# Fit the model\nmod_kns = sm.tsa.MarkovRegression(\n    dta_kns, k_regimes=3, trend=\"n\", switching_variance=True\n)\nres_kns = mod_kns.fit()\n\nres_kns.summary()\n\nprint(f'Expected duration of high-variance regime: \\\\boxed{{{res_kns.expected_durations[2]:.2f}}}')",
+    "final_answer": "2.63",
+    "metadata": {
+        "problem_id": "Time Series Analysis/markov_autoregression",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with linear trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+    "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2, optimized=False\n)\nfcast1 = fit1.forecast(5).rename(\"Holt's linear trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+    "final_answer": "50.58",
+    "metadata": {
+        "problem_id": "Time Series Analysis/exponential_smoothing",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "You are analyzing a physics experiment where you need to determine the relationship between two variables. You have collected data with measurement errors and need to fit a linear model using Weighted Least Squares (WLS) regression.\n\nWe split the data into training and test sets, where you use the training set to build the model and the test set to evaluate its performance.\n\nHere is the training set:\n  x   y y_err\n201 592    61\n244 401    25\n 47 583    38\n287 402    15\n203 495    21\n 58 173    15\n210 479    27\n202 504    14\n198 510    30\n158 416    16\n165 393    14\n201 442    25\n157 317    52\n131 311    16\n166 400    34\n\nHere is the testing data:\n  x   y y_err\n160 337    31\n186 423    42\n125 334    26\n218 533    16\n146 344    22\n\nThe model is trained on 15 data points and evaluated on 5 test points. What is the RMSE on the evaluation set?\n",
+    "rationale": "import numpy as np\nimport pandas as pd\nimport statsmodels.api as sm\nfrom io import StringIO\nfrom sklearn.metrics import mean_squared_error\n\ntrain_data = '''\n  x   y y_err\n201 592    61\n244 401    25\n 47 583    38\n287 402    15\n203 495    21\n 58 173    15\n210 479    27\n202 504    14\n198 510    30\n158 416    16\n165 393    14\n201 442    25\n157 317    52\n131 311    16\n166 400    34\n'''\n\ntest_data = '''\n  x   y y_err\n160 337    31\n186 423    42\n125 334    26\n218 533    16\n146 344    22\n'''\n\ntrain_data = pd.read_csv(StringIO(train_data), delim_whitespace=True).astype(float)\ntest_data = pd.read_csv(StringIO(test_data), delim_whitespace=True).astype(float)\n\nprint(f\"Training set: {len(train_data)}\")\nprint(f\"Test set: {len(test_data)}\")\n\n# Fit model on training data\nexog_train = sm.add_constant(train_data[\"x\"])\nendog_train = train_data[\"y\"]\nweights_train = 1.0 / (train_data[\"y_err\"] ** 2)\n\nwls = sm.WLS(endog_train, exog_train, weights_train)\nresults = wls.fit(cov_type=\"fixed scale\")\n\nprint(results.summary())\n\n# Predictions on test data\nexog_test = sm.add_constant(test_data[\"x\"])\npredictions = results.predict(exog_test)\n\n# Calculate multiple evaluation metrics\nmse = mean_squared_error(test_data[\"y\"], predictions)\nrmse = np.sqrt(mse)\n\nprint(\"\\nResults on the evaluation set:\")\nprint(f'RMSE: \\\\boxed{{{rmse:.2f}}}')",
+    "final_answer": "49.33",
+    "metadata": {
+        "problem_id": "Linear Regression Models/chi2_fitting",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4",
+            "scikit-learn==1.6.1"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with exponential trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+    "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, exponential=True, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2, optimized=False\n)\nfcast1 = fit1.forecast(5).rename(\"Exponential trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+    "final_answer": "54.52",
+    "metadata": {
+        "problem_id": "Time Series Analysis/exponential_smoothing",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "U.S. historical economic data shows that business cycles typically alternate between periods of expansion and contraction. As an economic analyst, you are tasked with analyzing quarterly growth rates of U.S. Real Gross National Product (RGNP) from 1951 to 1958.\nYou need to estimate a 2-regime Markov-switching autoregressive model with the following specifications:\n\n1. Use 2 regimes (k_regimes=2) to represent expansion and contraction states\n2. Include 4 autoregressive lags (order=4)\n3. Keep the autoregressive coefficients constant across regimes (switching_ar=False)\n4. Based on this specific model, if the economy is currently in a recession state (i.e., downturn regime, typically characterized by negative growth rates), how many quarters would this downturn state be expected to last according to historical patterns?\n\nThe answer should be a number representing the quantity of quarters. \n\nPlease use a Markov-switching autoregressive model to estimate this duration.\n\nHere is the data:\n| date | rgnp |\n|------------|------------|\n| 1951-04-01 | 2.5931642 |\n| 1951-07-01 | 2.2021713 |\n| 1951-10-01 | 0.45827562 |\n| 1952-01-01 | 0.9687438 |\n| 1952-04-01 | -0.24130757 |\n| 1952-07-01 | 0.8964748 |\n| 1952-10-01 | 2.0539322 |\n| 1953-01-01 | 1.7335365 |\n| 1953-04-01 | 0.9387129 |\n| 1953-07-01 | -0.46477833 |\n| 1953-10-01 | -0.80983406 |\n| 1954-01-01 | -1.3976369 |\n| 1954-04-01 | -0.39886093 |\n| 1954-07-01 | 1.1918416 |\n| 1954-10-01 | 1.4562005 |\n| 1955-01-01 | 2.1180823 |\n| 1955-04-01 | 1.0895786 |\n| 1955-07-01 | 1.3239027 |\n| 1955-10-01 | 0.87296367 |\n| 1956-01-01 | -0.19773273 |\n| 1956-04-01 | 0.45420215 |\n| 1956-07-01 | 0.07221876 |\n| 1956-10-01 | 1.1030364 |\n| 1957-01-01 | 0.8209749 |\n| 1957-04-01 | -0.05795795 |\n| 1957-07-01 | 0.5844777 |\n| 1957-10-01 | -1.5619267 |\n| 1958-01-01 | -2.0504103 |\n| 1958-04-01 | 0.5363718 |\n| 1958-07-01 | 2.3367684 |\n\nThe answer should be a number representing the quantity of quarters.\n",
+    "rationale": "from io import StringIO\n\nimport pandas as pd\nimport statsmodels.api as sm\n\n\ncsv_data = '''\ndate,rgnp\n1951-04-01,2.5931642\n1951-07-01,2.2021713\n1951-10-01,0.45827562\n1952-01-01,0.9687438\n1952-04-01,-0.24130757\n1952-07-01,0.8964748\n1952-10-01,2.0539322\n1953-01-01,1.7335365\n1953-04-01,0.9387129\n1953-07-01,-0.46477833\n1953-10-01,-0.80983406\n1954-01-01,-1.3976369\n1954-04-01,-0.39886093\n1954-07-01,1.1918416\n1954-10-01,1.4562005\n1955-01-01,2.1180823\n1955-04-01,1.0895786\n1955-07-01,1.3239027\n1955-10-01,0.87296367\n1956-01-01,-0.19773273\n1956-04-01,0.45420215\n1956-07-01,0.07221876\n1956-10-01,1.1030364\n1957-01-01,0.8209749\n1957-04-01,-0.05795795\n1957-07-01,0.5844777\n1957-10-01,-1.5619267\n1958-01-01,-2.0504103\n1958-04-01,0.5363718\n1958-07-01,2.3367684\n'''\n\ndata = StringIO(csv_data)\n\ndta_hamilton = pd.read_csv(data, parse_dates=[\"date\"], index_col=\"date\").squeeze()\n\n# dta_hamilton.to_csv('rgnp_data_first_30.csv', header=True)\n\n# Fit the model\nmod_hamilton = sm.tsa.MarkovAutoregression(\n    dta_hamilton, k_regimes=2, order=4, switching_ar=False\n)\nres_hamilton = mod_hamilton.fit()\n\n\n\nres_hamilton.summary()\n\n\nprint(f'Expected Duration: \\\\boxed{{{res_hamilton.expected_durations[1]:.2f}}}')",
+    "final_answer": "2.56",
+    "metadata": {
+        "problem_id": "Time Series Analysis/markov_autoregression",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "You are analyzing economic indicators from the Longley dataset and need to account for autocorrelation in your regression model predicting total employment (TOTEMP) based on economic variables.\n\nThe dataset contains several economic indicators including GNP deflator, Gross National Product, unemployment numbers, armed forces personnel, population, and year. You will first build an OLS model, then test for autocorrelation in the residuals, and finally estimate a Generalized Least Squares (GLS) model that accounts for this autocorrelation.\n\nYour task is to:\n1. Load the provided dataset\n2. Build an initial OLS regression model\n3. Test for autocorrelation in the residuals\n4. Build a GLS model with appropriate autocorrelation structure\n5. Print the statistical significance of GLS models\nThe dataset contains:\n|GNPDEFL|GNP     |UNEMP |ARMED |POP     |YEAR  |TOTEMP |\n|-------|--------|------|------|--------|------|-------|\n|83.0   |234289.0|2356.0|1590.0|107608.0|1947.0|60323.0|\n|88.5   |259426.0|2325.0|1456.0|108632.0|1948.0|61122.0|\n|88.2   |258054.0|3682.0|1616.0|109773.0|1949.0|60171.0|\n|89.5   |284599.0|3351.0|1650.0|110929.0|1950.0|61187.0|\n|96.2   |328975.0|2099.0|3099.0|112075.0|1951.0|63221.0|\n|98.1   |346999.0|1932.0|3594.0|113270.0|1952.0|63639.0|\n|99.0   |365385.0|1870.0|3547.0|115094.0|1953.0|64989.0|\n|100.0  |363112.0|3578.0|3350.0|116219.0|1954.0|63761.0|\n|101.2  |397469.0|2904.0|3048.0|117388.0|1955.0|66019.0|\n|104.6  |419180.0|2822.0|2857.0|118734.0|1956.0|67857.0|\n|108.4  |442769.0|2936.0|2798.0|120445.0|1957.0|68169.0|\n|110.8  |444546.0|4681.0|2637.0|121950.0|1958.0|66513.0|\n|112.6  |482704.0|3813.0|2552.0|123366.0|1959.0|68655.0|\n|114.2  |502601.0|3931.0|2514.0|125368.0|1960.0|69564.0|\n|115.7  |518173.0|4806.0|2572.0|127852.0|1961.0|69331.0|\n|116.9  |554894.0|4007.0|2827.0|130081.0|1962.0|70551.0|\n\nAfter accounting for first-order autocorrelation in the residuals using GLS, what is the t-value for the GNP coefficient in the new model?\n\nRound your answer to two decimal places.\n",
+    "rationale": "import pandas as pd\nimport numpy as np\nfrom io import StringIO\n\nimport statsmodels.api as sm\n\nlongley_str = '''GNPDEFL,GNP,UNEMP,ARMED,POP,YEAR,TOTEMP\n83.0,234289.0,2356.0,1590.0,107608.0,1947.0,60323.0\n88.5,259426.0,2325.0,1456.0,108632.0,1948.0,61122.0\n88.2,258054.0,3682.0,1616.0,109773.0,1949.0,60171.0\n89.5,284599.0,3351.0,1650.0,110929.0,1950.0,61187.0\n96.2,328975.0,2099.0,3099.0,112075.0,1951.0,63221.0\n98.1,346999.0,1932.0,3594.0,113270.0,1952.0,63639.0\n99.0,365385.0,1870.0,3547.0,115094.0,1953.0,64989.0\n100.0,363112.0,3578.0,3350.0,116219.0,1954.0,63761.0\n101.2,397469.0,2904.0,3048.0,117388.0,1955.0,66019.0\n104.6,419180.0,2822.0,2857.0,118734.0,1956.0,67857.0\n108.4,442769.0,2936.0,2798.0,120445.0,1957.0,68169.0\n110.8,444546.0,4681.0,2637.0,121950.0,1958.0,66513.0\n112.6,482704.0,3813.0,2552.0,123366.0,1959.0,68655.0\n114.2,502601.0,3931.0,2514.0,125368.0,1960.0,69564.0\n115.7,518173.0,4806.0,2572.0,127852.0,1961.0,69331.0\n116.9,554894.0,4007.0,2827.0,130081.0,1962.0,70551.0\n'''\n\ndata_io = StringIO(longley_str)\nfull_df = pd.read_csv(data_io)\n\nendog_name = 'TOTEMP'\nexog_names = [col for col in full_df.columns if col != endog_name]\n\nendog = full_df[endog_name]\nexog = full_df[exog_names]\n\nexog = sm.add_constant(exog)\n\nmodel = sm.OLS(endog, exog)\nresults = model.fit()\nols_resid = results.resid\n\nresid_fit = sm.OLS(\n    np.asarray(ols_resid)[1:], sm.add_constant(np.asarray(ols_resid)[:-1])\n).fit()\n\nrho = resid_fit.params[1]\n\nfrom scipy.linalg import toeplitz\n\ntoeplitz(range(5))\n\norder = toeplitz(range(len(ols_resid)))\n\nsigma = rho ** order\ngls_model = sm.GLS(endog, exog, sigma=sigma)\ngls_results = gls_model.fit()\n\ngls_tvalues = gls_results.tvalues\n\nprint(f'GLS t-value for GNP: \\\\boxed{{{gls_results.tvalues[\"GNP\"]:.2f}}}')",
+    "final_answer": "-1.45",
+    "metadata": {
+        "problem_id": "Linear Regression Models/gls",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "Given the following oil price data (oildata) from 1996 to 2007:\n\n| Year | Oil Price |\n|------|-----------|\n| 1996 | 446.6565  |\n| 1997 | 454.4733  |\n| 1998 | 455.663   |\n| 1999 | 423.6322  |\n| 2000 | 456.2713  |\n| 2001 | 440.5881  |\n| 2002 | 425.3325  |\n| 2003 | 485.1494  |\n| 2004 | 506.0482  |\n| 2005 | 526.792   |\n| 2006 | 514.2689  |\n| 2007 | 494.211   |\n\nUsing Simple Exponential Smoothing method with smoothing level \u03b1 = 0.2, heuristic initialization, and no parameter optimization, forecast the oil price for the year 2010.\n",
+    "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import SimpleExpSmoothing\n\ndata = [\n    446.6565,\n    454.4733,\n    455.663,\n    423.6322,\n    456.2713,\n    440.5881,\n    425.3325,\n    485.1494,\n    506.0482,\n    526.792,\n    514.2689,\n    494.211,\n]\nindex = pd.date_range(start=\"1996\", end=\"2008\", freq=\"Y\")\noildata = pd.Series(data, index)\n\nfit1 = SimpleExpSmoothing(oildata, initialization_method=\"heuristic\").fit(\n    smoothing_level=0.2, optimized=False\n)\nfcast1 = fit1.forecast(3).rename(r\"$\\alpha=0.2$\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2010-12-31\"]:.2f}}}')",
+    "final_answer": "483.07",
+    "metadata": {
+        "problem_id": "Time Series Analysis/exponential_smoothing",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+},
+{
+    "question": "Given the following air quality data (air) from 1990 to 2004:\n\n| Year | Air Quality |\n|------|-------------|\n| 1990 | 17.5534     |\n| 1991 | 21.86       |\n| 1992 | 23.8866     |\n| 1993 | 26.9293     |\n| 1994 | 26.8885     |\n| 1995 | 28.8314     |\n| 1996 | 30.0751     |\n| 1997 | 30.9535     |\n| 1998 | 30.1857     |\n| 1999 | 31.5797     |\n| 2000 | 32.5776     |\n| 2001 | 33.4774     |\n| 2002 | 39.0216     |\n| 2003 | 41.3864     |\n| 2004 | 41.5966     |\n\nUsing Holt's method with damped trend, smoothing level \u03b1 = 0.8, smoothing trend \u03b2 = 0.2, and no parameter optimization, forecast the air quality for the year 2009.\n",
+    "rationale": "import pandas as pd\nfrom statsmodels.tsa.api import Holt\n\ndata = [\n    17.5534,\n    21.86,\n    23.8866,\n    26.9293,\n    26.8885,\n    28.8314,\n    30.0751,\n    30.9535,\n    30.1857,\n    31.5797,\n    32.5776,\n    33.4774,\n    39.0216,\n    41.3864,\n    41.5966,\n]\nindex = pd.date_range(start=\"1990\", end=\"2005\", freq=\"Y\")\nair = pd.Series(data, index)\n\nfit1 = Holt(air, damped_trend=True, initialization_method=\"estimated\").fit(\n    smoothing_level=0.8, smoothing_trend=0.2\n)\nfcast1 = fit1.forecast(5).rename(\"Additive damped trend\")\n\nprint(f'Forecast value: \\\\boxed{{{fcast1[\"2009-12-31\"]:.2f}}}')",
+    "final_answer": "46.06",
+    "metadata": {
+        "problem_id": "Time Series Analysis/exponential_smoothing",
+        "name": "stats_model",
+        "date_created": "2025-04-15",
+        "contributor": "Zhaowei Wang, Xingyue Huang, Zhuangzhuang He, Jinhe Bi",
+        "domain": "Mathematical Programming",
+        "required_dependencies": [
+            "pandas==1.5.3",
+            "statsmodels==0.14.4",
+            "numpy==1.26.4"
+        ],
+        "license": "BSD 3-Clause",
+        "source": "https://github.com/statsmodels/statsmodels"
+    }
+}
 ]
