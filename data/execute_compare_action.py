@@ -234,13 +234,38 @@ async def compare_results(
             pass
     elif precision and execution_result and final_answer and (domain == "chemistry" or domain == "finance"):
         try:
-            exec_float = float(execution_result)
-            ans_float = float(final_answer)
-            if abs(exec_float - ans_float) <= float(precision):
+            exec_result = ast.literal_eval(execution_result)
+            final_ans = ast.literal_eval(final_answer)
+            precision = float(precision)
+
+            if isinstance(exec_result, dict) and isinstance(final_ans, dict):
+                if exec_result.keys() != final_ans.keys():
+                    return False
+                for key in exec_result:
+                    if isinstance(exec_result[key], (int, float)) and isinstance(final_ans[key], (int, float)):
+                        if abs(float(exec_result[key]) - float(final_ans[key])) > precision:
+                            return False
+                    else:
+                        return False
                 return True
+            elif isinstance(exec_result, (list, tuple)) and isinstance(final_ans, (list, tuple)):
+                if len(exec_result) != len(final_ans):
+                    return False
+                for i in range(len(exec_result)):
+                    if isinstance(exec_result[i], (int, float)) and isinstance(final_ans[i], (int, float)):
+                        if abs(float(exec_result[i]) - float(final_ans[i])) > precision:
+                            return False
+                    else:
+                        return False
+                return True
+            elif isinstance(exec_result, (int, float)) and isinstance(final_ans, (int, float)):
+                if abs(float(exec_result) - float(final_ans)) <= precision:
+                    return True
+                else:
+                    return False
             else:
                 return False
-        except ValueError:
+        except (ValueError, SyntaxError):
             return False
     elif precision:
         return compare_answer_str(
