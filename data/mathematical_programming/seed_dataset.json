@@ -13,7 +13,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/rcs.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -30,7 +30,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/flp.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -47,7 +47,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/even.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -64,7 +64,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/diet.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -81,7 +81,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/sudoku.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -98,7 +98,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/atsp.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -115,7 +115,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/bpp.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -132,7 +132,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/mctransp.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -149,7 +149,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/ssp.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
@@ -166,7 +166,7 @@
         "pyscipopt==5.4.1"
       ],
       "source": "https://github.com/scipopt/PySCIPOpt/blob/master/examples/finished/pfs.py",
-      "license": "Apache-2.0"
+      "license": "MIT license"
     }
   },
   {
