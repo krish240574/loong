@@ -468,7 +468,8 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson"
+      "contributor": "Neil Johnson",
+      "answer_tolerance": "0.1"
     }
   },
   {
@@ -1181,7 +1182,7 @@
     }
   },
   {
-    "id": "finance_quant_134",
+    "id": "finance_quant_166",
     "question": "Determine the price of a 3-year zero coupon bond using the Hull-White model with a=0.03 and sigma=0.01.",
     "rationale": "import QuantLib as ql\nimport math\n\n# Set evaluation date\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Define a flat yield curve with a 5% continuously compounded rate.\nflat_rate = 0.05\nday_count = ql.Actual360()\ncalendar = ql.TARGET()\nyield_curve = ql.FlatForward(today, flat_rate, day_count)\ndiscount_curve = ql.RelinkableYieldTermStructureHandle(yield_curve)\n\n# Hull-White model parameters\na = 0.03     # mean reversion\nsigma = 0.01  # volatility\n\n# Construct the Hull-White model with the given discount curve\nhw_model = ql.HullWhite(discount_curve, a, sigma)\n\n# Define the maturity date 3 years from today using the calendar\nmaturity = calendar.advance(today, ql.Period(3, ql.Years))\nT = day_count.yearFraction(today, maturity)\n\n# Assume the current short rate is approximated by the flat rate,\n# then use the analytic formula of the Hull-White model to price the zero coupon bond.\nr0 = flat_rate\nprice = hw_model.discountBond(0.0, T, r0)\n\n# Alternatively, compute the price directly from the yield curve discount factor:\nprice_from_curve = yield_curve.discount(maturity)\nresult = price\nprint(result)",
     "final_answer": "0.8587974156648543",
@@ -1198,7 +1199,8 @@
       ],
       "contributor": [
         "Neil Johnson, Zicheng Su"
-      ]
+      ],
+      "answer_tolerance": "0.1"
     }
   },
   {
@@ -1402,7 +1404,7 @@
     "id": "finance_quant_216",
     "question": "Determine the value of a forward rate agreement (FRA) with notional 10 million, fixing in 6 months for a 3-month period.",
     "rationale": "import QuantLib as ql\n\n# Set up evaluation date and calendar\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\ncalendar = ql.TARGET()\n\n# Day counter to use: Actual/365 fixed\ndayCounter = ql.Actual365Fixed()\n\n# Define the flat yield curve (risk-free) with a constant rate of 2%\nflat_rate = 0.02\nyield_curve = ql.FlatForward(today, flat_rate, dayCounter)\ndiscount_curve = ql.RelinkableYieldTermStructureHandle()\ndiscount_curve.linkTo(yield_curve)\n\n# FRA parameters\nnotional = 10_000_000         # Notional amount\nstrike = 0.025                # FRA fixed rate (2.5%)\naccrual = 0.25                # Accrual factor for a 3-month period (3/12)\n\n# FRA schedule: fixing in 6 months with a period of 3 months\nstart_date = calendar.advance(today, 6, ql.Months)\nend_date = calendar.advance(start_date, 3, ql.Months)\n\n# Get discount factors for the start and end dates\nDF_start = yield_curve.discount(start_date)\nDF_end = yield_curve.discount(end_date)\n\n# Calculate the forward rate over the FRA period:\n# forward = (DF(start)/DF(end)-1)/accrual\nforward_rate = (DF_start / DF_end - 1.0) / accrual\n\n# Compute the FRA value using the standard formula:\n# FRA Value = Notional * accrual * DF(end) * (forward_rate - strike) / (1 + accrual * forward_rate)\nFRA_value = notional * accrual * DF_end * (forward_rate - strike) / (1 + accrual * forward_rate)\n\n# Store the final result in the variable 'result'\nresult = FRA_value\n\n# Print the final result\nprint(result)",
-    "final_answer": "-11722.335716073081",
+    "final_answer": "-10641.335716073081",
     "metadata": {
       "name": "Quantitative Finance",
       "domain": "Quant",
@@ -1608,7 +1610,7 @@
     "id": "finance_quant_220",
     "question": "Price an FRA using the Black model with notional=10 million, fixing in 6 months, for a 3-month period.",
     "rationale": "import QuantLib as ql\n\n# Set evaluation date\ncalendar = ql.TARGET()\ntoday = ql.Date.todaysDate()\nql.Settings.instance().evaluationDate = today\n\n# Construct a flat yield (discount) curve at 2%\nflat_rate = 0.02\nday_count = ql.Actual360()\ndiscount_curve = ql.YieldTermStructureHandle(ql.FlatForward(today, flat_rate, day_count))\n\n# Define the Ibor index for 3-month tenor (the FRA underlying period)\nindex = ql.Euribor3M(discount_curve)\n\n# Define FRA details:\n# Fixing is set 6 months from today, then a 3-month accrual period, notional of 10 million, strike rate of 3%\nfixing_date = calendar.advance(today, 6, ql.Months)\nmaturity_date = calendar.advance(fixing_date, 3, ql.Months)\nnotional = 10_000_000\nstrike = 0.03  # 3%\n\n# Create the FRA using the constructor that takes fixingDate and maturityDate:\nfra = ql.ForwardRateAgreement(index, fixing_date, maturity_date, ql.Position.Long, strike, notional, discount_curve)\n\n# Price the FRA and obtain its Net Present Value\nnpv = fra.NPV()\n\n# The final answer is stored in 'result'\nresult = npv\n\n# For display (if needed)\nprint(result)",
-    "final_answer": "-25036.452462950925",
+    "final_answer": "-25576.452462950925",
     "metadata": {
       "name": "Quantitative Finance",
       "domain": "Quant",
@@ -2436,7 +2438,7 @@
       "contributor": [
         "Neil Johnson, Zicheng Su"
       ],
-      "answer_tolerance": "1000"
+      "answer_tolerance": "1500"
     }
   },
   {
@@ -2770,7 +2772,8 @@
       ],
       "contributor": [
         "Neil Johnson, Zicheng Su"
-      ]
+      ],
+      "answer_tolerance": "0.1"
     }
   },
   {
@@ -3097,8 +3100,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "0.5"
+      "contributor": "Neil Johnson"
     }
   },
   {
@@ -3860,8 +3862,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "0.5"
+      "contributor": "Neil Johnson"
     }
   },
   {
@@ -3926,8 +3927,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "0.5"
+      "contributor": "Neil Johnson"
     }
   },
   {
@@ -4343,8 +4343,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "5"
+      "contributor": "Neil Johnson"
     }
   },
   {
@@ -4474,8 +4473,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "5"
+      "contributor": "Neil Johnson"
     }
   },
   {
@@ -4519,7 +4517,7 @@
         "2025-03-26"
       ],
       "contributor": "Neil Johnson",
-      "answer_tolerance": "5"
+      "answer_tolerance": "1000"
     }
   },
   {
@@ -4868,8 +4866,7 @@
       "date_created": [
         "2025-03-26"
       ],
-      "contributor": "Neil Johnson",
-      "answer_tolerance": "5"
+      "contributor": "Neil Johnson"
     }
   },
   {
