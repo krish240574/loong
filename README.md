@@ -158,6 +158,20 @@ If you're keen on exploring new research opportunities or discoveries with our p
   <img src="assets/wechatgroup.jpeg" alt="WeChat Group QR Code">
 </div>
 
+## 🖊️ Cite
+
+If you find this repo useful, please cite:
+
+
+```
+@misc{loong2025,
+  title={Loong: Synthesize Long CoTs at Scale through Verifiers},
+  author={CAMEL-AI.org},
+  url={https://github.com/camel-ai/loong},
+  year={2025}
+}
+```
+
 [discord-image]: https://img.shields.io/discord/1082486657678311454?logo=discord&labelColor=%20%235462eb&logoColor=%20%23f5f5f5&color=%20%235462eb
 [discord-url]: https://discord.camel-ai.org/
 [huggingface-image]: https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-CAMEL--AI-ffc107?color=ffc107&logoColor=white
