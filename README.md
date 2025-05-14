@@ -93,7 +93,7 @@ The repository currently includes a total of **8,729 questions** spanning **12 d
 - 💹 **Finance:** 235 questions
 - 🎮 **Game:** 926 questions
 - 📈 **Graph & Discrete Math:** 178 questions  
-- 🧠 **Logic:** 130 questions  
+- 🧠 **Logic:** 1,054 questions  
 - 📐 **Mathematical Programming:** 76 questions
 - 💊 **Medicine:** 916 questions
 - 🔒 **Security & Safety:** 516 questions
