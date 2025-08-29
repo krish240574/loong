@@ -150,13 +150,15 @@ If you're keen on exploring new research opportunities or discoveries with our p
 <br>
 
 - Join us ([*Discord*](https://discord.camel-ai.org/) or [*WeChat*](assets/wechat.jpg)) in pushing the boundaries of finding the scaling laws of agents. 
-- Join WechatGroup for further discussions!
+<!---
+- Join WechatGroup for further discussions!>
 
 <br>
 
 <div align="">
   <img src="assets/wechatgroup.jpeg" alt="WeChat Group QR Code">
 </div>
+-->
 
 ## 🖊️ Cite
 
