@@ -20,10 +20,8 @@ set_log_level('INFO')
 if not os.environ["OPENAI_API_KEY"]:
     raise RuntimeError("No OpenAI API key found")
 
-DEEPSEEK_API_KEY = "ENTER API KEY HERE"
-
-if DEEPSEEK_API_KEY == "ENTER API KEY HERE":
-    raise RuntimeError("Please enter your API key.")
+if not os.environ["DEEPSEEK_API_KEY"]:
+    raise RuntimeError("No DeepSeek API key found")
 
 # Enable DeepSeek reasoning content
 os.environ["GET_REASONING_CONTENT"] = "true"
@@ -48,14 +46,14 @@ with open('data/advanced_math/seed_dataset.json', 'r') as f:
 # Filter for Level 4 and 5 questions
 filtered_seed_data = [
     example for example in seed_data 
-    if example.get('metadata', {}).get('level') in ['Level 4', 'Level 5']
+    if example.get('metadata', {}).get('difficulty') in ['Level 4', 'Level 5']
 ]
 
 
 
 logger.info(f"Filtered seed dataset from {len(seed_data)} to {len(filtered_seed_data)} examples (Level 4 and 5 only)")
-logger.info(f"Level 4: {sum(1 for x in filtered_seed_data if x['metadata']['level'] == 'Level 4')}")
-logger.info(f"Level 5: {sum(1 for x in filtered_seed_data if x['metadata']['level'] == 'Level 5')}")
+logger.info(f"Level 4: {sum(1 for x in filtered_seed_data if x['metadata']['difficulty'] == 'Level 4')}")
+logger.info(f"Level 5: {sum(1 for x in filtered_seed_data if x['metadata']['difficulty'] == 'Level 5')}")
 
 seed_dataset = StaticDataset(filtered_seed_data)
 

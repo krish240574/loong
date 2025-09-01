@@ -71,6 +71,23 @@ self-improvement through reinforcement learning and more advanced strategies.
 
 <br>
 
+## 🚀 Getting Started
+
+To set up the project locally, follow these steps:
+
+```bash
+# Create a virtual environment with Python 3.10
+uv venv .venv --python=3.10
+
+# Activate the virtual environment
+source .venv/bin/activate
+
+# Install the package in editable mode
+uv pip install -e .
+```
+
+<br>
+
 ## 📊 Seed Datasets [→](./data)
 A collection of **seed datasets**, structured for generation and verification, divded for each domain. 
 
